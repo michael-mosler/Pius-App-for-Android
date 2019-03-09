@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pius App for Android</string>
+    <string name="title_home">Heute</string>
+    <string name="title_substitution_schedule">Vertretungsplan</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_settings">Einstellungen</string>
+</resources>
