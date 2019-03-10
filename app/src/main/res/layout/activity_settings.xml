@@ -13,7 +13,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/textView2"
@@ -29,7 +31,7 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="395dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
@@ -90,13 +92,14 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/mycourses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/colorPiusBlue"
+                android:background="@drawable/button_default"
+                android:enabled="false"
                 android:text="@string/button_mycourses"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,10 +131,14 @@
                 android:layout_marginEnd="16dp"
                 android:layout_height="wrap_content"
                 android:text="@string/label_username"
+                android:labelFor="@id/username"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/username"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:backgroundTint="@color/colorPiusBlue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -149,26 +156,32 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/label_password"
+                android:labelFor="@id/password"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/password"
+                android:textCursorDrawable="@null"
+                android:singleLine="true"
+                android:backgroundTint="@color/colorPiusBlue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:importantForAutofill="no" tools:targetApi="o" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/colorPiusBlue"
+                android:background="@drawable/button_default"
+                android:enabled="false"
                 android:text="@string/button_login"
                 android:textColor="@android:color/white" />
 
@@ -182,12 +195,14 @@
 
             <TextView
                 android:id="@+id/textView7"
+                android:autoLink="web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/label_copyright" />
+                android:text="@string/label_copyright"
+                android:textColorLink="@color/colorPiusBlue" />
         </LinearLayout>
     </ScrollView>
 
