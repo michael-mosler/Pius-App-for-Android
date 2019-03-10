@@ -1,4 +1,4 @@
-package com.example.pius_app_for_android;
+package com.rmkrings.pius_app_for_android;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

@@ -1,8 +1,25 @@
 <resources>
     <string name="app_name">Pius App for Android</string>
+
+    <string name="button_mycourses">Meine Kurse</string>
+    <string name="button_login">Anmelden</string>
+    <string name="button_logout">Abmelden</string>
+
     <string name="title_home">Heute</string>
     <string name="title_substitution_schedule">Vertretungsplan</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_settings">Einstellungen</string>
+
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zum Erhalt von Push-Benachrichtigungen Deine Klasse bzw. Jahrgangsstufe ein.</string>
+    <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>
+    <string name="label_copyright">
+        © Felix Krings und Michael Mosler-Krings
+        Unter https://github.com/michael-mosler/Pius-App findest Du weitere Infos zur App.
+        Informationen zu unserer Datenschutzrichtlinie findest Du unter https://github.com/michael-mosler/Pius-App/wiki/Datenschutzrichtlinie.
+    </string>
+
+    <string name="label_grade">Jahrgangsstufe</string>
+    <string name="label_class">Klasse</string>
+    <string name="label_username">Benutzername</string>
+    <string name="label_password">Passwort</string>
 </resources>

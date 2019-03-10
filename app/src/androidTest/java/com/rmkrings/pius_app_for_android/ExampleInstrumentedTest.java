@@ -1,4 +1,4 @@
-package com.example.pius_app_for_android;
+package com.rmkrings.pius_app_for_android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.pius_app_for_android", appContext.getPackageName());
+        assertEquals("com.rmkrings.pius_app_for_android", appContext.getPackageName());
     }
 }
