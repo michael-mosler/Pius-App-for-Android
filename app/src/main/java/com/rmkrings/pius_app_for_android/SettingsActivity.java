@@ -13,12 +13,67 @@ import android.widget.Button;
 import com.rmkrings.helper.Config;
 
 public class SettingsActivity extends AppCompatActivity {
+    // Outlets
     private EditText mUserName;
     private EditText mPassword;
     private Button mLoginButton;
+    private Button mCoursesButton;
+    private NumberPicker mGradePicker;
+    private NumberPicker mClassPicker;
 
+    // Internal state.
+    private Config config = new Config();
     private String sUserName = "";
     private String sPassword = "";
+
+    private boolean isUpperGradeSelected(int val) {
+        return config.isUpperGrade(config.getGrades()[val]);
+    }
+
+    private boolean isLowerGradeSelected(int val) {
+        return config.isLowerGrade(config.getGrades()[val]);
+    }
+
+    private void setElementStates(int forSelectedGradeVal) {
+        // If grade "None" is selected class picker also is set to None.
+        if (forSelectedGradeVal == 0) {
+            mClassPicker.setValue(0);
+            // AppDefaults.selectedClassRow = 0;
+
+            mClassPicker.setEnabled(false);
+            mCoursesButton.setEnabled(false);
+        }
+
+        // When user has selected EF, Q1 or Q2 set class picker view to "None" and disable.
+        // Enable "Meine Kurse" button.
+        else if (isUpperGradeSelected(forSelectedGradeVal)) {
+            mClassPicker.setValue(0);
+            //AppDefaults.selectedClassRow = 0;
+
+            mClassPicker.setEnabled(false);
+            mCoursesButton.setEnabled(true);
+        }
+
+        // When a lower grade is selected disable "Meine Kurse" button and make sure
+        // that class is defined.
+        else if (isLowerGradeSelected(forSelectedGradeVal)) {
+            if (mClassPicker.getValue() == 0) {
+                mClassPicker.setValue(1);
+                // AppDefaults.selectedClassRow = 1;
+            }
+
+            mClassPicker.setEnabled(true);
+            mCoursesButton.setEnabled(false);
+        }
+
+        // Neither
+        else {
+            mClassPicker.setValue(0);
+            // AppDefaults.selectedClassRow = 0;
+            mCoursesButton.setEnabled(false);
+        }
+    }
+
 
     private void titlesForPicker(NumberPicker mPicker, String[] titles) {
         mPicker.setMinValue(0);
@@ -27,13 +82,31 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void titlesForGradePicker() {
-        Config config = new Config();
-        titlesForPicker((NumberPicker)findViewById(R.id.gradePicker), config.getGrades());
+        titlesForPicker(mGradePicker, config.getGrades());
     }
 
     private void titlesForClassPicker() {
-        Config config = new Config();
-        titlesForPicker((NumberPicker)findViewById(R.id.classPicker), config.getClasses());
+        titlesForPicker(mClassPicker, config.getClasses());
+    }
+
+    private void gradePickerDidSelectRow(int val) {
+        if (!isUpperGradeSelected(val) /* && && isUpperGradeSelected(AppDefaults.selectedGradeRow! */) {
+            mClassPicker.setValue(1);
+            // AppDefaults.selectedClassRow = 1;
+        }
+
+        // AppDefaults.selectedGradeRow = row;
+        setElementStates(val);
+    }
+
+    private void classPickerDidSelect(int val) {
+        if (val == 0 && !isUpperGradeSelected(mGradePicker.getValue())) {
+            mClassPicker.setValue(1);
+            // AppDefaults.selectedClassRow = 1;
+        } else {
+            // AppDefaults.selectedClassRow = row;
+        }
+
     }
 
     private void setLoginButtonState() {
@@ -47,9 +120,26 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        mGradePicker = findViewById(R.id.gradePicker);
+        mClassPicker = findViewById(R.id.classPicker);
+        mCoursesButton = findViewById(R.id.mycourses);
         mUserName = findViewById(R.id.username);
         mPassword = findViewById(R.id.password);
         mLoginButton = findViewById(R.id.login);
+
+        mGradePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                gradePickerDidSelectRow(newVal);
+            }
+        });
+
+        mClassPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                classPickerDidSelect(newVal);
+            }
+        });
 
         // Check if login button must be enabled or disabled while typing on username or
         // password field.
