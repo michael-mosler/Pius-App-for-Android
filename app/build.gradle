@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.rmkrings.pius_app_for_android"
+        applicationId "com.rmkrings.PiusApp"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1

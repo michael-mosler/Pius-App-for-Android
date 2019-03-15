@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.rmkrings.pius_app_for_android", appContext.getPackageName());
+        assertEquals("com.rmkrings.PiusApp", appContext.getPackageName());
     }
 }
