@@ -1,11 +1,21 @@
 package com.rmkrings.http;
 
 import android.os.AsyncTask;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
 
+import com.rmkrings.PiusApp;
+import com.rmkrings.helper.AppDefaults;
+import com.rmkrings.vertretungsplandata.VertretungsplanLoader;
+
 public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpResponseData> {
+
+    private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
 
     @Override
     protected HttpResponseData doInBackground(HttpRequestData... params) {
@@ -20,27 +30,35 @@ public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpRespons
             connection.setUseCaches(false);
 
             connection.connect();
-            InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
-            //Create a new buffered reader and String Builder
-            BufferedReader reader = new BufferedReader(streamReader);
-            StringBuilder stringBuilder = new StringBuilder();
+            // Ok: Read reply data.
+            if (connection.getResponseCode() == 200) {
+                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
 
-            //Check if the line we are reading is not null
-            while((inputLine = reader.readLine()) != null){
-                stringBuilder.append(inputLine);
+                //Create a new buffered reader and String Builder
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                //Check if the line we are reading is not null
+                while ((inputLine = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine);
+                }
+
+                //Close our InputStream and Buffered reader
+                reader.close();
+                streamReader.close();
+
+                //Set our result equal to our stringBuilder
+                response = new HttpResponseData(connection.getResponseCode(), false, stringBuilder.toString(), data.getCallback());
             }
-
-            //Close our InputStream and Buffered reader
-            reader.close();
-            streamReader.close();
-
-            //Set our result equal to our stringBuilder
-            response = new HttpResponseData(connection.getResponseCode(), false, stringBuilder.toString(), data.getCallback());
+            // Failed with HTTP Status.
+            else {
+                response = new HttpResponseData(connection.getResponseCode(), false, null, data.getCallback());
+            }
         }
         catch (java.io.IOException e) {
-            e.printStackTrace();
-            response = new HttpResponseData(500, true, null, data.getCallback());
+            logger.info(String.format("Failed to submit HTTP GET request to %s: %s", connection.getURL().toString()));
+            response = new HttpResponseData(null, true, null, data.getCallback());
         }
         finally {
             connection.disconnect();
@@ -51,7 +69,7 @@ public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpRespons
 
     @Override
     protected void onPostExecute(HttpResponseData response) {
-        response.getCallback().execute(response.getHttpStatusCode() == 200, response.isError(), null);
+        response.getCallback().execute(response);
         super.onPostExecute(response);
     }
 }

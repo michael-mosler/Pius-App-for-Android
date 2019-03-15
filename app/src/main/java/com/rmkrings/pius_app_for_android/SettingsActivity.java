@@ -1,11 +1,10 @@
 package com.rmkrings.pius_app_for_android;
 
 import android.content.Context;
-import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,8 +13,8 @@ import android.widget.NumberPicker;
 import android.widget.EditText;
 import android.widget.Button;
 
-import com.rmkrings.PiusApp;
 import com.rmkrings.helper.Config;
+import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.vertretungsplandata.VertretungsplanLoader;
@@ -164,12 +163,55 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     // Update Login button text depending on authentication state.
     private void updateLoginButtonText(boolean authenticated) {
         if (authenticated) {
-            mLoginButton.setText("Abmelden");
+            mLoginButton.setText(getResources().getString(R.string.button_logout));
         } else {
-            mLoginButton.setText("Anmelden");
+            mLoginButton.setText(getResources().getString(R.string.button_login));
         }
     }
 
+    /**
+     * When not logged on reads username and password from input fields and starts validation.
+     * This will cause execute()-callback to be called. Username an password are stored in
+     * preferences before hand.
+     * When logged on credentials are deleted and user is informed on logout.
+     */
+    private void saveCredentials() {
+        // User is not authenticated; in this case we want to set credentials.
+        if (!AppDefaults.isAuthenticated()) {
+            // Save credentials in user defaults.
+            AppDefaults.setUsername(mUserName.getText().toString());
+            AppDefaults.setPassword(mPassword.getText().toString());
+
+            // Show activity indicator.
+            // activityIndicator.startAnimating();
+
+            // Validate credentials; this will also update authenticated state
+            // of the app.
+            mLoginButton.setEnabled(false);
+            VertretungsplanLoader.validateLogin(AppDefaults.getUsername(), AppDefaults.getPassword(), this);
+        } else {
+            // User is authenticated and wants to logout.
+            mUserName.setText("");
+            mPassword.setText("");
+
+            // Delete credential from from user settings and clear text of username
+            // and password field.
+            AppDefaults.setUsername("");
+            AppDefaults.setPassword("");
+            AppDefaults.setAuthenticated(false);
+            updateLoginButtonText(false);
+
+            // Inform user on new login state.
+            new AlertDialog.Builder(this)
+                    .setTitle(getResources().getString(R.string.text_logon))
+                    .setMessage(getResources().getString(R.string.text_logged_out))
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+
+            mUserName.setEnabled(true);
+            mPassword.setEnabled(true);
+        }
+    }
 
     /**
      * The iOS viewDidLoad equivalent. Do all the initialisation stuff.
@@ -234,52 +276,55 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         });
 
         // Hide soft keyboard when login button clicked.
-        final SettingsActivity sa = this;
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mLoginButton.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(mPassword.getWindowToken(), 0);
-
-                mLoginButton.setEnabled(false);
-                VertretungsplanLoader.validateLogin("Papst", "PiusX", sa);
+                saveCredentials();
             }
         });
 
-        setTitle("Einstellungen");
+        setTitle(getResources().getString(R.string.title_settings));
         titlesForGradePicker();
         titlesForClassPicker();
     }
 
+    /**
+     * Submit login request to middleware callback: Checks response data for outcome
+     * and informs user by popup. In case of success authenticated flag is set in
+     * AppDefaults.
+     * @param data - Response data from Validate Login request.
+     */
     @Override
-    public void execute(boolean statusOk, boolean isError, HttpResponseData data) {
+    public void execute(HttpResponseData data) {
         mLoginButton.setEnabled(true);
 
-        // create the alert
+        // Show popup with info outcome.
         String message;
-        if (isError) {
-            message = "Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.";
+        if (data.isError() || (data.getHttpStatusCode() != 200 && data.getHttpStatusCode() != 401)) {
+            message = getResources().getString(R.string.text_logon_error);
         } else {
-            message = (statusOk) ? "Du bist nun angemeldet." : "Die Anmeldedaten sind ungültig.";
+            message = getResources().getString((data.getHttpStatusCode() == 200) ? R.string.text_logged_on : R.string.text_invalid_credentials);
         }
 
-        new AlertDialog.Builder(PiusApp.getAppContext())
-                .setTitle("Anmeldung")
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.text_logon))
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
 
         // Store current authentication state in user settings and update text of
         // login button.
-        if (statusOk) {
-            // AppDefaults.authenticated = true;
+        if (data.getHttpStatusCode() == 200) {
+            AppDefaults.setAuthenticated(true);
             mUserName.setEnabled(false);
             mPassword.setEnabled(false);
+            updateLoginButtonText(true);
         } else {
-            // AppDefaults.authenticated = false;
+            AppDefaults.setAuthenticated(false);
+            updateLoginButtonText(false);
         }
-
-        updateLoginButtonText(statusOk);
     }
 }

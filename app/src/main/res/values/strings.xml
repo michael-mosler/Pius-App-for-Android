@@ -22,4 +22,10 @@
     <string name="label_class">Klasse</string>
     <string name="label_username">Benutzername</string>
     <string name="label_password">Passwort</string>
+
+    <string name="text_logon">Anmeldung</string>
+    <string name="text_logged_on">Du bit nun angemeldet.</string>
+    <string name="text_logged_out">Du bist nun abgemeldet.</string>
+    <string name="text_invalid_credentials">Die Anmeldedaten sind ungültig.</string>
+    <string name="text_logon_error">Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.</string>
 </resources>
