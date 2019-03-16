@@ -13,7 +13,10 @@
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zum Erhalt von Push-Benachrichtigungen Deine Klasse bzw. Jahrgangsstufe ein.</string>
     <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>
     <string name="label_copyright">
-        © Felix Krings und Michael Mosler-Krings
+        Pius-App für Android\n
+        \n
+        © Felix Krings und Michael Mosler-Krings\n
+        \n
         Unter https://github.com/michael-mosler/Pius-App findest Du weitere Infos zur App.
         Informationen zu unserer Datenschutzrichtlinie findest Du unter https://github.com/michael-mosler/Pius-App/wiki/Datenschutzrichtlinie.
     </string>
@@ -24,7 +27,7 @@
     <string name="label_password">Passwort</string>
 
     <string name="text_logon">Anmeldung</string>
-    <string name="text_logged_on">Du bit nun angemeldet.</string>
+    <string name="text_logged_on">Du bist nun angemeldet.</string>
     <string name="text_logged_out">Du bist nun abgemeldet.</string>
     <string name="text_invalid_credentials">Die Anmeldedaten sind ungültig.</string>
     <string name="text_logon_error">Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.</string>

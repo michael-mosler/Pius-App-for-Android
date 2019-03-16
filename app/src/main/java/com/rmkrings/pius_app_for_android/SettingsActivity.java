@@ -2,16 +2,17 @@ package com.rmkrings.pius_app_for_android;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.NumberPicker;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.rmkrings.helper.Config;
 import com.rmkrings.helper.AppDefaults;
@@ -28,11 +29,13 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     private Button mCoursesButton;
     private NumberPicker mGradePicker;
     private NumberPicker mClassPicker;
+    private ProgressBar mProgressBar;
 
     // Internal state.
     private Config config = new Config();
     private String sUserName = "";
     private String sPassword = "";
+
 
     /**
      * Check if grade picker index value identifies an upper grade row.
@@ -61,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         // If grade "None" is selected class picker also is set to None.
         if (forSelectedGradeVal == 0) {
             mClassPicker.setValue(0);
-            // AppDefaults.selectedClassRow = 0;
+            AppDefaults.setSelectedClassRow(0);
 
             mClassPicker.setEnabled(false);
             mCoursesButton.setEnabled(false);
@@ -82,7 +85,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         else if (isLowerGradeSelected(forSelectedGradeVal)) {
             if (mClassPicker.getValue() == 0) {
                 mClassPicker.setValue(1);
-                // AppDefaults.selectedClassRow = 1;
+                AppDefaults.setSelectedClassRow(1);
             }
 
             mClassPicker.setEnabled(true);
@@ -92,7 +95,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         // Neither
         else {
             mClassPicker.setValue(0);
-            // AppDefaults.selectedClassRow = 0;
+            AppDefaults.setSelectedClassRow(0);
             mCoursesButton.setEnabled(false);
         }
     }
@@ -129,10 +132,10 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     private void gradePickerDidSelectRow(int val) {
         if (!isUpperGradeSelected(val) /* && && isUpperGradeSelected(AppDefaults.selectedGradeRow! */) {
             mClassPicker.setValue(1);
-            // AppDefaults.selectedClassRow = 1;
+            AppDefaults.setSelectedClassRow(1);
         }
 
-        // AppDefaults.selectedGradeRow = row;
+        AppDefaults.setSelectedGradeRow(val);
         setElementStates(val);
     }
 
@@ -143,9 +146,9 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     private void classPickerDidSelect(int val) {
         if (val == 0 && !isUpperGradeSelected(mGradePicker.getValue())) {
             mClassPicker.setValue(1);
-            // AppDefaults.selectedClassRow = 1;
+            AppDefaults.setSelectedClassRow(1);
         } else {
-            // AppDefaults.selectedClassRow = row;
+            AppDefaults.setSelectedClassRow(val);
         }
 
     }
@@ -182,12 +185,13 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
             AppDefaults.setUsername(mUserName.getText().toString());
             AppDefaults.setPassword(mPassword.getText().toString());
 
-            // Show activity indicator.
-            // activityIndicator.startAnimating();
+            // Show activity indicator and disable user interaction.
+            mLoginButton.setEnabled(false);
+            mProgressBar.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
             // Validate credentials; this will also update authenticated state
             // of the app.
-            mLoginButton.setEnabled(false);
             VertretungsplanLoader.validateLogin(AppDefaults.getUsername(), AppDefaults.getPassword(), this);
         } else {
             // User is authenticated and wants to logout.
@@ -213,6 +217,13 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         }
     }
 
+    private void showCredentials() {
+        mUserName.setText(AppDefaults.getUsername());
+        mPassword.setText(AppDefaults.getPassword());
+
+        updateLoginButtonText(AppDefaults.isAuthenticated());
+    }
+
     /**
      * The iOS viewDidLoad equivalent. Do all the initialisation stuff.
      * @param savedInstanceState - Saved instance state to return to.
@@ -220,6 +231,8 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTitle(getResources().getString(R.string.title_settings));
         setContentView(R.layout.activity_settings);
 
         // Initialise outlets.
@@ -229,6 +242,23 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         mUserName = findViewById(R.id.username);
         mPassword = findViewById(R.id.password);
         mLoginButton = findViewById(R.id.login);
+        mProgressBar = findViewById((R.id.progressBar));
+
+        titlesForGradePicker();
+        titlesForClassPicker();
+
+        boolean isAuthenticated = AppDefaults.isAuthenticated();
+        mUserName.setEnabled(!isAuthenticated);
+        mPassword.setEnabled(!isAuthenticated);
+
+        int classRow = AppDefaults.getSelectedClassRow();
+        int gradeRow = AppDefaults.getSelectedGradeRow();
+
+        mClassPicker.setValue(AppDefaults.getSelectedClassRow());
+        mGradePicker.setValue(AppDefaults.getSelectedGradeRow());
+
+        setElementStates(AppDefaults.getSelectedGradeRow());
+        showCredentials();
 
         // Register listeners for all interactive components.
         mGradePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -285,10 +315,6 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
                 saveCredentials();
             }
         });
-
-        setTitle(getResources().getString(R.string.title_settings));
-        titlesForGradePicker();
-        titlesForClassPicker();
     }
 
     /**
@@ -299,6 +325,8 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
      */
     @Override
     public void execute(HttpResponseData data) {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        mProgressBar.setVisibility(View.GONE);
         mLoginButton.setEnabled(true);
 
         // Show popup with info outcome.
