@@ -1,4 +1,4 @@
-package com.rmkrings;
+package com.rmkrings.main;
 
 import android.app.Application;
 import android.content.Context;

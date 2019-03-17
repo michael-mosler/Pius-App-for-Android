@@ -5,7 +5,6 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_today_blue"
         android:title="@string/title_home" />
-
     <item
         android:id="@+id/navigation_substitution_schedule"
         android:icon="@drawable/ic_list_blue"
@@ -14,7 +13,10 @@
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_star_blue"
         android:title="@string/title_dashboard" />
-
+    <item
+        android:id="@+id/navigation_calendar"
+        android:icon="@drawable/ic_calendar_blue"
+        android:title="@string/title_calendar" />
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_blue"

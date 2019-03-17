@@ -22,7 +22,7 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.x500.X500Principal;
 
-import com.rmkrings.PiusApp;
+import com.rmkrings.main.PiusApp;
 
 public class Crypto {
     private static final String RSA_MODE =  "RSA/ECB/PKCS1Padding";

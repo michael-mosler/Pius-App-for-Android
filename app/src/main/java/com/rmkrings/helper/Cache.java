@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.logging.Logger;
 
-import com.rmkrings.PiusApp;
+import com.rmkrings.main.PiusApp;
 
 public class Cache {
     private final static Logger logger = Logger.getLogger(Cache.class.getName());

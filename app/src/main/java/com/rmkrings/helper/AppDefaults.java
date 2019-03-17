@@ -3,7 +3,7 @@ package com.rmkrings.helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.rmkrings.PiusApp;
+import com.rmkrings.main.PiusApp;
 
 public class AppDefaults {
     static private SharedPreferences sharedPreferences = PiusApp.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);

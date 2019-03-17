@@ -1,16 +1,12 @@
 package com.rmkrings.http;
 
 import android.os.AsyncTask;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
 
-import com.rmkrings.PiusApp;
-import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.vertretungsplandata.VertretungsplanLoader;
 
 public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpResponseData> {
