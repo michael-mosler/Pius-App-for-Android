@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +14,12 @@ import com.rmkrings.pius_app_for_android.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link VertretungsplanFragment.OnFragmentInteractionListener} interface
+ * {@link TodayFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link VertretungsplanFragment#newInstance} factory method to
+ * Use the {@link TodayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VertretungsplanFragment extends Fragment {
+public class TodayFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,7 +31,7 @@ public class VertretungsplanFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public VertretungsplanFragment() {
+    public TodayFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +41,11 @@ public class VertretungsplanFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment VertretungsplanFragment.
+     * @return A new instance of fragment TodayFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VertretungsplanFragment newInstance(String param1, String param2) {
-        VertretungsplanFragment fragment = new VertretungsplanFragment();
+    public static TodayFragment newInstance(String param1, String param2) {
+        TodayFragment fragment = new TodayFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,7 +66,7 @@ public class VertretungsplanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vertretungsplan, container, false);
+        return inflater.inflate(R.layout.fragment_today, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -94,16 +93,14 @@ public class VertretungsplanFragment extends Fragment {
         mListener = null;
     }
 
-    @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(R.string.title_substitution_schedule);
+        getActivity().setTitle(R.string.title_home);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
-        mNavigationView.getMenu().getItem(1).setChecked(true);
+        mNavigationView.getMenu().getItem(0).setChecked(true);
     }
 
     /**
-     *
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that

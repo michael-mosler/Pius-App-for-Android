@@ -12,10 +12,18 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.content.Intent;
 
+import com.rmkrings.PiusApp.CalendarFragment;
+import com.rmkrings.PiusApp.DashboardFragment;
 import com.rmkrings.PiusApp.VertretungsplanFragment;
+import com.rmkrings.PiusApp.TodayFragment;
 
-public class MainActivity extends AppCompatActivity implements VertretungsplanFragment.OnFragmentInteractionListener {
-
+public class MainActivity extends AppCompatActivity
+        implements
+            TodayFragment.OnFragmentInteractionListener,
+            VertretungsplanFragment.OnFragmentInteractionListener,
+            DashboardFragment.OnFragmentInteractionListener,
+            CalendarFragment.OnFragmentInteractionListener
+{
     private FrameLayout mFrameLayout;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -24,24 +32,39 @@ public class MainActivity extends AppCompatActivity implements VertretungsplanFr
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    setTitle(R.string.title_home);
+                case R.id.navigation_home: {
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frameLayout, new TodayFragment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
-                case R.id.navigation_substitution_schedule:
-                    setTitle(R.string.title_substitution_schedule);
+                }
+
+                case R.id.navigation_substitution_schedule: {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frameLayout, new VertretungsplanFragment());
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;
-                case R.id.navigation_dashboard:
-                    setTitle(getResources().getString(R.string.title_dashboard));
+                }
+
+                case R.id.navigation_dashboard: {
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frameLayout, new DashboardFragment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
-                case R.id.navigation_calendar:
-                    setTitle(R.string.title_calendar);
+                }
+
+                case R.id.navigation_calendar: {
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frameLayout, new CalendarFragment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     return true;
+                }
+
                 case R.id.navigation_settings:
-                    //mTextMessage.setText(R.string.title_settings);
                     Intent a = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivity(a);
                     return false;
@@ -53,15 +76,23 @@ public class MainActivity extends AppCompatActivity implements VertretungsplanFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTitle(R.string.title_home);
-
-        mFrameLayout = findViewById(R.id.frameLayout);
-
         setContentView(R.layout.activity_main);
 
+        // Add navigation bar.
+        mFrameLayout = findViewById(R.id.frameLayout);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // Show Today fragment initially.
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayout, new TodayFragment());
+        transaction.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTitle(R.string.title_home);
     }
 
     @Override
