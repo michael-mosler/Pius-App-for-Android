@@ -6,11 +6,17 @@ public class HttpResponseData {
     private boolean error;
     private HttpResponseCallback callback;
 
-    HttpResponseData(Integer httpStatusCode, boolean error, String data, HttpResponseCallback callback) {
+    public HttpResponseData(Integer httpStatusCode, boolean error, String data, HttpResponseCallback callback) {
         this.httpStatusCode = httpStatusCode;
         this.error = error;
         this.data = data;
         this.callback = callback;
+    }
+
+    public HttpResponseData(Integer httpStatusCode, boolean error) {
+        this.httpStatusCode = httpStatusCode;
+        this.error = error;
+        this.callback = null;
     }
 
     public Integer getHttpStatusCode() {

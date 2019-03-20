@@ -32,6 +32,7 @@
     <string name="text_logged_out">Du bist nun abgemeldet.</string>
     <string name="text_invalid_credentials">Die Anmeldedaten sind ungültig.</string>
     <string name="text_logon_error">Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.</string>
+    <string name="text_last_changed">Letzte Änderung</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
