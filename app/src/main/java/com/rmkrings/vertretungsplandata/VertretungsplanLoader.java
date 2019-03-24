@@ -26,7 +26,8 @@ public class VertretungsplanLoader {
 
     private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
 
-    public VertretungsplanLoader() {
+    public VertretungsplanLoader(String forGrade) {
+        this.forGrade = forGrade;
 /*
         String digest = null;
         String cacheFileName = (forGrade != null) ? String.format("%s.json", forGrade) : "vertretungsplan.json";
@@ -105,6 +106,7 @@ public class VertretungsplanLoader {
 
     public void load(HttpResponseCallback callback) {
         try {
+            // @TODO Reachability check
             if (true) {
                 URL url = getVertretungsplanURL(forGrade, digest);
                 HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();

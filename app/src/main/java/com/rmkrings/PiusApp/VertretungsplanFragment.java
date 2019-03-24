@@ -12,18 +12,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.rmkrings.data.adapter.MetaDataAdapter;
+import com.rmkrings.data.adapter.VertretungsplanListAdapter;
+import com.rmkrings.data.vertretungsplan.GradeItem;
+import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 import com.rmkrings.vertretungsplandata.VertretungsplanLoader;
+import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,27 +42,20 @@ import org.json.JSONObject;
  * create an instance of this fragment.
  */
 public class VertretungsplanFragment extends Fragment implements HttpResponseCallback {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     // Outlets
-    private RecyclerView mMetaData;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private TextView mLastUpdate;
+    private String[] metaData = new String[2];
+    private ExpandableListView mVertretungsplanListView;
+    private VertretungsplanListAdapter mVertretunsplanListAdapter;
 
     // Listeners
     private OnFragmentInteractionListener mListener;
 
     // Local state.
-    private JSONObject jsonData;
-    private String[] metaData = new String[2];
+    private Vertretungsplan vertretungsplan;
+    private ArrayList<String> listDataHeader = new ArrayList<String>(0);
+    private HashMap<String, List<String>> listDataChild = new HashMap<String, List<String>>(0);
 
     public VertretungsplanFragment() {
         // Required empty public constructor
@@ -71,34 +72,32 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     // TODO: Rename and change types and number of parameters
     public static VertretungsplanFragment newInstance(String param1, String param2) {
         VertretungsplanFragment fragment = new VertretungsplanFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setArguments(null);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mMetaData = view.findViewById(R.id.metadata);
+        RecyclerView mMetaData = view.findViewById(R.id.metadata);
         mLastUpdate = view.findViewById(R.id.lastupdate);
+        mVertretungsplanListView = view.findViewById(R.id.vertretungsplanListView);
 
         mMetaData.setHasFixedSize(true);
 
         // Create Meta Data output widgets.
-        mLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
         mMetaData.setLayoutManager(mLayoutManager);
         mAdapter = new MetaDataAdapter(metaData);
         mMetaData.setAdapter(mAdapter);
+
+        // preparing list data
+        mVertretunsplanListAdapter = new VertretungsplanListAdapter(PiusApp.getAppContext(), listDataHeader, listDataChild);
+        mVertretungsplanListView.setAdapter(mVertretunsplanListAdapter);
     }
 
     @Override
@@ -109,11 +108,13 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     }
 
     // TODO: Rename method, update argument and hook method into UI event
+    /*
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+    */
 
     @Override
     public void onAttach(Context context) {
@@ -139,68 +140,61 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(1).setChecked(true);
 
-        VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader();
+        VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(null);
         vertretungsplanLoader.load(this);
     }
 
-    private void setMetaData(JSONObject data) {
-        String tickerText;
-        String additionalText;
-
-        try {
-            tickerText = data.getString("tickerText");
-        } catch (JSONException e1) {
-            tickerText = null;
-        }
-
-        try {
-            additionalText = data.getString("_additionalText");
-        } catch (JSONException e1) {
-            additionalText = null;
-        }
-
-        this.metaData[0] = tickerText;
-        this.metaData[1] = additionalText;
+    private void setMetaData() {
+        this.metaData[0] = vertretungsplan.getTickerText();
+        this.metaData[1] = vertretungsplan.getAdditionalText();
         mAdapter.notifyDataSetChanged();
     }
 
-    private void setLastUpdate(JSONObject data) {
-        String lastUpdate;
+    private void setLastUpdate() {
+        mLastUpdate.setText(vertretungsplan.getLastUpdate());
+    }
 
-        try {
-            lastUpdate = data.getString("lastUpdate");
-            mLastUpdate.setText(lastUpdate);
-        } catch (JSONException e) {
-            e.printStackTrace();
+    private void setVertretungsplanList() {
+        listDataHeader.clear();
+        for (VertretungsplanForDate vertretungsplanForDate: vertretungsplan.getVertretungsplaene()) {
+            listDataHeader.add(vertretungsplanForDate.getDate());
+
+            List<String> grades = new ArrayList<String>(0);
+            for (GradeItem gradeItem: vertretungsplanForDate.getGradeItems()) {
+                grades.add(gradeItem.getGrade());
+            }
+
+            listDataChild.put(vertretungsplanForDate.getDate(), grades);
         }
+
+        mVertretunsplanListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void execute(HttpResponseData responseData) {
         String data = null;
+        JSONObject jsonData;
 
         // @TODO Error Handling
+
         if (responseData.getData() != null) {
             data = responseData.getData();
+        } else {
+            // @TODO No error and no data: We need to read data from cache.
         }
 
-        if (data != null) {
-            try {
-                // @TODO Convert into internal structure.
-                jsonData = new JSONObject(responseData.getData());
-                System.out.println(responseData.getData());
-                setMetaData(jsonData);
-                setLastUpdate(jsonData);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                jsonData = null;
-            }
+        try {
+            // @TODO Convert into internal structure.
+            jsonData = new JSONObject(data);
+            System.out.println(responseData.getData());
 
-            if (jsonData != null) {
-
-            } else {
-                // @TODO Error Handling
-            }
+            vertretungsplan = new Vertretungsplan(jsonData);
+            setMetaData();
+            setLastUpdate();
+            setVertretungsplanList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // @TODO Show error and return.
         }
     }
 
@@ -210,13 +204,6 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+    public interface OnFragmentInteractionListener { }
 }

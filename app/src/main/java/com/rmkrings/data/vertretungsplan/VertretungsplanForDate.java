@@ -1,0 +1,43 @@
+package com.rmkrings.data.vertretungsplan;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+public class VertretungsplanForDate {
+    private String date;
+    private ArrayList<GradeItem> gradeItems;
+
+    public VertretungsplanForDate(JSONObject data) throws Exception {
+        try {
+            date = data.getString("title");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw(new Exception("Expected property title not present in date item"));
+        }
+
+        try {
+            gradeItems = new ArrayList<GradeItem>();
+            JSONArray jsonGradeItems = data.getJSONArray("gradeItems");
+            for (int i = 0; i< jsonGradeItems.length(); i++) {
+                JSONObject jsonGradeItem = jsonGradeItems.getJSONObject(i);
+                GradeItem gradeItem = new GradeItem(jsonGradeItem);
+                gradeItems.add(gradeItem);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw(new Exception("Failed to process grade items for date " + date));
+        }
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public ArrayList<GradeItem> getGradeItems() {
+        return gradeItems;
+    }
+}
