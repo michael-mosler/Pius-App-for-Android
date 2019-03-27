@@ -1,12 +1,12 @@
 package com.rmkrings.PiusApp;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +28,6 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +44,6 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     // Outlets
     private RecyclerView.Adapter mAdapter;
     private TextView mLastUpdate;
-    private String[] metaData = new String[2];
     private ExpandableListView mVertretungsplanListView;
     private VertretungsplanListAdapter mVertretunsplanListAdapter;
 
@@ -54,8 +52,10 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
 
     // Local state.
     private Vertretungsplan vertretungsplan;
-    private ArrayList<String> listDataHeader = new ArrayList<String>(0);
-    private HashMap<String, List<String>> listDataChild = new HashMap<String, List<String>>(0);
+    private String[] metaData = new String[2];
+    private ArrayList<String> listDataHeader = new ArrayList<>(0);
+    private HashMap<String, List<String>> listDataChild = new HashMap<>(0);
+    private FragmentActivity fragmentActivity;
 
     public VertretungsplanFragment() {
         // Required empty public constructor
@@ -64,13 +64,9 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment VertretungsplanFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static VertretungsplanFragment newInstance(String param1, String param2) {
+    public static VertretungsplanFragment newInstance() {
         VertretungsplanFragment fragment = new VertretungsplanFragment();
         fragment.setArguments(null);
         return fragment;
@@ -98,11 +94,25 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         // preparing list data
         mVertretunsplanListAdapter = new VertretungsplanListAdapter(PiusApp.getAppContext(), listDataHeader, listDataChild);
         mVertretungsplanListView.setAdapter(mVertretunsplanListAdapter);
+
+        mVertretungsplanListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                VertretungsplanForDate vertretungsplanForDate = vertretungsplan.getVertretungsplaene().get(groupPosition);
+                GradeItem gradeItem = vertretungsplanForDate.getGradeItems().get(childPosition);
+
+                FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, VertretungsplanDetailFragment.newInstance(gradeItem, vertretungsplanForDate.getDate()));
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                return true;
+            }
+        });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_vertretungsplan, container, false);
     }
@@ -119,11 +129,12 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        fragmentActivity = (FragmentActivity)context;
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -159,7 +170,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         for (VertretungsplanForDate vertretungsplanForDate: vertretungsplan.getVertretungsplaene()) {
             listDataHeader.add(vertretungsplanForDate.getDate());
 
-            List<String> grades = new ArrayList<String>(0);
+            List<String> grades = new ArrayList<>(0);
             for (GradeItem gradeItem: vertretungsplanForDate.getGradeItems()) {
                 grades.add(gradeItem.getGrade());
             }
@@ -176,6 +187,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         JSONObject jsonData;
 
         // @TODO Error Handling
+        // @TODO Read from cache
 
         if (responseData.getData() != null) {
             data = responseData.getData();
@@ -184,10 +196,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         }
 
         try {
-            // @TODO Convert into internal structure.
             jsonData = new JSONObject(data);
-            System.out.println(responseData.getData());
-
             vertretungsplan = new Vertretungsplan(jsonData);
             setMetaData();
             setLastUpdate();

@@ -85,7 +85,6 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
             int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent)
     {
-        System.out.println(groupPosition);
         String headerTitle = (String)getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context

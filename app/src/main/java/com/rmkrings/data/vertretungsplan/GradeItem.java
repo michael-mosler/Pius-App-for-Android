@@ -3,10 +3,14 @@ package com.rmkrings.data.vertretungsplan;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GradeItem {
+public final class GradeItem implements Serializable {
+    // @serial
     private String grade;
+
+    // @serial
     private ArrayList<String[]> vertretungsplanItems;
 
     public GradeItem(JSONObject data) throws Exception {

@@ -20,7 +20,6 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public MetaDataAdapter(String[] dataset) {
         this.dataset = dataset;
     }
@@ -40,16 +39,13 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MetaDataViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
         holder.textView.setText(dataset[position]);
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        // Ticket text not set => 0 items.
+        // Ticker text not set => 0 items.
         if (dataset[0] == null || dataset[0] == "") {
             return 0;
         }
