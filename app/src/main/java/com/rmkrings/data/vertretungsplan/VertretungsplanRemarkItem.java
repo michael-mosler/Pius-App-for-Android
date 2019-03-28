@@ -1,11 +1,13 @@
 package com.rmkrings.data.vertretungsplan;
 
+import com.rmkrings.helper.StringHelper;
+
 public class VertretungsplanRemarkItem extends VertretungsplanListItem {
 
     private String remarkText;
 
     public VertretungsplanRemarkItem(String remarkText) {
-        this.remarkText = remarkText;
+        this.remarkText = StringHelper.replaceHtmlEntities(remarkText);
     }
 
     public String getRemarkText() {

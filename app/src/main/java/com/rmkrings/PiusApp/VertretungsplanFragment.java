@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rmkrings.data.adapter.MetaDataAdapter;
@@ -42,6 +43,7 @@ import java.util.List;
  */
 public class VertretungsplanFragment extends Fragment implements HttpResponseCallback {
     // Outlets
+    private ProgressBar mProgressBar;
     private RecyclerView.Adapter mAdapter;
     private TextView mLastUpdate;
     private ExpandableListView mVertretungsplanListView;
@@ -79,6 +81,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMetaData = view.findViewById(R.id.metadata);
         mLastUpdate = view.findViewById(R.id.lastupdate);
         mVertretungsplanListView = view.findViewById(R.id.vertretungsplanListView);
@@ -151,6 +154,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(1).setChecked(true);
 
+        mProgressBar.setVisibility(View.VISIBLE);
         VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(null);
         vertretungsplanLoader.load(this);
     }
@@ -185,6 +189,8 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     public void execute(HttpResponseData responseData) {
         String data = null;
         JSONObject jsonData;
+
+        mProgressBar.setVisibility(View.INVISIBLE);
 
         // @TODO Error Handling
         // @TODO Read from cache

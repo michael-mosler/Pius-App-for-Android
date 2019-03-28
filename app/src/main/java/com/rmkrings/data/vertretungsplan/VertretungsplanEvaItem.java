@@ -1,11 +1,13 @@
 package com.rmkrings.data.vertretungsplan;
 
+import com.rmkrings.helper.StringHelper;
+
 public class VertretungsplanEvaItem extends VertretungsplanListItem {
 
     private String evaText;
 
     public VertretungsplanEvaItem(String evaText) {
-        this.evaText = evaText;
+        this.evaText = StringHelper.replaceHtmlEntities(evaText);
     }
 
     public String getEvaText() {

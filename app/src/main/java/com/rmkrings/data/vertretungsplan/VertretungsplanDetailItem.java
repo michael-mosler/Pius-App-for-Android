@@ -1,5 +1,7 @@
 package com.rmkrings.data.vertretungsplan;
 
+import com.rmkrings.helper.StringHelper;
+
 public class VertretungsplanDetailItem extends VertretungsplanListItem {
 
     private String substitutionType;
@@ -8,9 +10,9 @@ public class VertretungsplanDetailItem extends VertretungsplanListItem {
 
 
     public VertretungsplanDetailItem(String substitutionType, String room, String teacher) {
-        this.substitutionType = substitutionType;
-        this.room = room;
-        this.teacher = teacher;
+        this.substitutionType = StringHelper.replaceHtmlEntities(substitutionType);
+        this.room = StringHelper.replaceHtmlEntities(room);
+        this.teacher = StringHelper.replaceHtmlEntities(teacher);
     }
 
     public String getSubstitutionType() {

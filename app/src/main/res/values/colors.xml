@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorPiusBlue">#699FCD</color>
+    <color name="colorEva">#FFCC01</color>
 
     <color name="colorEnabled">@color/colorPiusBlue</color>
     <color name="colorDisabled">#969696</color>

@@ -151,9 +151,11 @@ public class VertretungsplanDetailFragment extends Fragment {
             VertretungsplanRemarkItem remarkItem = new VertretungsplanRemarkItem(a[6]);
 
             list.add(headerItem);
-            // TODO: Include these items.
-            // list.add(detailItem);
-            // list.add(remarkItem);
+            list.add(detailItem);
+
+            if (remarkItem.getRemarkText().length() > 0) {
+                list.add(remarkItem);
+            }
 
             if (a.length > 7) {
                 VertretungsplanEvaItem evaItem = new VertretungsplanEvaItem(a[7]);
