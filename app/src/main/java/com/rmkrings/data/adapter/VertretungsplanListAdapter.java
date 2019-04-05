@@ -2,9 +2,10 @@ package com.rmkrings.data.adapter;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).get(childPosititon);
+        return Objects.requireNonNull(this.listDataChild.get(this.listDataHeader.get(groupPosition))).get(childPosititon);
     }
 
     @Override
@@ -42,6 +43,7 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getChildView(
             int groupPosition, final int childPosition,
@@ -62,7 +64,7 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).size();
+        return Objects.requireNonNull(this.listDataChild.get(this.listDataHeader.get(groupPosition))).size();
     }
 
     @Override
@@ -80,6 +82,7 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getGroupView(
             int groupPosition, boolean isExpanded,

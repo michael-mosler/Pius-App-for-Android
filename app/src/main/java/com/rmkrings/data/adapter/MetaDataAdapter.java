@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rmkrings.helper.StringHelper;
 import com.rmkrings.pius_app_for_android.R;
 
 public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDataViewHolder> {
@@ -39,7 +40,7 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MetaDataViewHolder holder, int position) {
-        holder.textView.setText(dataset[position]);
+        holder.textView.setText(StringHelper.replaceHtmlEntities(dataset[position]));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

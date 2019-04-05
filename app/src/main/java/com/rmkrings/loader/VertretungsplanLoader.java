@@ -1,4 +1,4 @@
-package com.rmkrings.vertretungsplandata;
+package com.rmkrings.loader;
 
 import android.util.Base64;
 import java.io.IOException;

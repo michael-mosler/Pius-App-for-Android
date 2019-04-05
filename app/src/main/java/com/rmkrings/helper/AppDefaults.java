@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 
 import com.rmkrings.main.PiusApp;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 public class AppDefaults {
     static private SharedPreferences sharedPreferences = PiusApp.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);
     static private SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -47,7 +51,8 @@ public class AppDefaults {
         edit.commit();
     }
 
-    public static int getSelectedClassRow() { return sharedPreferences.getInt("selectedClassRow", 0);
+    public static int getSelectedClassRow() {
+        return sharedPreferences.getInt("selectedClassRow", 0);
     }
 
     public static void setSelectedClassRow(int classRow) {
@@ -58,7 +63,8 @@ public class AppDefaults {
     /*
      * Username and Password
      */
-    public static String getUsername() { return sharedPreferences.getString("username", "");
+    public static String getUsername() {
+        return sharedPreferences.getString("username", "");
     }
 
     public static void setUsername(String username) {
@@ -92,5 +98,19 @@ public class AppDefaults {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /*
+     * Course List
+     */
+    public static void setCourseList(ArrayList<String> courseList) {
+        Set<String> s = new HashSet<>(courseList);
+        edit.putStringSet("courseList", s);
+        edit.commit();
+    }
+
+    public static ArrayList<String> getCourseList() {
+        Set<String> s = sharedPreferences.getStringSet("courseList", null);
+        return (s != null) ? new ArrayList<>(s) : new ArrayList<String>();
     }
 }

@@ -14,6 +14,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.FormatHelper;
+import com.rmkrings.helper.StringHelper;
 import com.rmkrings.pius_app_for_android.R;
 
 /**
@@ -88,7 +89,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
                 break;
             }
 
-            case VertretungsplanListItem.evaItem: {
+            default: { // EVA item
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_eva_item, parent, false);
                 vh = new TextViewViewHolder(itemView);
                 break;
@@ -98,6 +99,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
         return vh;
     }
 
+    @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
 
@@ -107,7 +109,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
                 TextViewViewHolder viewHolder = (TextViewViewHolder)holder;
                 viewHolder.textView.setText(
                         (headerItem.getCourse().length() > 0)
-                        ? String.format("Fach/Kurs: %s, %s. Stunde", headerItem.getCourse(), headerItem.getLesson())
+                        ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
                         : String.format("%s. Stunde", headerItem.getLesson()));
                 break;
             }

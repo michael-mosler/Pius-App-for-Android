@@ -40,13 +40,13 @@ public class VertretungsplanDetailFragment extends Fragment {
     private static final String ARG_PARAM2 = "date";
 
     // Outlets
-    TextView mDate;
+    private TextView mDate;
     private RecyclerView.Adapter mAdapter;
 
     // Local State
     private GradeItem gradeItem;
     private String date;
-    ArrayList<VertretungsplanListItem> list = new ArrayList<>();
+    private ArrayList<VertretungsplanListItem> list = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 

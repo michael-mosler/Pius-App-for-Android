@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
 
-import com.rmkrings.vertretungsplandata.VertretungsplanLoader;
+import com.rmkrings.loader.VertretungsplanLoader;
 
 public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpResponseData> {
 

@@ -24,7 +24,7 @@ import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
-import com.rmkrings.vertretungsplandata.VertretungsplanLoader;
+import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
 
 import org.json.JSONObject;

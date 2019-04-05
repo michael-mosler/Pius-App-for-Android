@@ -1,6 +1,7 @@
 package com.rmkrings.pius_app_for_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,9 +19,11 @@ import com.rmkrings.helper.Config;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
-import com.rmkrings.vertretungsplandata.VertretungsplanLoader;
+import com.rmkrings.loader.VertretungsplanLoader;
 
-public class SettingsActivity extends AppCompatActivity implements HttpResponseCallback {
+public class SettingsActivity extends AppCompatActivity
+        implements HttpResponseCallback
+{
 
     // Outlets
     private EditText mUserName;
@@ -207,7 +210,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
 
             // Inform user on new login state.
             new AlertDialog.Builder(this)
-                    .setTitle(getResources().getString(R.string.text_logon))
+                    .setTitle(getResources().getString(R.string.title_logon))
                     .setMessage(getResources().getString(R.string.text_logged_out))
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
@@ -232,7 +235,6 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle(getResources().getString(R.string.title_settings));
         setContentView(R.layout.activity_settings);
 
         // Initialise outlets.
@@ -315,6 +317,20 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
                 saveCredentials();
             }
         });
+
+        mCoursesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(SettingsActivity.this, CourseListActivity.class);
+                startActivity(a);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTitle(getResources().getString(R.string.title_settings));
     }
 
     /**
@@ -338,7 +354,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         }
 
         new AlertDialog.Builder(this)
-                .setTitle(getResources().getString(R.string.text_logon))
+                .setTitle(getResources().getString(R.string.title_logon))
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
