@@ -1,9 +1,14 @@
 package com.rmkrings.helper;
 
 import android.content.Context;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.logging.Logger;
 
 import com.rmkrings.main.PiusApp;
@@ -17,10 +22,12 @@ public class Cache {
     }
 
     // Store data under given filename in cache directory.
-    public void store(String filename, byte[] data) {
+    public void store(String filename, String data) {
         try {
-            FileOutputStream fos = PiusApp.getAppContext().openFileOutput(filename, Context.MODE_PRIVATE);
-            fos.write(data);
+            OutputStreamWriter writer = new OutputStreamWriter(PiusApp.getAppContext().openFileOutput(filename, Context.MODE_PRIVATE));
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(data);
+            bw.close();
         }
         catch (java.io.FileNotFoundException e) {
             logger.severe(String.format("Failed to open file %s: File not found.", filename));
@@ -32,12 +39,19 @@ public class Cache {
 
     // Read data from filename in cache directory. If data cannot
     // be read returns nil. Supposes that file content is a string.
-    public byte[] read(String filename) {
-        byte[] data = {};
+    public String read(String filename) {
+        String d;
+        String data = "";
 
         try {
-            FileInputStream fis = PiusApp.getAppContext().openFileInput(filename);
-            fis.read(data);
+            InputStreamReader reader = new InputStreamReader(PiusApp.getAppContext().openFileInput(filename));
+            BufferedReader br = new BufferedReader(reader);
+
+            while ((d = br.readLine()) != null) {
+                data += d;
+            }
+
+            br.close();
         }
         catch (java.io.FileNotFoundException e) {
             logger.severe(String.format("Failed to open file %s: File not found.", filename));

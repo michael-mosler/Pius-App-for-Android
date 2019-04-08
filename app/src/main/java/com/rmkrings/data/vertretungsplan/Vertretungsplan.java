@@ -1,5 +1,7 @@
 package com.rmkrings.data.vertretungsplan;
 
+import android.support.annotation.Nullable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +13,7 @@ public class Vertretungsplan {
     private String additionalText = null;
     private String lastUpdate = null;
     private ArrayList<VertretungsplanForDate> vertretungsplaene;
+    private String digest = null;
 
     public Vertretungsplan(JSONObject data) throws Exception {
         try {
@@ -23,6 +26,7 @@ public class Vertretungsplan {
         try {
             additionalText = data.getString("_additionalText");
         } catch (JSONException e) {
+            e.printStackTrace();
             additionalText = null;
         }
 
@@ -46,6 +50,13 @@ public class Vertretungsplan {
             e.printStackTrace();
             throw(new Exception(("Failed to process date items from Vertretungsplan")));
         }
+
+        try {
+            digest = data.getString("_digest");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            digest = null;
+        }
     }
 
     public String getTickerText() {
@@ -62,5 +73,10 @@ public class Vertretungsplan {
 
     public ArrayList<VertretungsplanForDate> getVertretungsplaene() {
         return vertretungsplaene;
+    }
+
+    @Nullable
+    public String getDigest() {
+        return digest;
     }
 }

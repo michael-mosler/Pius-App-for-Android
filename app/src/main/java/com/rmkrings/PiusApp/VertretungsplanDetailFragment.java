@@ -1,8 +1,8 @@
 package com.rmkrings.PiusApp;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.adapter.VertetungsplanDetailListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanDetailItem;
@@ -25,16 +24,8 @@ import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link VertretungsplanDetailFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link VertretungsplanDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class VertretungsplanDetailFragment extends Fragment {
     private static final String ARG_PARAM1 = "gradeItem";
     private static final String ARG_PARAM2 = "date";
@@ -47,8 +38,6 @@ public class VertretungsplanDetailFragment extends Fragment {
     private GradeItem gradeItem;
     private String date;
     private ArrayList<VertretungsplanListItem> list = new ArrayList<>();
-
-    private OnFragmentInteractionListener mListener;
 
     public VertretungsplanDetailFragment() {
         // Required empty public constructor
@@ -81,7 +70,7 @@ public class VertretungsplanDetailFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         RecyclerView mList = view.findViewById(R.id.detaillist);
         mDate = view.findViewById(R.id.date);
 
@@ -93,45 +82,30 @@ public class VertretungsplanDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_vertretungsplan_detail, container, false);
     }
 
-    /*
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-    */
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(gradeItem.getGrade());
+        Objects.requireNonNull(getActivity()).setTitle(gradeItem.getGrade());
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(1).setChecked(true);
 
-        list = prepareVertretungsplanItems(list);
+        prepareVertretungsplanItems(list);
 
         mDate.setText(date);
         mAdapter.notifyDataSetChanged();
@@ -140,9 +114,9 @@ public class VertretungsplanDetailFragment extends Fragment {
     /**
      * Convert vetretungsplan items from grade item into linear list that represents
      * table content.
-     * @return
+     * eturn - Populated list
      */
-    private ArrayList<VertretungsplanListItem> prepareVertretungsplanItems(ArrayList<VertretungsplanListItem> list) {
+    private void prepareVertretungsplanItems(ArrayList<VertretungsplanListItem> list) {
         list.clear();
 
         for (String[] a: gradeItem.getVertretungsplanItems()) {
@@ -162,22 +136,5 @@ public class VertretungsplanDetailFragment extends Fragment {
                 list.add(evaItem);
             }
         }
-
-        return list;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

@@ -22,7 +22,6 @@ public class VertretungsplanLoader {
     private Cache cache;
     private String cacheFileName;
     private String digestFileName;
-    private String digest;
 
     private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
 
@@ -104,7 +103,7 @@ public class VertretungsplanLoader {
         return new URL(urlString);
     }
 
-    public void load(HttpResponseCallback callback) {
+    public void load(HttpResponseCallback callback, String digest) {
         try {
             // @TODO Reachability check
             if (true) {

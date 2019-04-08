@@ -39,9 +39,7 @@
     <string name="text_logon_error">Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.</string>
     <string name="text_last_changed">Letzte Änderung</string>
     <string name="text_confirm_delete_course_list">Bist Du sicher, dass Du die gesamte Kursliste löschen möchtest?</string>
-
     <string name="text_course_list_info">Hier legst Du fest, für welche Kurse im Dashboard und bei Push-Benachrichtigungen berücksichtigt werden.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
 </resources>

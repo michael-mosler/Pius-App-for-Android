@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity
             TodayFragment.OnFragmentInteractionListener,
             VertretungsplanFragment.OnFragmentInteractionListener,
             DashboardFragment.OnFragmentInteractionListener,
-            CalendarFragment.OnFragmentInteractionListener,
-            VertretungsplanDetailFragment.OnFragmentInteractionListener
+            CalendarFragment.OnFragmentInteractionListener
 {
     private FrameLayout mFrameLayout;
 

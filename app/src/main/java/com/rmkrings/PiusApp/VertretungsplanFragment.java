@@ -1,12 +1,17 @@
 package com.rmkrings.PiusApp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +25,7 @@ import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.adapter.VertretungsplanListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
+import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.main.PiusApp;
@@ -32,46 +38,32 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Logger;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link VertretungsplanFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link VertretungsplanFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class VertretungsplanFragment extends Fragment implements HttpResponseCallback {
     // Outlets
+    private SwipeRefreshLayout mFragment;
     private ProgressBar mProgressBar;
     private RecyclerView.Adapter mAdapter;
     private TextView mLastUpdate;
-    private ExpandableListView mVertretungsplanListView;
     private VertretungsplanListAdapter mVertretunsplanListAdapter;
 
-    // Listeners
-    private OnFragmentInteractionListener mListener;
-
     // Local state.
+    private String digestFileName = "vertretungsplan.md5";
+    private String cacheFileName = "vertretungsplan.json";
+
+    private Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;
     private String[] metaData = new String[2];
     private ArrayList<String> listDataHeader = new ArrayList<>(0);
     private HashMap<String, List<String>> listDataChild = new HashMap<>(0);
     private FragmentActivity fragmentActivity;
 
+    private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
+
     public VertretungsplanFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * @return A new instance of fragment VertretungsplanFragment.
-     */
-    public static VertretungsplanFragment newInstance() {
-        VertretungsplanFragment fragment = new VertretungsplanFragment();
-        fragment.setArguments(null);
-        return fragment;
     }
 
     @Override
@@ -80,11 +72,12 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mFragment = view.findViewById(R.id.vertretungsplanFragment);
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMetaData = view.findViewById(R.id.metadata);
         mLastUpdate = view.findViewById(R.id.lastupdate);
-        mVertretungsplanListView = view.findViewById(R.id.vertretungsplanListView);
+        ExpandableListView mVertretungsplanListView = view.findViewById(R.id.vertretungsplanListView);
 
         mMetaData.setHasFixedSize(true);
 
@@ -112,51 +105,59 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
                 return true;
             }
         });
+
+        mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reload(true);
+            }
+        });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_vertretungsplan, container, false);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    /*
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-    */
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity)context;
-
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        // mListener = null;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(R.string.title_substitution_schedule);
+        reload(false);
+    }
+
+    private void reload(boolean refreshing) {
+        String digest;
+
+        if (cache.fileExists(cacheFileName) && cache.fileExists(digestFileName)) {
+            digest = cache.read(digestFileName);
+        } else {
+            logger.info(String.format("Cache and/or digest file %s does not exist. Not sending digest.", cacheFileName));
+            digest = null;
+        }
+
+        Objects.requireNonNull(getActivity()).setTitle(R.string.title_substitution_schedule);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(1).setChecked(true);
 
-        mProgressBar.setVisibility(View.VISIBLE);
+        if (!refreshing) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+
         VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(null);
-        vertretungsplanLoader.load(this);
+        vertretungsplanLoader.load(this, digest);
     }
 
     private void setMetaData() {
@@ -185,25 +186,47 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         mVertretunsplanListAdapter.notifyDataSetChanged();
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void execute(HttpResponseData responseData) {
-        String data = null;
+        String data;
         JSONObject jsonData;
 
+        mFragment.setRefreshing(false);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        // @TODO Error Handling
-        // @TODO Read from cache
+        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+            logger.severe(String.format("Failed to load data for Vertretungsplan. HTTP Status code %d.", responseData.getHttpStatusCode()));
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+                    .setTitle(getResources().getString(R.string.title_substitution_schedule))
+                    .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (getFragmentManager() != null) {
+                                getFragmentManager().popBackStack();
+                            }
+                        }
+                    })
+                    .show();
+            return;
+        }
 
         if (responseData.getData() != null) {
             data = responseData.getData();
+            cache.store(cacheFileName, data);
         } else {
-            // @TODO No error and no data: We need to read data from cache.
+            data = cache.read(cacheFileName);
         }
 
         try {
             jsonData = new JSONObject(data);
             vertretungsplan = new Vertretungsplan(jsonData);
+
+            if (responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+                cache.store(digestFileName, vertretungsplan.getDigest());
+            }
+
             setMetaData();
             setLastUpdate();
             setVertretungsplanList();
