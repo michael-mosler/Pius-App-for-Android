@@ -27,44 +27,6 @@ public class VertretungsplanLoader {
 
     public VertretungsplanLoader(String forGrade) {
         this.forGrade = forGrade;
-/*
-        String digest = null;
-        String cacheFileName = (forGrade != null) ? String.format("%s.json", forGrade) : "vertretungsplan.json";
-        String digestFileName = (forGrade != null) ? String.format("%s.md5", forGrade) : "md5";
-
-        // If cache file exists we may use digest to detect changes in Vertretungsplan. Without cache file
-        // we need to request data.
-        cache = new Cache();
-
-        if (cache.fileExists(cacheFileName)) {
-            digest = cache.read(digestFileName).toString();
-        } else {
-            logger.info(String.format("Cache file %s does not exist. Not sending digest.", cacheFileName));
-        }
-
-        this.forGrade = forGrade;
-        this.digest = digest;
-
-        String urlString = baseUrl;
-        if (forGrade != null || digest != null) {
-            String separator = "/?";
-            if (forGrade != null) {
-                urlString += String.format("%sforGrade=%s", separator, forGrade);
-                separator = "&";
-            }
-
-            if (digest != null) {
-                urlString += String.format("%sdigest=%s", separator, digest);
-            }
-        }
-
-        url = new URL(urlString);
-        this.cacheFileName = cacheFileName;
-        this.digestFileName = digestFileName;
-
-        // This expression matches a missing course that is indicated by dashes or blanks.
-        matchEmptyCourse = Pattern.compile("^[^A-Z]");
-*/
     }
 
     private static String getAndEncodeCredentials(String username, String password) {

@@ -87,7 +87,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         mAdapter = new MetaDataAdapter(metaData);
         mMetaData.setAdapter(mAdapter);
 
-        // preparing list data
+        // Prepare list data
         mVertretunsplanListAdapter = new VertretungsplanListAdapter(PiusApp.getAppContext(), listDataHeader, listDataChild);
         mVertretungsplanListView.setAdapter(mVertretunsplanListAdapter);
 
@@ -135,6 +135,11 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     @Override
     public void onResume() {
         super.onResume();
+
+        Objects.requireNonNull(getActivity()).setTitle(R.string.title_substitution_schedule);
+        BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
+        mNavigationView.getMenu().getItem(1).setChecked(true);
+
         reload(false);
     }
 
@@ -147,10 +152,6 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
             logger.info(String.format("Cache and/or digest file %s does not exist. Not sending digest.", cacheFileName));
             digest = null;
         }
-
-        Objects.requireNonNull(getActivity()).setTitle(R.string.title_substitution_schedule);
-        BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
-        mNavigationView.getMenu().getItem(1).setChecked(true);
 
         if (!refreshing) {
             mProgressBar.setVisibility(View.VISIBLE);
@@ -232,7 +233,6 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
             setVertretungsplanList();
         } catch (Exception e) {
             e.printStackTrace();
-            // @TODO Show error and return.
         }
     }
 

@@ -52,8 +52,7 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
         final String childText = (String)getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.vertretungsplan_item, null);
         }
 
@@ -64,17 +63,17 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return Objects.requireNonNull(this.listDataChild.get(this.listDataHeader.get(groupPosition))).size();
+        return Objects.requireNonNull(listDataChild.get(listDataHeader.get(groupPosition))).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this.listDataHeader.get(groupPosition);
+        return listDataHeader.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this.listDataHeader.size();
+        return listDataHeader.size();
     }
 
     @Override

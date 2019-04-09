@@ -109,8 +109,8 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
                 TextViewViewHolder viewHolder = (TextViewViewHolder)holder;
                 viewHolder.textView.setText(
                         (headerItem.getCourse().length() > 0)
-                        ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
-                        : String.format("%s. Stunde", headerItem.getLesson()));
+                                ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
+                                : String.format("%s. Stunde", headerItem.getLesson()));
                 break;
             }
 

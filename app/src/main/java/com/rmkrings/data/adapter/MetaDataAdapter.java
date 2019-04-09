@@ -53,7 +53,7 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
 
         // Additional text set => 2 items.
         // Otherwise we have just one item.
-        return (dataset[1] != null && dataset[1] != "") ? 2 : 1;
+        return (dataset[1] != null && dataset[1].length() != 0) ? 2 : 1;
     }
 
 }

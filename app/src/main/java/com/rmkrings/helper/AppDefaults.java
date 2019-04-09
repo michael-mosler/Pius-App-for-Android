@@ -60,6 +60,18 @@ public class AppDefaults {
         edit.commit();
     }
 
+    public static String getGradeSetting() {
+        int selectedGradeRow = AppDefaults.getSelectedGradeRow();
+        int selectedClassRow = AppDefaults.getSelectedClassRow();
+
+        if (selectedGradeRow != 0) {
+            Config config = new Config();
+            return config.getShortGrades()[selectedGradeRow] + config.getShortClasses()[selectedClassRow];
+        }
+
+        return "";
+    }
+
     /*
      * Username and Password
      */

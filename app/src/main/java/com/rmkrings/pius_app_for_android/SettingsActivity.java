@@ -77,7 +77,7 @@ public class SettingsActivity extends AppCompatActivity
         // Enable "Meine Kurse" button.
         else if (isUpperGradeSelected(forSelectedGradeVal)) {
             mClassPicker.setValue(0);
-            //AppDefaults.selectedClassRow = 0;
+            AppDefaults.setSelectedClassRow(0);
 
             mClassPicker.setEnabled(false);
             mCoursesButton.setEnabled(true);
