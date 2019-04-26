@@ -56,7 +56,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
 
     // Local state.
     private String grade;
-    private String digestFileName() { return String.format("%s.md5", grade); };
+    private String digestFileName() { return String.format("%s.md5", grade); }
     private String cacheFileName() { return String.format("%s.json", grade); }
 
     private Cache cache = new Cache();
@@ -119,6 +119,22 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     @Override
     public void onResume() {
         super.onResume();
+
+        if (!canUseDashboard()) {
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+                    .setTitle(getResources().getString(R.string.title_dashboard))
+                    .setMessage(getResources().getString(R.string.error_cannot_use_dashboard))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (getFragmentManager() != null) {
+                                getFragmentManager().popBackStack();
+                            }
+                        }
+                    })
+                    .show();
+            return;
+        }
 
         Objects.requireNonNull(getActivity()).setTitle(grade);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
@@ -237,5 +253,9 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean canUseDashboard() {
+        return AppDefaults.isAuthenticated() && AppDefaults.hasGrade();
     }
 }

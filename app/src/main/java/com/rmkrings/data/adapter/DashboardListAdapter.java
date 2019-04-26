@@ -32,7 +32,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader; // header titles
 
     // child data in format of header title, child title
-        private HashMap<String, List<VertretungsplanListItem>> listDataChild;
+    private HashMap<String, List<VertretungsplanListItem>> listDataChild;
 
     public DashboardListAdapter(
             Context context,
@@ -90,6 +90,10 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
 
         TextView lblListHeader = convertView.findViewById(R.id.vertretungsplan_list_group);
         lblListHeader.setText(headerTitle);
+
+        if (getChildrenCount(groupPosition) == 0) {
+            convertView.setEnabled(false);
+        }
 
         return convertView;
     }

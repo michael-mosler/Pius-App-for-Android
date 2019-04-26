@@ -97,6 +97,10 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = convertView.findViewById(R.id.vertretungsplan_list_group);
         lblListHeader.setText(headerTitle);
 
+        if (getChildrenCount(groupPosition) == 0) {
+            convertView.setEnabled(false);
+        }
+
         return convertView;
     }
 

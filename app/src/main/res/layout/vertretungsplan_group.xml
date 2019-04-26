@@ -7,13 +7,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@color/colorPiusBlue">
+    android:background="@drawable/button_default">
 
     <TextView
         android:id="@+id/vertretungsplan_list_group"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="17sp"
-        android:background="@color/colorPiusBlue"
         android:textColor="@android:color/white" />
 </LinearLayout>

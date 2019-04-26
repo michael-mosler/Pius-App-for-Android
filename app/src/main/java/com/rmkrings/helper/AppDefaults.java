@@ -51,6 +51,10 @@ public class AppDefaults {
         edit.commit();
     }
 
+    public static boolean hasGrade() {
+        return AppDefaults.getSelectedGradeRow() != 0;
+    }
+
     public static int getSelectedClassRow() {
         return sharedPreferences.getInt("selectedClassRow", 0);
     }
