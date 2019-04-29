@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,7 +63,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     private String[] metaData = new String[2];
     private ArrayList<String> listDataHeader = new ArrayList<>(0);
     private HashMap<String, List<VertretungsplanListItem>> listDataChild = new HashMap<>(0);
-    private FragmentActivity fragmentActivity;
+    // private FragmentActivity fragmentActivity;
 
     private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
 
@@ -96,6 +95,13 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         // Prepare list data
         mDashboardListAdapter = new DashboardListAdapter(PiusApp.getAppContext(), listDataHeader, listDataChild);
         mDashboardListView.setAdapter(mDashboardListAdapter);
+
+        mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reload(true);
+            }
+        });
 
         grade = AppDefaults.getGradeSetting();
     }
@@ -182,20 +188,23 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
             // There is only one grade item when in dashboard mode.
             for (GradeItem g: vertretungsplanForDate.getGradeItems()) {
                 for (String[] a: g.getVertretungsplanItems()) {
+                    // Check if the current item can be accepted, i.e. must be displayed.
                     VertretungsplanHeaderItem headerItem = new VertretungsplanHeaderItem(a[2], a[0]);
-                    VertretungsplanDetailItem detailItem = new VertretungsplanDetailItem(a[1], a[3], a[4]);
-                    VertretungsplanRemarkItem remarkItem = new VertretungsplanRemarkItem(a[6]);
+                    if (headerItem.accept()) {
+                        VertretungsplanDetailItem detailItem = new VertretungsplanDetailItem(a[1], a[3], a[4]);
+                        VertretungsplanRemarkItem remarkItem = new VertretungsplanRemarkItem(a[6]);
 
-                    vertretungsplanListItems.add(headerItem);
-                    vertretungsplanListItems.add(detailItem);
+                        vertretungsplanListItems.add(headerItem);
+                        vertretungsplanListItems.add(detailItem);
 
-                    if (remarkItem.getRemarkText().length() > 0) {
-                        vertretungsplanListItems.add(remarkItem);
-                    }
+                        if (remarkItem.getRemarkText().length() > 0) {
+                            vertretungsplanListItems.add(remarkItem);
+                        }
 
-                    if (a.length > 7) {
-                        VertretungsplanEvaItem evaItem = new VertretungsplanEvaItem(a[7]);
-                        vertretungsplanListItems.add(evaItem);
+                        if (a.length > 7) {
+                            VertretungsplanEvaItem evaItem = new VertretungsplanEvaItem(a[7]);
+                            vertretungsplanListItems.add(evaItem);
+                        }
                     }
                 }
             }
@@ -258,4 +267,5 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     private boolean canUseDashboard() {
         return AppDefaults.isAuthenticated() && AppDefaults.hasGrade();
     }
+
 }

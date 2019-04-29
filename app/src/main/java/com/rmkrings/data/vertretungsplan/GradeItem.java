@@ -13,7 +13,7 @@ public final class GradeItem implements Serializable {
     // @serial
     private ArrayList<String[]> vertretungsplanItems;
 
-    public GradeItem(JSONObject data) throws Exception {
+    GradeItem(JSONObject data) throws Exception {
         try {
             grade = data.getString("grade");
         }
@@ -23,7 +23,7 @@ public final class GradeItem implements Serializable {
         }
 
         try {
-            vertretungsplanItems = new ArrayList<String[]>();
+            vertretungsplanItems = new ArrayList<>();
             JSONArray jsonVertretungsplanItems = data.optJSONArray("vertretungsplanItems");
             for (int i = 0; i < jsonVertretungsplanItems.length(); i++) {
                 JSONObject jsonVertretungsplanItem = jsonVertretungsplanItems.getJSONObject(i);

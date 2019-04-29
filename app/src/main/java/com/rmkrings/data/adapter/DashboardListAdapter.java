@@ -91,9 +91,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = convertView.findViewById(R.id.vertretungsplan_list_group);
         lblListHeader.setText(headerTitle);
 
-        if (getChildrenCount(groupPosition) == 0) {
-            convertView.setEnabled(false);
-        }
+        convertView.setEnabled(getChildrenCount(groupPosition) > 0);
 
         return convertView;
     }

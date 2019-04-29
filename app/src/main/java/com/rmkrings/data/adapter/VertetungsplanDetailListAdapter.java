@@ -1,5 +1,6 @@
 package com.rmkrings.data.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -22,14 +23,14 @@ import com.rmkrings.pius_app_for_android.R;
  * a certain grade and date. It displays all items from the list.
  */
 public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    ArrayList<VertretungsplanListItem> list;
+    private ArrayList<VertretungsplanListItem> list;
 
     /**
      * TextView view holder: Holds data for items that contain a single TextView.
      */
     public static class TextViewViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public TextViewViewHolder(TextView v) {
+        TextView textView;
+        TextViewViewHolder(TextView v) {
             super(v);
             textView = v;
         }
@@ -39,10 +40,10 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
      * Holds information for DetailItem list entries.
      */
     public static class DetailItemViewHolder extends RecyclerView.ViewHolder {
-        public TextView substitutionType;
-        public TextView room;
-        public TextView teacher;
-        public DetailItemViewHolder(LinearLayout l) {
+        TextView substitutionType;
+        TextView room;
+        TextView teacher;
+        DetailItemViewHolder(LinearLayout l) {
             super(l);
             substitutionType = l.findViewById(R.id.substitutionType);
             room = l.findViewById(R.id.room);
@@ -64,9 +65,10 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
         return list.size();
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder vh = null;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder vh;
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(parent.getContext());
 
@@ -100,7 +102,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
 
         switch(type) {
