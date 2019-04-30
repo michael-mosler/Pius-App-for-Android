@@ -17,11 +17,17 @@ public class Config {
     private String [] classes = { "keine", "a", "b", "c", "d", "e" };
     private String[] shortClasses =  { "", "A", "B", "C", "D", "E" };
 
+    private String[] lessonStartTimes = { "07:55", "08:40", "09:45", "10:35", "11:25", "12:40", "13:25", "14:30", "15:15", "16:00", "16:45" };
+
+    public String[] getLessonStartTimes() {
+        return lessonStartTimes;
+    }
+
     public String[] getGrades() {
         return grades;
     }
 
-    public String[] getShortGrades() {
+    String[] getShortGrades() {
         return shortGrades;
     }
 
@@ -29,7 +35,7 @@ public class Config {
         return classes;
     }
 
-    public String[] getShortClasses() {
+    String[] getShortClasses() {
         return shortClasses;
     }
 

@@ -1,5 +1,6 @@
 package com.rmkrings.data.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanDetailItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
@@ -15,11 +15,9 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.FormatHelper;
 import com.rmkrings.helper.StringHelper;
+import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -79,6 +77,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String)getGroup(groupPosition);
@@ -96,6 +95,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         VertretungsplanListItem vertretungsplanListItem = (VertretungsplanListItem)getChild(groupPosition, childPosition);
@@ -111,6 +111,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
                         (headerItem.getCourse().length() > 0)
                                 ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
                                 : String.format("%s. Stunde", headerItem.getLesson()));
+                tv.setBackgroundColor(PiusApp.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
                 break;
             }
 

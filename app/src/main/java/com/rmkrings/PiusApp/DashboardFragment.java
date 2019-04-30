@@ -40,6 +40,7 @@ import com.rmkrings.pius_app_for_android.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +52,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     private ProgressBar mProgressBar;
     private RecyclerView.Adapter mAdapter;
     private TextView mLastUpdate;
+    private ExpandableListView mDashboardListView;
     private DashboardListAdapter mDashboardListAdapter;
 
     // Local state.
@@ -63,7 +65,6 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     private String[] metaData = new String[2];
     private ArrayList<String> listDataHeader = new ArrayList<>(0);
     private HashMap<String, List<VertretungsplanListItem>> listDataChild = new HashMap<>(0);
-    // private FragmentActivity fragmentActivity;
 
     private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
 
@@ -82,7 +83,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMetaData = view.findViewById(R.id.metadata);
         mLastUpdate = view.findViewById(R.id.lastupdate);
-        ExpandableListView mDashboardListView = view.findViewById(R.id.vertretungsplanListView);
+        mDashboardListView = view.findViewById(R.id.vertretungsplanListView);
 
         mMetaData.setHasFixedSize(true);
 
@@ -178,10 +179,16 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     }
 
     private void setVertretungsplanList() {
+        Date currentDate = new Date();
+        boolean[] expanded = new boolean[vertretungsplan.getVertretungsplaene().size()];
+        boolean hasExpanded = false;
+        int i = 0;
+
         listDataHeader.clear();
         listDataChild.clear();
         for (VertretungsplanForDate vertretungsplanForDate: vertretungsplan.getVertretungsplaene()) {
             listDataHeader.add(vertretungsplanForDate.getDate());
+            expanded[i] = false;
 
             ArrayList<VertretungsplanListItem> vertretungsplanListItems = new ArrayList<>(0);
 
@@ -191,6 +198,16 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                     // Check if the current item can be accepted, i.e. must be displayed.
                     VertretungsplanHeaderItem headerItem = new VertretungsplanHeaderItem(a[2], a[0]);
                     if (headerItem.accept()) {
+                        // We will expand the next date with a substitution, thus that date that has
+                        // a lesson which is after current date and time. Once such a lesson has been
+                        // found no more groups shall get expanded. This is why we need to track
+                        // expansion.
+                        if (!hasExpanded) {
+                            Date lessonStartDate = headerItem.realLessonStartDate(vertretungsplanForDate.getDate());
+                            expanded[i] |= (lessonStartDate.after(currentDate) || lessonStartDate.equals(currentDate));
+                            hasExpanded = expanded[i];
+                        }
+
                         VertretungsplanDetailItem detailItem = new VertretungsplanDetailItem(a[1], a[3], a[4]);
                         VertretungsplanRemarkItem remarkItem = new VertretungsplanRemarkItem(a[6]);
 
@@ -210,9 +227,18 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
             }
 
             listDataChild.put(vertretungsplanForDate.getDate(), vertretungsplanListItems);
+            i += 1;
         }
 
         mDashboardListAdapter.notifyDataSetChanged();
+
+        for (i = 0; i < listDataHeader.size(); i++) {
+            if (expanded[i]) {
+                mDashboardListView.expandGroup(i);
+            } else {
+                mDashboardListView.collapseGroup(i);
+            }
+        }
     }
 
     @SuppressLint("DefaultLocale")

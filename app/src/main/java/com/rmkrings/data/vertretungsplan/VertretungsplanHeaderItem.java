@@ -3,7 +3,14 @@ package com.rmkrings.data.vertretungsplan;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Config;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VertretungsplanHeaderItem extends VertretungsplanListItem {
 
@@ -104,5 +111,46 @@ public class VertretungsplanHeaderItem extends VertretungsplanListItem {
         }
 
         return false;
+    }
+
+    public Date realLessonStartDate(String forDate) {
+        String lessonsDate = "";
+        Pattern datePattern = Pattern.compile("(\\d{2}.\\d{2}.\\d{4})");
+        Matcher dateMatcher = datePattern.matcher(forDate);
+
+        if (dateMatcher.find()) {
+            lessonsDate = dateMatcher.group(1);
+            lessonsDate += '-';
+
+            Pattern firstNumberPattern = Pattern.compile("(\\d+)");
+            Matcher firstNumberMatcher = firstNumberPattern.matcher(lesson);
+
+            if (firstNumberMatcher.find()) {
+                Config config = new Config();
+                String[] lessonStartTimes = config.getLessonStartTimes();
+
+                try {
+                    lessonsDate += lessonStartTimes[Integer.parseInt(firstNumberMatcher.group(1))];
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }
+
+        if (lessonsDate.length() > 0) {
+            DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy'-'HH:mm", Locale.GERMANY);
+
+            try {
+                return dateFormat.parse(lessonsDate);
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }
