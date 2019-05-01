@@ -2,8 +2,7 @@
 <!--
   Regular group header in Pius blue color.
   -->
-<TextView android:id="@+id/vertretungsplan_header_item"
-    android:layout_width="match_parent"
+<TextView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="17sp"
     android:paddingStart="8dp"

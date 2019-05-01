@@ -28,7 +28,6 @@
                 android:layout_height="8dp" />
 
             <View
-                android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
