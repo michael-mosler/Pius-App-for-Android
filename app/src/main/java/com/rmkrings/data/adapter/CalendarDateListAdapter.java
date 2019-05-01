@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -19,9 +18,9 @@ public class CalendarDateListAdapter extends RecyclerView.Adapter<CalendarDateLi
 
     static class DateListViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView dateView;
-        public TextView eventView;
-        public DateListViewHolder(@NonNull ConstraintLayout itemView) {
+        TextView dateView;
+        TextView eventView;
+        DateListViewHolder(@NonNull ConstraintLayout itemView) {
             super(itemView);
             dateView = itemView.findViewById(R.id.date);
             eventView = itemView.findViewById(R.id.event);

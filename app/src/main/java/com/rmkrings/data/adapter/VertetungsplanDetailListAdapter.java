@@ -28,7 +28,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
     /**
      * TextView view holder: Holds data for items that contain a single TextView.
      */
-    public static class TextViewViewHolder extends RecyclerView.ViewHolder {
+    static class TextViewViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         TextViewViewHolder(TextView v) {
             super(v);
@@ -39,7 +39,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
     /**
      * Holds information for DetailItem list entries.
      */
-    public static class DetailItemViewHolder extends RecyclerView.ViewHolder {
+    static class DetailItemViewHolder extends RecyclerView.ViewHolder {
         TextView substitutionType;
         TextView room;
         TextView teacher;

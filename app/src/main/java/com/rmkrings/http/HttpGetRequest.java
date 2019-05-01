@@ -17,7 +17,7 @@ public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpRespons
     protected HttpResponseData doInBackground(HttpRequestData... params) {
         HttpRequestData data = params[0];
         HttpsURLConnection connection = data.getConnection();
-        HttpResponseData response = null;
+        HttpResponseData response;
         String inputLine;
 
         try {
@@ -53,7 +53,7 @@ public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpRespons
             }
         }
         catch (java.io.IOException e) {
-            logger.info(String.format("Failed to submit HTTP GET request to %s: %s", connection.getURL().toString()));
+            logger.info(String.format("Failed to submit HTTP GET request to %s: %s", connection.getURL().toString(), e.getMessage()));
             response = new HttpResponseData(null, true, null, data.getCallback());
         }
         finally {

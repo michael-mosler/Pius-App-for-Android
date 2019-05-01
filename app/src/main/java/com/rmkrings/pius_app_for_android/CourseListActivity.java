@@ -19,13 +19,9 @@ import com.rmkrings.helper.Config;
 import com.rmkrings.main.PiusApp;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CourseListActivity extends AppCompatActivity {
 
-    // Outlets
-    private Button mAddCourseButton;
-    private Button mDeleteAllButton;
     private EditText mEditText;
     private NumberPicker mCoursePicker;
     private NumberPicker mCourseTypePicker;
@@ -78,7 +74,7 @@ public class CourseListActivity extends AppCompatActivity {
     }
 
     private void addCourseFromPickers() {
-        String realCourseName = "";
+        String realCourseName;
         String courseNameFromEdit = mEditText.getText().toString();
 
         if (courseNameFromEdit.length() > 0) {
@@ -90,7 +86,7 @@ public class CourseListActivity extends AppCompatActivity {
             String courseType = config.getCourseTypes()[mCourseTypePicker.getValue()];
             String courseNumber = config.getCourseNumbers()[mCourseNumberPicker.getValue()];
 
-            realCourseName = (courseType == "P" || courseType == "V")
+            realCourseName = (courseType.equals("P") || courseType.equals("V"))
                     ? String.format("%s%s%s", courseType, courseName, courseNumber)
                     : String.format("%s %s%s", courseName, courseType, courseNumber);
         }
@@ -107,8 +103,9 @@ public class CourseListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_list);
 
         // Outlets
-        mAddCourseButton = findViewById(R.id.addCourseButton);
-        mDeleteAllButton = findViewById(R.id.deleteAll);
+        // Outlets
+        Button mAddCourseButton = findViewById(R.id.addCourseButton);
+        Button mDeleteAllButton = findViewById(R.id.deleteAll);
         mEditText = findViewById(R.id.editText);
         mCoursePicker = findViewById(R.id.coursePicker);
         mCourseTypePicker = findViewById(R.id.courseTypePicker);

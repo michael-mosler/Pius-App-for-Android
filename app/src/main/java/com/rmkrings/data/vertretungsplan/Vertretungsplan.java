@@ -9,11 +9,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Vertretungsplan {
-    private String tickerText = null;
-    private String additionalText = null;
-    private String lastUpdate = null;
+    private String tickerText;
+    private String additionalText;
+    private String lastUpdate;
     private ArrayList<VertretungsplanForDate> vertretungsplaene;
-    private String digest = null;
+    private String digest;
 
     public Vertretungsplan(JSONObject data) throws Exception {
         try {
@@ -38,7 +38,7 @@ public class Vertretungsplan {
         }
 
         try {
-            vertretungsplaene = new ArrayList<VertretungsplanForDate>();
+            vertretungsplaene = new ArrayList<>();
             JSONArray jsonDateItems = data.getJSONArray("dateItems");
             for (int i = 0; i < jsonDateItems.length(); i++) {
                 JSONObject jsonDateItem = jsonDateItems.getJSONObject(i);

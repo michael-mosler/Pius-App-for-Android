@@ -12,7 +12,6 @@ import android.content.Intent;
 
 import com.rmkrings.PiusApp.CalendarFragment;
 import com.rmkrings.PiusApp.DashboardFragment;
-import com.rmkrings.PiusApp.VertretungsplanDetailFragment;
 import com.rmkrings.PiusApp.VertretungsplanFragment;
 import com.rmkrings.PiusApp.TodayFragment;
 

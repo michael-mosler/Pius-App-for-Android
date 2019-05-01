@@ -76,8 +76,7 @@ public class Crypto {
         cipherOutputStream.write(secret);
         cipherOutputStream.close();
 
-        byte[] vals = outputStream.toByteArray();
-        return vals;
+        return outputStream.toByteArray();
     }
 
     private byte[] rsaDecrypt(byte[] encrypted) throws Exception {

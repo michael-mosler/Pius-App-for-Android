@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Calendar {
 
     private ArrayList<MonthItem> monthItems;
-    private String digest = null;
+    private String digest;
 
     public Calendar(JSONObject data) throws Exception {
         try {

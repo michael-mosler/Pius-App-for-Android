@@ -13,8 +13,8 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
     private String[] dataset;
 
     public static class MetaDataViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public MetaDataViewHolder(TextView v) {
+        TextView textView;
+        MetaDataViewHolder(TextView v) {
             super(v);
             textView = v;
             textView.setMovementMethod(new ScrollingMovementMethod());
@@ -33,8 +33,7 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
                 .from(parent.getContext())
                 .inflate(R.layout.metadata_view_item, parent, false);
 
-        MetaDataViewHolder vh = new MetaDataViewHolder(v);
-        return vh;
+        return new MetaDataViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -47,7 +46,7 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
     @Override
     public int getItemCount() {
         // Ticker text not set => 0 items.
-        if (dataset[0] == null || dataset[0] == "") {
+        if (dataset[0] == null || dataset[0].length() == 0) {
             return 0;
         }
 

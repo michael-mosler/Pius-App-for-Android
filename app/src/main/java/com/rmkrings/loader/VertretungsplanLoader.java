@@ -48,7 +48,7 @@ public class VertretungsplanLoader {
     }
 
     private URL getVertretungsplanURL(String forGrade, String digest) throws java.net.MalformedURLException {
-        String urlString = String.format("%s/v2/vertretungsplan", AppDefaults.getBaseUrl());;
+        String urlString = String.format("%s/v2/vertretungsplan", AppDefaults.getBaseUrl());
 
         if (forGrade != null || digest != null) {
             String separator = "/?";

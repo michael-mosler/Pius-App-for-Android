@@ -19,7 +19,7 @@ public class VertretungsplanForDate {
         }
 
         try {
-            gradeItems = new ArrayList<GradeItem>();
+            gradeItems = new ArrayList<>();
             JSONArray jsonGradeItems = data.getJSONArray("gradeItems");
             for (int i = 0; i< jsonGradeItems.length(); i++) {
                 JSONObject jsonGradeItem = jsonGradeItems.getJSONObject(i);
