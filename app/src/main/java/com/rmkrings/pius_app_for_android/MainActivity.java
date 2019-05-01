@@ -19,8 +19,7 @@ import com.rmkrings.PiusApp.TodayFragment;
 public class MainActivity extends AppCompatActivity
         implements
             TodayFragment.OnFragmentInteractionListener,
-            VertretungsplanFragment.OnFragmentInteractionListener,
-            CalendarFragment.OnFragmentInteractionListener
+            VertretungsplanFragment.OnFragmentInteractionListener
 {
     private FrameLayout mFrameLayout;
 

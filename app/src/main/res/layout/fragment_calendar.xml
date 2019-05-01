@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calendarFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rmkrings.PiusApp.CalendarFragment">
@@ -26,12 +27,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/monthlist"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:scrollbars="horizontal"
@@ -48,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingStart="8dp"
+                android:paddingTop="4dp"
                 android:paddingEnd="8dp"
                 android:scrollbars="vertical"
                 tools:layoutManager="GridLayout" />

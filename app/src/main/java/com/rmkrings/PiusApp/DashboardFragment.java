@@ -50,7 +50,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     // Outlets
     private SwipeRefreshLayout mFragment;
     private ProgressBar mProgressBar;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter mMetaDataAdapter;
     private TextView mLastUpdate;
     private ExpandableListView mDashboardListView;
     private DashboardListAdapter mDashboardListAdapter;
@@ -90,8 +90,8 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         // Create Meta Data output widgets.
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
         mMetaData.setLayoutManager(mLayoutManager);
-        mAdapter = new MetaDataAdapter(metaData);
-        mMetaData.setAdapter(mAdapter);
+        mMetaDataAdapter = new MetaDataAdapter(metaData);
+        mMetaData.setAdapter(mMetaDataAdapter);
 
         // Prepare list data
         mDashboardListAdapter = new DashboardListAdapter(PiusApp.getAppContext(), listDataHeader, listDataChild);
@@ -171,7 +171,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     private void setMetaData() {
         this.metaData[0] = vertretungsplan.getTickerText();
         this.metaData[1] = vertretungsplan.getAdditionalText();
-        mAdapter.notifyDataSetChanged();
+        mMetaDataAdapter.notifyDataSetChanged();
     }
 
     private void setLastUpdate() {
