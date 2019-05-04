@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-// import android.widget.FrameLayout;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.rmkrings.data.adapter.CalendarDateListAdapter;
@@ -38,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-
 /**
  */
 public class CalendarFragment extends Fragment implements HttpResponseCallback, MonthListSelectionCallback {
@@ -46,6 +47,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private CalendarMonthListAdapter mCalendarMonthListAdapter;
     private CalendarDateListAdapter mCalendarDateListAdapter;
     private Button mSelectedButton = null;
+    private ImageButton mSearchButton = null;
 
     // Local State
     private String digestFileName = "calendar.md5";
@@ -55,6 +57,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private Calendar calendar;
     private ArrayList<String> monthList = new ArrayList<>();
     private ArrayList<DayItem> dateList = new ArrayList<>();
+    private FragmentActivity fragmentActivity;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
@@ -70,7 +73,6 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Outlets
-        // FrameLayout mFragment = view.findViewById(R.id.calendarFragment);
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMonthList = view.findViewById(R.id.monthlist);
         RecyclerView mDateList = view.findViewById(R.id.datelist);
@@ -86,6 +88,17 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         mDateList.addItemDecoration(new DividerItemDecoration(mDateList.getContext(), DividerItemDecoration.VERTICAL));
         mCalendarDateListAdapter = new CalendarDateListAdapter(dateList);
         mDateList.setAdapter(mCalendarDateListAdapter);
+
+        mSearchButton = view.findViewById(R.id.searchbutton);
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, CalendarSearchFragment.newInstance(calendar));
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
     }
 
     @Override
@@ -98,6 +111,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        fragmentActivity = (FragmentActivity)context;
     }
 
     @Override
