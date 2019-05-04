@@ -6,6 +6,7 @@
     <color name="colorPiusBlue">#699FCD</color>
     <color name="colorPiusLightBlue">#56A1D2</color>
     <color name="colorEva">#FFCC01</color>
+    <color name="colorHighlight">#FFCC01</color>
 
     <color name="colorEnabled">@color/colorPiusBlue</color>
     <color name="colorDisabled">#969696</color>

@@ -8,11 +8,11 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_month"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
         android:textAlignment="center"
         android:textColor="@drawable/button_month"
         app:layout_constraintBottom_toBottomOf="parent"

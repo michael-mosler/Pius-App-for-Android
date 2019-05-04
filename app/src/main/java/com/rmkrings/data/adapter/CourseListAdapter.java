@@ -48,16 +48,17 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         String course = courseList.get(position);
         CourseListItemViewHolder courseListItemViewHolder = (CourseListItemViewHolder) holder;
         courseListItemViewHolder.textView.setText(course);
 
+        final RecyclerView.ViewHolder vh = holder;
         courseListItemViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                courseList.remove(position);
-                notifyItemRemoved(position);
+                courseList.remove(vh.getAdapterPosition());
+                notifyItemRemoved(vh.getAdapterPosition());
             }
         });
     }

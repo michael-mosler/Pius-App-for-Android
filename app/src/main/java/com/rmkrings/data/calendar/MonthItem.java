@@ -1,18 +1,29 @@
 package com.rmkrings.data.calendar;
 
+import com.rmkrings.helper.StringHelper;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MonthItem {
+public class MonthItem implements Serializable {
 
+    // @serial
     private String name;
+
+    // @serial
     private ArrayList<DayItem> dayItems;
 
-    public MonthItem(JSONObject data) throws Exception {
+    private  MonthItem(MonthItem monthItem) {
+        name = monthItem.getName();
+        dayItems = new ArrayList<>();
+    }
+
+    MonthItem(JSONObject data) throws Exception {
         try {
-            String fullName = data.getString("name");
+            String fullName = StringHelper.replaceHtmlEntities(data.getString("name"));
             name = fullName.substring(0, 3) + " " + fullName.substring(fullName.length() - 2);
         }
         catch (Exception e) {
@@ -41,5 +52,21 @@ public class MonthItem {
 
     public ArrayList<DayItem> getDayItems() {
         return dayItems;
+    }
+
+    // @nullable
+    MonthItem filter(String s) {
+        if (s.length() == 0) {
+            return this;
+        }
+
+        MonthItem m = new MonthItem(this);
+        for (DayItem dayItem: getDayItems()) {
+            if (dayItem.matches(s)) {
+                m.dayItems.add(dayItem);
+            }
+        }
+
+        return (m.dayItems.size() > 0) ? m : null;
     }
 }

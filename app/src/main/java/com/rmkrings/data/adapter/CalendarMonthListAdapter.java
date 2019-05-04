@@ -17,6 +17,7 @@ public class CalendarMonthListAdapter extends RecyclerView.Adapter<CalendarMonth
 
     private MonthListSelectionCallback fragment;
     private ArrayList<String> monthList;
+    private int selectedButtonIndex = -1;
 
     static class MonthListViewHolder extends RecyclerView.ViewHolder {
         Button buttonView;
@@ -44,15 +45,24 @@ public class CalendarMonthListAdapter extends RecyclerView.Adapter<CalendarMonth
     public void onBindViewHolder(@NonNull final MonthListViewHolder viewHolder, int i) {
         viewHolder.buttonView.setText(monthList.get(i));
 
+        viewHolder.buttonView.setSelected(false);
         viewHolder.buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Update the button that is selectedButtonIndex right now.
+                selectedButtonIndex = viewHolder.getAdapterPosition();
                 fragment.notifySelectionChanged(viewHolder.buttonView, viewHolder.buttonView.getText().toString());
             }
         });
 
-        if (i == 0) {
-            fragment.notifySelectionChanged(viewHolder.buttonView, monthList.get(0));
+        // On startup initialise by selecting first month.
+        if (selectedButtonIndex == -1 && i == 0) {
+            selectedButtonIndex = 0;
+        }
+
+        // If button gets into view, should actually be selectedButtonIndex but is not then select id.
+        if (i == selectedButtonIndex && !viewHolder.buttonView.isSelected()) {
+            fragment.notifySelectionChanged(viewHolder.buttonView, monthList.get(selectedButtonIndex));
         }
     }
 

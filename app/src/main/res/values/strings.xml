@@ -29,6 +29,7 @@
     <string name="label_password">Passwort</string>
     <string name="label_delete">Löschen</string>
     <string name="label_delete_all">Alles löschen</string>
+    <string name="label_search">Suchen</string>
     <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
 
     <string name="text_logged_on">Du bist nun angemeldet.</string>

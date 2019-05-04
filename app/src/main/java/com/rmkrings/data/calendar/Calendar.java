@@ -6,12 +6,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Calendar {
+public class Calendar implements Serializable {
 
+    // @serial
     private ArrayList<MonthItem> monthItems;
+
+    // @serial
     private String digest;
+
+    private Calendar() {
+        monthItems = new ArrayList<>();
+        digest = null;
+    }
 
     public Calendar(JSONObject data) throws Exception {
         try {
@@ -54,5 +63,22 @@ public class Calendar {
         }
 
         return null;
+    }
+
+    public Calendar filter(String s) {
+        if (s.length() == 0) {
+            return this;
+        }
+
+        Calendar c = new Calendar();
+        for (MonthItem monthItem: getMonthItems()) {
+            MonthItem m = monthItem.filter(s);
+
+            if (m != null) {
+                c.monthItems.add(m);
+            }
+        }
+
+        return c;
     }
 }
