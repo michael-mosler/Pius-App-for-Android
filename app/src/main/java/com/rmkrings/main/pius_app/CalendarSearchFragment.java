@@ -1,4 +1,4 @@
-package com.rmkrings.PiusApp;
+package com.rmkrings.main.pius_app;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import com.rmkrings.data.calendar.Calendar;
 import com.rmkrings.data.calendar.CalendarListItem;
 import com.rmkrings.data.calendar.MonthHeaderItem;
 import com.rmkrings.data.calendar.MonthItem;
-import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class CalendarSearchFragment extends Fragment {
             }
         });
 
-        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.VERTICAL, false);
         mDateList.setLayoutManager(mVerticalLayoutManager);
         mCalendarSearchListAdapter = new CalendarSearchListAdapter(listItems);
         mDateList.setAdapter(mCalendarSearchListAdapter);

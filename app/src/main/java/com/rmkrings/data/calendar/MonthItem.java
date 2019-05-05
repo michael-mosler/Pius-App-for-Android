@@ -6,7 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class MonthItem implements Serializable {
 
@@ -52,6 +56,23 @@ public class MonthItem implements Serializable {
 
     public ArrayList<DayItem> getDayItems() {
         return dayItems;
+    }
+
+    ArrayList<DayItem> getTodayEvents() {
+        ArrayList<DayItem> l = new ArrayList<>();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.GERMANY);
+        String today = dateFormat.format(new Date());
+        String year = getName().substring(getName().length() - 2);
+
+        for (DayItem dayItem: getDayItems()) {
+            String dateString = dayItem.getDay().substring(dayItem.getDay().length() - 6) + year;
+
+            if (dateString.equals(today)) {
+                l.add(dayItem);
+            }
+        }
+
+        return l;
     }
 
     // @nullable

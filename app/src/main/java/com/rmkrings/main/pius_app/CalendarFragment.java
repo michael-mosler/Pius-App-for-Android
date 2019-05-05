@@ -1,4 +1,4 @@
-package com.rmkrings.PiusApp;
+package com.rmkrings.main.pius_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -31,7 +31,6 @@ import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.CalendarLoader;
-import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 
 import org.json.JSONObject;
@@ -43,11 +42,12 @@ import java.util.logging.Logger;
 /**
  */
 public class CalendarFragment extends Fragment implements HttpResponseCallback, MonthListSelectionCallback {
+
+    // Outlets
     private ProgressBar mProgressBar;
     private CalendarMonthListAdapter mCalendarMonthListAdapter;
     private CalendarDateListAdapter mCalendarDateListAdapter;
     private Button mSelectedButton = null;
-    private ImageButton mSearchButton = null;
 
     // Local State
     private String digestFileName = "calendar.md5";
@@ -76,8 +76,8 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMonthList = view.findViewById(R.id.monthlist);
         RecyclerView mDateList = view.findViewById(R.id.datelist);
-        RecyclerView.LayoutManager mHorizontalLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mHorizontalLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.VERTICAL, false);
 
         mMonthList.setHasFixedSize(true);
         mMonthList.setLayoutManager(mHorizontalLayoutManager);
@@ -89,7 +89,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         mCalendarDateListAdapter = new CalendarDateListAdapter(dateList);
         mDateList.setAdapter(mCalendarDateListAdapter);
 
-        mSearchButton = view.findViewById(R.id.searchbutton);
+        ImageButton mSearchButton = view.findViewById(R.id.searchbutton);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +202,6 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             }
 
             setMonthList();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

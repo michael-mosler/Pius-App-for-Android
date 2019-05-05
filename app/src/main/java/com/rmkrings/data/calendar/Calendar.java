@@ -65,6 +65,11 @@ public class Calendar implements Serializable {
         return null;
     }
 
+    public ArrayList<DayItem> getTodayEvents() {
+        MonthItem monthItem = getMonthItems().get(0);
+        return monthItem.getTodayEvents();
+    }
+
     public Calendar filter(String s) {
         if (s.length() == 0) {
             return this;

@@ -1,4 +1,4 @@
-package com.rmkrings.PiusApp;
+package com.rmkrings.main.pius_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -28,7 +28,6 @@ import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
-import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
@@ -84,13 +83,13 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         mMetaData.setHasFixedSize(true);
 
         // Create Meta Data output widgets.
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
         mMetaData.setLayoutManager(mLayoutManager);
         mAdapter = new MetaDataAdapter(metaData);
         mMetaData.setAdapter(mAdapter);
 
         // Prepare list data
-        mVertretunsplanListAdapter = new VertretungsplanListAdapter(PiusApp.getAppContext(), listDataHeader, listDataChild);
+        mVertretunsplanListAdapter = new VertretungsplanListAdapter(PiusApplication.getAppContext(), listDataHeader, listDataChild);
         mVertretungsplanListView.setAdapter(mVertretunsplanListAdapter);
 
         mVertretungsplanListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

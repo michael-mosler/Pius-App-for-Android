@@ -16,7 +16,7 @@ import android.widget.NumberPicker;
 import com.rmkrings.data.adapter.CourseListAdapter;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Config;
-import com.rmkrings.main.PiusApp;
+import com.rmkrings.main.pius_app.PiusApplication;
 
 import java.util.ArrayList;
 
@@ -112,7 +112,7 @@ public class CourseListActivity extends AppCompatActivity {
         mCourseNumberPicker = findViewById(R.id.courseNumberPicker);
         mCourseList = findViewById(R.id.courseList);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.VERTICAL, false);
         mCourseList.setLayoutManager(mLayoutManager);
         mAdapter = new CourseListAdapter(courseList);
         mCourseList.setAdapter(mAdapter);

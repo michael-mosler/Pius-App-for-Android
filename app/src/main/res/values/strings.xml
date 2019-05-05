@@ -39,10 +39,14 @@
     <string name="text_last_changed">Letzte Änderung</string>
     <string name="text_confirm_delete_course_list">Bist Du sicher, dass Du die gesamte Kursliste löschen möchtest?</string>
     <string name="text_course_list_info">Hier legst Du fest, für welche Kurse im Dashboard und bei Push-Benachrichtigungen berücksichtigt werden.</string>
+    <string name="text_empty_calendar">Für heute steht nichts im Kalender.</string>
 
     <string name="error_cannot_use_dashboard">Melde Dich in den Einstellungen an und lege Deine Klasse/Jahrgangsstufe fest, um das Dashboard zu verwenden. Wenn Du in der Oberstufe bist, musst Du auch Deine Kursliste hinzufügen, um ein personalisiertes Dashboard zu erhalten.\n
         \nHast Du alle Informationen angegeben, dann kannst Du das Widget verwenden und Push-Benachrichtigungen erhalten.\n
         \nTippe unten auf Einstellungen, um mit der Konfiguration zu beginnen.
     </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

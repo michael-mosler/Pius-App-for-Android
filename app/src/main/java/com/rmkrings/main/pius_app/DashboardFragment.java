@@ -1,4 +1,4 @@
-package com.rmkrings.PiusApp;
+package com.rmkrings.main.pius_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,7 +34,6 @@ import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
-import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 
 import org.json.JSONObject;
@@ -88,13 +87,13 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mMetaData.setHasFixedSize(true);
 
         // Create Meta Data output widgets.
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
         mMetaData.setLayoutManager(mLayoutManager);
         mMetaDataAdapter = new MetaDataAdapter(metaData);
         mMetaData.setAdapter(mMetaDataAdapter);
 
         // Prepare list data
-        mDashboardListAdapter = new DashboardListAdapter(PiusApp.getAppContext(), listDataHeader, listDataChild);
+        mDashboardListAdapter = new DashboardListAdapter(PiusApplication.getAppContext(), listDataHeader, listDataChild);
         mDashboardListView.setAdapter(mDashboardListAdapter);
 
         mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

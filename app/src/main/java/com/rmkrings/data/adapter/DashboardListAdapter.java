@@ -15,7 +15,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.FormatHelper;
 import com.rmkrings.helper.StringHelper;
-import com.rmkrings.main.PiusApp;
+import com.rmkrings.main.pius_app.PiusApplication;
 import com.rmkrings.pius_app_for_android.R;
 
 import java.util.HashMap;
@@ -111,7 +111,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
                         (headerItem.getCourse().length() > 0)
                                 ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
                                 : String.format("%s. Stunde", headerItem.getLesson()));
-                tv.setBackgroundColor(PiusApp.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
+                tv.setBackgroundColor(PiusApplication.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
                 break;
             }
 

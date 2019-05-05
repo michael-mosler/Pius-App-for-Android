@@ -22,9 +22,9 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.x500.X500Principal;
 
-import com.rmkrings.main.PiusApp;
+import com.rmkrings.main.pius_app.PiusApplication;
 
-public class Crypto {
+class Crypto {
     private static final String RSA_MODE =  "RSA/ECB/PKCS1Padding";
     private static final String AES_MODE = "AES/ECB/PKCS7Padding";
     private static final String KEY_ALIAS = "com.rmkrings.pius_app";
@@ -32,7 +32,7 @@ public class Crypto {
 
     private KeyStore keyStore;
 
-    public Crypto() throws Exception
+    Crypto() throws Exception
     {
         keyStore = KeyStore.getInstance(AndroidKeyStore);
         keyStore.load(null);
@@ -43,7 +43,7 @@ public class Crypto {
             Calendar start = Calendar.getInstance();
             Calendar end = Calendar.getInstance();
             end.add(Calendar.YEAR, 30);
-            KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(PiusApp.getAppContext())
+            KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(PiusApplication.getAppContext())
                     .setAlias(KEY_ALIAS)
                     .setSubject(new X500Principal("CN=" + KEY_ALIAS))
                     .setSerialNumber(BigInteger.TEN)
@@ -96,7 +96,7 @@ public class Crypto {
 
         byte[] bytes = new byte[values.size()];
         for(int i = 0; i < bytes.length; i++) {
-            bytes[i] = values.get(i).byteValue();
+            bytes[i] = values.get(i);
         }
 
         return bytes;
@@ -131,7 +131,7 @@ public class Crypto {
         return new SecretKeySpec(key, "AES");
     }
 
-    public String encrypt(String input) throws Exception {
+    String encrypt(String input) throws Exception {
         Cipher c = Cipher.getInstance(AES_MODE, "BC");
         c.init(Cipher.ENCRYPT_MODE, getSecretKey());
         byte[] encodedBytes = c.doFinal(input.getBytes());
@@ -139,7 +139,7 @@ public class Crypto {
     }
 
 
-    public String decrypt(String input) throws Exception {
+    String decrypt(String input) throws Exception {
         Cipher c = Cipher.getInstance(AES_MODE, "BC");
         c.init(Cipher.DECRYPT_MODE, getSecretKey());
 

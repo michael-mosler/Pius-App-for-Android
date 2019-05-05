@@ -3,11 +3,14 @@ package com.rmkrings.data.adapter;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rmkrings.data.calendar.CalendarListItem;
+import com.rmkrings.data.calendar.CalendarMessage;
 import com.rmkrings.data.calendar.DayItem;
 import com.rmkrings.data.calendar.MonthHeaderItem;
 import com.rmkrings.helper.FormatHelper;
@@ -47,14 +50,27 @@ public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView
         RecyclerView.ViewHolder vh;
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(viewGroup.getContext());
-        if (i == CalendarListItem.monthHeader) {
-            TextView itemView = (TextView) mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, viewGroup, false);
-            vh = new TextViewHolder(itemView);
-        } else {
-            ConstraintLayout v = (ConstraintLayout) LayoutInflater
-                    .from(viewGroup.getContext())
-                    .inflate(R.layout.date_list_item, viewGroup, false);
-            vh = new DateListViewHolder(v);
+        switch(i) {
+            case CalendarListItem.monthHeader: {
+                TextView itemView = (TextView) mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, viewGroup, false);
+                vh = new TextViewHolder(itemView);
+                break;
+            }
+
+            case CalendarListItem.dayItem: {
+                ConstraintLayout v = (ConstraintLayout) LayoutInflater
+                        .from(viewGroup.getContext())
+                        .inflate(R.layout.date_list_item, viewGroup, false);
+                vh = new DateListViewHolder(v);
+                break;
+            }
+
+            default: {
+                TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, viewGroup, false);
+                itemView.setGravity(Gravity.CENTER);
+                vh = new TextViewHolder(itemView);
+                break;
+            }
         }
 
         return vh;
@@ -78,6 +94,14 @@ public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView
                 dateListViewHolder.dateView.setText(dayItem.getDay());
                 dateListViewHolder.eventView.setText(dayItem.getEvent(), TextView.BufferType.SPANNABLE);
                 FormatHelper.highlight(dateListViewHolder.eventView, dayItem.getSearchMatches());
+                break;
+            }
+
+            case CalendarListItem.message: {
+                CalendarMessage calendarMessage = (CalendarMessage)dateList.get(i);
+                TextViewHolder vh = (TextViewHolder)viewHolder;
+                ((TextViewHolder) viewHolder).textView.setText(calendarMessage.getMessageText());
+                break;
             }
         }
     }

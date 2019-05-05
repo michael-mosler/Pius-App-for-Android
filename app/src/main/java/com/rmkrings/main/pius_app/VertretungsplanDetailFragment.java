@@ -1,4 +1,4 @@
-package com.rmkrings.PiusApp;
+package com.rmkrings.main.pius_app;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
-import com.rmkrings.main.PiusApp;
 import com.rmkrings.pius_app_for_android.R;
 
 import java.util.ArrayList;
@@ -74,7 +73,7 @@ public class VertretungsplanDetailFragment extends Fragment {
         RecyclerView mList = view.findViewById(R.id.detaillist);
         mDate = view.findViewById(R.id.date);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApp.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.VERTICAL, false);
         mList.setLayoutManager(mLayoutManager);
         mAdapter = new VertetungsplanDetailListAdapter(list);
         mList.setAdapter(mAdapter);

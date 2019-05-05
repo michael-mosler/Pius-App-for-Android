@@ -3,14 +3,14 @@ package com.rmkrings.helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.rmkrings.main.PiusApp;
+import com.rmkrings.main.pius_app.PiusApplication;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class AppDefaults {
-    static private SharedPreferences sharedPreferences = PiusApp.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);
+    static private SharedPreferences sharedPreferences = PiusApplication.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);
     static private SharedPreferences.Editor edit = sharedPreferences.edit();
 
     static SharedPreferences getSharedPreferences() {

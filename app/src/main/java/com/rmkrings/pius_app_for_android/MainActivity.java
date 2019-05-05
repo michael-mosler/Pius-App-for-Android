@@ -1,6 +1,5 @@
 package com.rmkrings.pius_app_for_android;
 
-import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +9,13 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.content.Intent;
 
-import com.rmkrings.PiusApp.CalendarFragment;
-import com.rmkrings.PiusApp.DashboardFragment;
-import com.rmkrings.PiusApp.VertretungsplanFragment;
-import com.rmkrings.PiusApp.TodayFragment;
+import com.rmkrings.main.pius_app.CalendarFragment;
+import com.rmkrings.main.pius_app.DashboardFragment;
+import com.rmkrings.main.pius_app.VertretungsplanFragment;
+import com.rmkrings.main.pius_app.TodayFragment;
 
 public class MainActivity extends AppCompatActivity
         implements
-            TodayFragment.OnFragmentInteractionListener,
             VertretungsplanFragment.OnFragmentInteractionListener
 {
     private FrameLayout mFrameLayout;
@@ -89,10 +87,5 @@ public class MainActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         setTitle(R.string.title_home);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }
