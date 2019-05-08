@@ -50,8 +50,8 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private Button mSelectedButton = null;
 
     // Local State
-    private String digestFileName = "calendar.md5";
-    private String cacheFileName = "calendar.json";
+    private final String digestFileName = "calendar.md5";
+    private final String cacheFileName = "calendar.json";
 
     private Cache cache = new Cache();
     private Calendar calendar;
@@ -119,6 +119,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         super.onDetach();
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         Objects.requireNonNull(getActivity()).setTitle(R.string.title_calendar);

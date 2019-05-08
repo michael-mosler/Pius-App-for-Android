@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.content.Intent;
 
 import com.rmkrings.main.pius_app.CalendarFragment;
@@ -15,10 +14,7 @@ import com.rmkrings.main.pius_app.VertretungsplanFragment;
 import com.rmkrings.main.pius_app.TodayFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements
-            VertretungsplanFragment.OnFragmentInteractionListener
 {
-    private FrameLayout mFrameLayout;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,7 +69,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // Add navigation bar.
-        mFrameLayout = findViewById(R.id.frameLayout);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 

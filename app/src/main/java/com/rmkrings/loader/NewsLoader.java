@@ -11,10 +11,10 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class CalendarLoader {
+public class NewsLoader {
 
     private URL getCalendarURL(String digest) throws java.net.MalformedURLException {
-        String urlString = String.format("%s/calendar", AppDefaults.getBaseUrl());
+        String urlString = String.format("%s/v2/news", AppDefaults.getBaseUrl());
 
         if (digest != null) {
             urlString += String.format("?digest=%s", digest);

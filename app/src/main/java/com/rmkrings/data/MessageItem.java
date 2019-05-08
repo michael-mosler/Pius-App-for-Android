@@ -1,20 +1,22 @@
-package com.rmkrings.data.calendar;
+package com.rmkrings.data;
 
 import android.view.Gravity;
 
+import com.rmkrings.data.calendar.CalendarListItem;
+
 import java.io.Serializable;
 
-public class CalendarMessage extends CalendarListItem implements Serializable {
+public class MessageItem extends BaseListItem implements Serializable {
 
     private String messageText;
     private int gravity;
 
-    public CalendarMessage(String message) {
+    public MessageItem(String message) {
         this.messageText = message;
         this.gravity = Gravity.NO_GRAVITY;
     }
 
-    public CalendarMessage(String message, int gravity) {
+    public MessageItem(String message, int gravity) {
         this.messageText = message;
         this.gravity = gravity;
     }

@@ -3,9 +3,7 @@ package com.rmkrings.data.adapter;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -52,22 +50,19 @@ public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView
         LayoutInflater mLayoutInflater = LayoutInflater.from(viewGroup.getContext());
         switch(i) {
             case CalendarListItem.monthHeader: {
-                TextView itemView = (TextView) mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, viewGroup, false);
+                TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, viewGroup, false);
                 vh = new TextViewHolder(itemView);
                 break;
             }
 
             case CalendarListItem.dayItem: {
-                ConstraintLayout v = (ConstraintLayout) LayoutInflater
-                        .from(viewGroup.getContext())
-                        .inflate(R.layout.date_list_item, viewGroup, false);
+                ConstraintLayout v = (ConstraintLayout)mLayoutInflater.inflate(R.layout.date_list_item, viewGroup, false);
                 vh = new DateListViewHolder(v);
                 break;
             }
 
             default: {
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, viewGroup, false);
-                itemView.setGravity(Gravity.CENTER);
                 vh = new TextViewHolder(itemView);
                 break;
             }
@@ -83,8 +78,7 @@ public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView
         switch(type) {
             case CalendarListItem.monthHeader: {
                 MonthHeaderItem monthHeaderItem = (MonthHeaderItem)dateList.get(i);
-                TextViewHolder vh = (TextViewHolder)viewHolder;
-                ((TextViewHolder) viewHolder).textView.setText(monthHeaderItem.getMonthName());
+                ((TextViewHolder)viewHolder).textView.setText(monthHeaderItem.getMonthName());
                 break;
             }
 
@@ -99,8 +93,8 @@ public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView
 
             case CalendarListItem.message: {
                 CalendarMessage calendarMessage = (CalendarMessage)dateList.get(i);
-                TextViewHolder vh = (TextViewHolder)viewHolder;
-                ((TextViewHolder) viewHolder).textView.setText(calendarMessage.getMessageText());
+                ((TextViewHolder)viewHolder).textView.setGravity(calendarMessage.getGravity());
+                ((TextViewHolder)viewHolder).textView.setText(calendarMessage.getMessageText());
                 break;
             }
         }
@@ -110,7 +104,6 @@ public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView
     public int getItemViewType(int position) {
         return dateList.get(position).getType();
     }
-
 
     @Override
     public int getItemCount() {

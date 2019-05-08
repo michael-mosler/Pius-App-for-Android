@@ -9,20 +9,21 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rmkrings.data.adapter.CalendarSearchListAdapter;
+import com.rmkrings.data.BaseListItem;
+import com.rmkrings.data.adapter.NewsListAdapter;
 import com.rmkrings.data.calendar.Calendar;
-import com.rmkrings.data.calendar.CalendarListItem;
-import com.rmkrings.data.calendar.CalendarMessage;
-import com.rmkrings.data.calendar.DayItem;
+import com.rmkrings.data.news.NewsItem;
+import com.rmkrings.data.news.NewsItems;
+import com.rmkrings.data.news.NewsListItem;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.CalendarLoader;
+import com.rmkrings.loader.NewsLoader;
 import com.rmkrings.pius_app_for_android.R;
 
 import org.json.JSONObject;
@@ -30,47 +31,43 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-/**
- */
-public class TodayCalendarFragment extends Fragment implements HttpResponseCallback {
+public class TodayNewsFragment extends Fragment implements HttpResponseCallback {
+
     // Outlets
-    private CalendarSearchListAdapter mCalendarSearchListAdapter;
+    private NewsListAdapter mNewsListAdapter;
 
     // Local State
-    private String digestFileName = "calendar.md5";
-    private String cacheFileName = "calendar.json";
+    private final String digestFileName = "news.md5";
+    private final String cacheFileName = "news.json";
+
     private Cache cache = new Cache();
-    private Calendar calendar;
-    private ArrayList<CalendarListItem> dateList = new ArrayList<>();
+    private NewsItems newsItems;
+    private ArrayList<BaseListItem> newsItemList = new ArrayList<>();
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
-    public TodayCalendarFragment() {
+    public TodayNewsFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView mDateList = view.findViewById(R.id.datelist);
+        RecyclerView mNewsList = view.findViewById(R.id.newslist);
         RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.VERTICAL, false);
 
-        mDateList.setLayoutManager(mVerticalLayoutManager);
-        mDateList.addItemDecoration(new DividerItemDecoration(mDateList.getContext(), DividerItemDecoration.VERTICAL));
-        mCalendarSearchListAdapter = new CalendarSearchListAdapter(dateList);
-        mDateList.setAdapter(mCalendarSearchListAdapter);
+        mNewsList.setLayoutManager(mVerticalLayoutManager);
+        mNewsList.setClickable(false);
+        mNewsList.addItemDecoration(new DividerItemDecoration(mNewsList.getContext(), DividerItemDecoration.VERTICAL));
+        mNewsListAdapter = new NewsListAdapter(newsItemList);
+        mNewsList.setAdapter(mNewsListAdapter);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_today_calendar, container, false);
+        return inflater.inflate(R.layout.fragment_today_news, container, false);
     }
 
     @Override
@@ -89,25 +86,13 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
         reload();
     }
 
-    private void setDateList() {
-        ArrayList<DayItem> list = calendar.getTodayEvents();
-        if (list.size() == 0) {
-            setMessage(getResources().getString(R.string.text_empty_calendar));
-        } else {
-            dateList.clear();
-
-            for (DayItem dayItem: calendar.getTodayEvents()) {
-                dateList.add(new CalendarMessage(dayItem.getEvent()));
-            }
+    private void setNewsList() {
+        newsItemList.clear();
+        for (NewsItem newsItem: newsItems.getNewsItems()) {
+            newsItemList.add(new NewsListItem(newsItem));
         }
 
-        mCalendarSearchListAdapter.notifyDataSetChanged();
-    }
-
-    private void setMessage(String message) {
-        dateList.clear();
-        dateList.add(new CalendarMessage(message, Gravity.CENTER));
-        mCalendarSearchListAdapter.notifyDataSetChanged();
+        mNewsListAdapter.notifyDataSetChanged();
     }
 
     private void reload() {
@@ -120,8 +105,8 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
             digest = null;
         }
 
-        CalendarLoader calendarLoader = new CalendarLoader();
-        calendarLoader.load(this, digest);
+        NewsLoader newsLoader = new NewsLoader();
+        newsLoader.load(this, digest);
     }
 
     @SuppressLint("DefaultLocale")
@@ -131,8 +116,8 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
         JSONObject jsonData;
 
         if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
-            logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            setMessage(getResources().getString(R.string.error_failed_to_load_data));
+            logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
+            // setMessage(getResources().getString(R.string.error_failed_to_load_data));
             return;
         }
 
@@ -145,13 +130,13 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
 
         try {
             jsonData = new JSONObject(data);
-            calendar = new Calendar(jsonData);
+            newsItems = new NewsItems(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
-                cache.store(digestFileName, calendar.getDigest());
+            if (responseData.getHttpStatusCode() != 304 && newsItems.getDigest() != null) {
+                cache.store(digestFileName, newsItems.getDigest());
             }
 
-            setDateList();
+            setNewsList();
         }
         catch (Exception e) {
             e.printStackTrace();

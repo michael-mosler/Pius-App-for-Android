@@ -221,8 +221,10 @@ public class SettingsActivity extends AppCompatActivity
     }
 
     private void showCredentials() {
-        mUserName.setText(AppDefaults.getUsername());
-        mPassword.setText(AppDefaults.getPassword());
+        sUserName = AppDefaults.getUsername();
+        sPassword = AppDefaults.getPassword();
+        mUserName.setText(sUserName);
+        mPassword.setText(sPassword);
 
         updateLoginButtonText(AppDefaults.isAuthenticated());
     }
@@ -331,6 +333,7 @@ public class SettingsActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         setTitle(getResources().getString(R.string.title_settings));
+        setLoginButtonState();
     }
 
     /**
