@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rmkrings.data.BaseListItem;
-import com.rmkrings.data.news.NewsItem;
+import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.news.NewsListItem;
 import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.pius_app_for_android.R;
@@ -89,6 +89,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .centerCrop()
                     .into(newsListViewHolder.imageView);
         } else {
+            MessageItem messageItem = (MessageItem)listItems.get(i);
+            ((TextViewHolder)viewHolder).textView.setGravity(messageItem.getGravity());
+            ((TextViewHolder)viewHolder).textView.setText(messageItem.getMessageText());
 
         }
     }

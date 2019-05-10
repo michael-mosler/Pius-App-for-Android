@@ -155,6 +155,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
         }
         catch (Exception e) {
             e.printStackTrace();
+            setMessage(getResources().getString(R.string.error_failed_to_load_data));
         }
     }
 }

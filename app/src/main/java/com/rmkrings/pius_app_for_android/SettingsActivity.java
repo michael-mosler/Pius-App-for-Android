@@ -255,9 +255,6 @@ public class SettingsActivity extends AppCompatActivity
         mUserName.setEnabled(!isAuthenticated);
         mPassword.setEnabled(!isAuthenticated);
 
-        int classRow = AppDefaults.getSelectedClassRow();
-        int gradeRow = AppDefaults.getSelectedGradeRow();
-
         mClassPicker.setValue(AppDefaults.getSelectedClassRow());
         mGradePicker.setValue(AppDefaults.getSelectedGradeRow());
 

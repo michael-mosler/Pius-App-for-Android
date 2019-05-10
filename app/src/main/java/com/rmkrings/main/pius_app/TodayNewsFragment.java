@@ -10,11 +10,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.rmkrings.data.BaseListItem;
+import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.adapter.NewsListAdapter;
 import com.rmkrings.data.news.NewsItem;
 import com.rmkrings.data.news.NewsItems;
@@ -25,7 +27,6 @@ import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.NewsLoader;
-import com.rmkrings.pius_app_for_android.MainActivity;
 import com.rmkrings.pius_app_for_android.R;
 import com.rmkrings.pius_app_for_android.WebViewActivity;
 
@@ -98,6 +99,12 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
         mNewsListAdapter.notifyDataSetChanged();
     }
 
+    private void setMessage(String message) {
+        newsItemList.clear();
+        newsItemList.add(new MessageItem(message, Gravity.CENTER));
+        mNewsListAdapter.notifyDataSetChanged();
+    }
+
     private void reload() {
         String digest;
 
@@ -120,7 +127,7 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
 
         if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            // setMessage(getResources().getString(R.string.error_failed_to_load_data));
+            setMessage(getResources().getString(R.string.error_failed_to_load_data));
             return;
         }
 
@@ -142,6 +149,7 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
             setNewsList();
         }
         catch (Exception e) {
+            setMessage(getResources().getString(R.string.error_failed_to_load_data));
             e.printStackTrace();
         }
     }
