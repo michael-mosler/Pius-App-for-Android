@@ -2,6 +2,7 @@ package com.rmkrings.main.pius_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,23 +16,25 @@ import android.view.ViewGroup;
 
 import com.rmkrings.data.BaseListItem;
 import com.rmkrings.data.adapter.NewsListAdapter;
-import com.rmkrings.data.calendar.Calendar;
 import com.rmkrings.data.news.NewsItem;
 import com.rmkrings.data.news.NewsItems;
 import com.rmkrings.data.news.NewsListItem;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
+import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.NewsLoader;
+import com.rmkrings.pius_app_for_android.MainActivity;
 import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.pius_app_for_android.WebViewActivity;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class TodayNewsFragment extends Fragment implements HttpResponseCallback {
+public class TodayNewsFragment extends Fragment implements HttpResponseCallback, ViewSelectedCallback {
 
     // Outlets
     private NewsListAdapter mNewsListAdapter;
@@ -59,7 +62,7 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback 
         mNewsList.setLayoutManager(mVerticalLayoutManager);
         mNewsList.setClickable(false);
         mNewsList.addItemDecoration(new DividerItemDecoration(mNewsList.getContext(), DividerItemDecoration.VERTICAL));
-        mNewsListAdapter = new NewsListAdapter(newsItemList);
+        mNewsListAdapter = new NewsListAdapter(newsItemList, this);
         mNewsList.setAdapter(mNewsListAdapter);
     }
 
@@ -141,5 +144,12 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback 
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void notifySelectionChanged(View b, String href) {
+        Intent a = new Intent(this.getActivity(), WebViewActivity.class);
+        a.putExtra("URL", href);
+        startActivity(a);
     }
 }

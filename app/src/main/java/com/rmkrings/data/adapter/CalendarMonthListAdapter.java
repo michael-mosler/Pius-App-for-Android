@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.rmkrings.data.calendar.MonthListSelectionCallback;
+import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.pius_app_for_android.R;
 
 import java.util.ArrayList;
 
 public class CalendarMonthListAdapter extends RecyclerView.Adapter<CalendarMonthListAdapter.MonthListViewHolder> {
 
-    private MonthListSelectionCallback fragment;
+    private ViewSelectedCallback fragment;
     private ArrayList<String> monthList;
     private int selectedButtonIndex = -1;
 
@@ -27,7 +27,7 @@ public class CalendarMonthListAdapter extends RecyclerView.Adapter<CalendarMonth
         }
     }
 
-    public CalendarMonthListAdapter(ArrayList<String> monthList, MonthListSelectionCallback fragment) {
+    public CalendarMonthListAdapter(ArrayList<String> monthList, ViewSelectedCallback fragment) {
         this.fragment = fragment;
         this.monthList = monthList;
     }

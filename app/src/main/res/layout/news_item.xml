@@ -33,13 +33,14 @@
                 android:id="@+id/newstext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Liebe Mint-Schüler, am Dienstag treffen wir uns das erste mal zur MINT-AG. Treffpunkt ist um 10.00h im Physiksaal." />
+                tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/newsimage"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="0"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"

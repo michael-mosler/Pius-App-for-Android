@@ -26,7 +26,7 @@ import com.rmkrings.data.adapter.CalendarMonthListAdapter;
 import com.rmkrings.data.calendar.Calendar;
 import com.rmkrings.data.calendar.DayItem;
 import com.rmkrings.data.calendar.MonthItem;
-import com.rmkrings.data.calendar.MonthListSelectionCallback;
+import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 
 /**
  */
-public class CalendarFragment extends Fragment implements HttpResponseCallback, MonthListSelectionCallback {
+public class CalendarFragment extends Fragment implements HttpResponseCallback, ViewSelectedCallback {
 
     // Outlets
     private ProgressBar mProgressBar;
@@ -209,14 +209,14 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     }
 
     @Override
-    public void notifySelectionChanged(Button b, String monthName) {
+    public void notifySelectionChanged(View b, String title) {
         if (mSelectedButton != null) {
             mSelectedButton.setSelected(false);
         }
 
         b.setSelected(true);
-        mSelectedButton = b;
+        mSelectedButton = (Button)b;
 
-        setDateList(monthName);
+        setDateList(title);
     }
 }
