@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 
 import com.rmkrings.helper.Config;
 import com.rmkrings.helper.AppDefaults;
-import com.rmkrings.http.HttpResponseCallback;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 

@@ -37,6 +37,17 @@
                 android:layout_height="8dp" />
 
             <fragment
+                android:id="@+id/postingsfragment"
+                android:name="com.rmkrings.main.pius_app.TodayPostingsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_today_postings" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <fragment
                 android:id="@+id/vertretungsplanfragment"
                 android:name="com.rmkrings.main.pius_app.TodayVertretungsplanFragment"
                 android:layout_width="match_parent"
@@ -65,5 +76,6 @@
                 android:layout_height="wrap_content"
                 tools:layout="@layout/fragment_today_news" />
         </LinearLayout>
+
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

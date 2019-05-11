@@ -16,7 +16,7 @@ import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.helper.DateHelper;
-import com.rmkrings.http.HttpResponseCallback;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
@@ -37,8 +37,10 @@ import java.util.logging.Logger;
 public class TodayFragment extends Fragment implements HttpResponseCallback {
     // Outlets
     TextView mDate = null;
-    TodayCalendarFragment mTodayCalendarFragment = null;
+    TodayPostingsFragment mTodayPostingsFragment = null;
     TodayVertretungsplanFragment mTodayVertetungsplanFragment = null;
+    TodayCalendarFragment mTodayCalendarFragment = null;
+    TodayNewsFragment mTodayNewsFragment = null;
 
     // Local State
     private String grade;
@@ -62,13 +64,16 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTodayVertetungsplanFragment = (TodayVertretungsplanFragment) getChildFragmentManager().findFragmentById(R.id.vertretungsplanfragment);
+        mTodayPostingsFragment = (TodayPostingsFragment)getChildFragmentManager().findFragmentById(R.id.postingsfragment);
+        mTodayVertetungsplanFragment = (TodayVertretungsplanFragment)getChildFragmentManager().findFragmentById(R.id.vertretungsplanfragment);
 
         mDate = view.findViewById(R.id.date);
         mTodayCalendarFragment = (TodayCalendarFragment)getChildFragmentManager().findFragmentById(R.id.calendarfragment);
 
         DateFormat dateFormat = new SimpleDateFormat("EEEE, d. MMMM", Locale.GERMANY);
         mDate.setText(String.format("%s (%s-Woche)", dateFormat.format(new Date()), DateHelper.week()));
+
+        mTodayNewsFragment = (TodayNewsFragment)getChildFragmentManager().findFragmentById(R.id.newsfragment);
 
         grade = AppDefaults.getGradeSetting();
     }
@@ -115,8 +120,13 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
         }
         */
 
+        mTodayPostingsFragment.show();
+
+        // We load Vertretungsplan from here as data might be needed in several child fragments.
         VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(grade);
         vertretungsplanLoader.load(this, digest);
+        // mTodayCalendarFragment.show();
+        // mTodayNewsFragment.show();
     }
 
     @SuppressLint("DefaultLocale")
@@ -127,6 +137,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
 
         if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
+            mTodayPostingsFragment.show(getResources().getString(R.string.error_failed_to_load_data));
             mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data));
             return;
         }
@@ -149,6 +160,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
             mTodayVertetungsplanFragment.show(vertretungsplan);
         }
         catch (Exception e) {
+            mTodayPostingsFragment.show(getResources().getString(R.string.error_failed_to_load_data));
             mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data));
             e.printStackTrace();
         }

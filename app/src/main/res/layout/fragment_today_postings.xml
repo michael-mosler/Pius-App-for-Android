@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.rmkrings.main.pius_app.TodayNewsFragment">
+    android:layout_height="match_parent"
+    tools:context="com.rmkrings.main.pius_app.TodayPostingsFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,28 +29,28 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:text="@string/title_news"
+                    android:text="@string/title_postings"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Benachrichtigungen" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/newslist"
+                    android:id="@+id/postinglist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
                     android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
                     android:paddingBottom="4dp"
-                    android:scrollbars="none"
-                    tools:itemCount="6"
-                    tools:listitem="@layout/news_item" />
+                    tools:itemCount="3"
+                    tools:listitem="@layout/postings_item" />
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
-
     </android.support.constraint.ConstraintLayout>
-
-</RelativeLayout>
+</FrameLayout>

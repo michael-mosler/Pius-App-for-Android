@@ -1,5 +1,7 @@
 package com.rmkrings.http;
 
+import com.rmkrings.interfaces.HttpResponseCallback;
+
 public class HttpResponseData {
     private String data;
     private Integer httpStatusCode;
@@ -31,7 +33,7 @@ public class HttpResponseData {
         return data;
     }
 
-    public HttpResponseCallback getCallback() {
+    HttpResponseCallback getCallback() {
         return callback;
     }
 }

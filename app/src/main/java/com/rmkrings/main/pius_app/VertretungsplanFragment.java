@@ -26,7 +26,7 @@ import com.rmkrings.data.adapter.VertretungsplanListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.Cache;
-import com.rmkrings.http.HttpResponseCallback;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.pius_app_for_android.R;
 import com.rmkrings.loader.VertretungsplanLoader;

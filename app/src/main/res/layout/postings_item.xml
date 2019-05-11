@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/postingmessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Am Wochenende stellt die Schule den Vertretungsplan um. Daher kann es zu Einschränkungen beim Verwenden der Pius-App kommen. Ab Aschermittwoch sollte alles wieder wie gewohnt funktionieren. Schöne Karnevalstage wünscht euch das Pius-App für iOS Team.🤡" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
+        <TextView
+            android:id="@+id/postingtimestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            tools:text="Samstag, 11. Mai 2019, 12:35 Uhr" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

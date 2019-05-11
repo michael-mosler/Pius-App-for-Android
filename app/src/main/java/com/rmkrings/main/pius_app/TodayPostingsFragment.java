@@ -2,7 +2,6 @@ package com.rmkrings.main.pius_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,61 +16,58 @@ import android.view.ViewGroup;
 
 import com.rmkrings.data.BaseListItem;
 import com.rmkrings.data.MessageItem;
-import com.rmkrings.data.adapter.NewsListAdapter;
-import com.rmkrings.data.news.NewsItem;
-import com.rmkrings.data.news.NewsItems;
-import com.rmkrings.data.news.NewsListItem;
+import com.rmkrings.data.adapter.PostingsAdapter;
+import com.rmkrings.data.postings.Postings;
 import com.rmkrings.helper.Cache;
-import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
-import com.rmkrings.interfaces.ViewSelectedCallback;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.CalendarLoader;
-import com.rmkrings.loader.NewsLoader;
+import com.rmkrings.loader.PostingsLoader;
 import com.rmkrings.pius_app_for_android.R;
-import com.rmkrings.pius_app_for_android.WebViewActivity;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Logger;
 
-public class TodayNewsFragment extends Fragment implements HttpResponseCallback, ViewSelectedCallback {
+
+public class TodayPostingsFragment extends Fragment implements HttpResponseCallback {
 
     // Outlets
-    private NewsListAdapter mNewsListAdapter;
+    private PostingsAdapter mPostingsAdapter;
 
     // Local State
-    private final String digestFileName = "news.md5";
-    private final String cacheFileName = "news.json";
-
-    private Cache cache = new Cache();
-    private NewsItems newsItems;
-    private ArrayList<BaseListItem> newsItemList = new ArrayList<>();
+    private final String digestFileName = "postings.md5";
+    private final String cacheFileName = "postings.json";
+    private final Cache cache = new Cache();
+    private Postings postings;
+    private final ArrayList<BaseListItem> itemlist = new ArrayList<>();
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
-    public TodayNewsFragment() {
+
+    public TodayPostingsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView mNewsList = view.findViewById(R.id.newslist);
+        RecyclerView mPostings = view.findViewById(R.id.postinglist);
         RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.VERTICAL, false);
 
-        mNewsList.setLayoutManager(mVerticalLayoutManager);
-        mNewsList.setClickable(false);
-        mNewsList.addItemDecoration(new DividerItemDecoration(mNewsList.getContext(), DividerItemDecoration.VERTICAL));
-        mNewsListAdapter = new NewsListAdapter(newsItemList, this);
-        mNewsList.setAdapter(mNewsListAdapter);
+        mPostings.setLayoutManager(mVerticalLayoutManager);
+        mPostings.addItemDecoration(new DividerItemDecoration(mPostings.getContext(), DividerItemDecoration.VERTICAL));
+        mPostingsAdapter = new PostingsAdapter(itemlist);
+        mPostings.setAdapter(mPostingsAdapter);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_today_news, container, false);
+        return inflater.inflate(R.layout.fragment_today_postings, container, false);
     }
 
     @Override
@@ -84,27 +80,6 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
         super.onDetach();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        reload();
-    }
-
-    private void setNewsList() {
-        newsItemList.clear();
-        for (NewsItem newsItem: newsItems.getNewsItems()) {
-            newsItemList.add(new NewsListItem(newsItem));
-        }
-
-        mNewsListAdapter.notifyDataSetChanged();
-    }
-
-    private void setMessage(String message) {
-        newsItemList.clear();
-        newsItemList.add(new MessageItem(message, Gravity.CENTER));
-        mNewsListAdapter.notifyDataSetChanged();
-    }
-
     private void reload() {
         String digest;
 
@@ -115,8 +90,24 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
             digest = null;
         }
 
-        NewsLoader newsLoader = new NewsLoader();
-        newsLoader.load(this, digest);
+        final PostingsLoader postingsLoader = new PostingsLoader();
+        postingsLoader.load(this, digest);
+    }
+
+    public void show(String message) {
+        itemlist.clear();
+        itemlist.add(new MessageItem(message, Gravity.CENTER));
+        mPostingsAdapter.notifyDataSetChanged();
+    }
+
+    public void show() {
+        reload();
+    }
+
+    private void setPostings() {
+        itemlist.clear();
+        itemlist.addAll(Objects.requireNonNull(postings.getPostings()));
+        mPostingsAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("DefaultLocale")
@@ -126,8 +117,8 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
         JSONObject jsonData;
 
         if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
-            logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            setMessage(getResources().getString(R.string.error_failed_to_load_data));
+            logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
+            show(getResources().getString(R.string.error_failed_to_load_data));
             return;
         }
 
@@ -140,24 +131,17 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
 
         try {
             jsonData = new JSONObject(data);
-            newsItems = new NewsItems(jsonData);
+            postings = new Postings(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && newsItems.getDigest() != null) {
-                cache.store(digestFileName, newsItems.getDigest());
+            if (responseData.getHttpStatusCode() != 304 && postings.getDigest() != null) {
+                cache.store(digestFileName, postings.getDigest());
             }
 
-            setNewsList();
+            setPostings();
         }
         catch (Exception e) {
-            setMessage(getResources().getString(R.string.error_failed_to_load_data));
             e.printStackTrace();
+            show(getResources().getString(R.string.error_failed_to_load_data));
         }
-    }
-
-    @Override
-    public void notifySelectionChanged(View b, String href) {
-        Intent a = new Intent(this.getActivity(), WebViewActivity.class);
-        a.putExtra("URL", href);
-        startActivity(a);
     }
 }

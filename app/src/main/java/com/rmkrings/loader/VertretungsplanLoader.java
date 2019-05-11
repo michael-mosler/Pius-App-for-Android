@@ -8,7 +8,7 @@ import javax.net.ssl.HttpsURLConnection;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.http.HttpGetRequest;
 import com.rmkrings.http.HttpRequestData;
-import com.rmkrings.http.HttpResponseCallback;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 
 public class VertretungsplanLoader {

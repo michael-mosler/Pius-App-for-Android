@@ -1,5 +1,7 @@
 package com.rmkrings.http;
 
+import com.rmkrings.interfaces.HttpResponseCallback;
+
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpRequestData {
@@ -11,11 +13,11 @@ public class HttpRequestData {
         this.callback = callback;
     }
 
-    public HttpsURLConnection getConnection() {
+    HttpsURLConnection getConnection() {
         return connection;
     }
 
-    public HttpResponseCallback getCallback() {
+    HttpResponseCallback getCallback() {
         return callback;
     }
 }

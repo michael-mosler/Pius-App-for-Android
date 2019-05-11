@@ -20,11 +20,11 @@ import java.util.ArrayList;
 
 public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<BaseListItem> listItems;
-    private ViewSelectedCallback fragment;
+    private final ArrayList<BaseListItem> listItems;
+    private final ViewSelectedCallback fragment;
 
     static class TextViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        final TextView textView;
         TextViewHolder(TextView v) {
             super(v);
             textView = v;
@@ -32,9 +32,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class NewsListViewHolder extends RecyclerView.ViewHolder {
-        TextView headingView;
-        TextView textView;
-        ImageView imageView;
+        final TextView headingView;
+        final TextView textView;
+        final ImageView imageView;
 
         NewsListViewHolder(ConstraintLayout itemView) {
             super(itemView);
@@ -56,7 +56,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(viewGroup.getContext());
         if (i == NewsListItem.news) {
-            ConstraintLayout v = (ConstraintLayout) mLayoutInflater.inflate(R.layout.news_item, viewGroup, false);
+            ConstraintLayout v = (ConstraintLayout)mLayoutInflater.inflate(R.layout.news_item, viewGroup, false);
             vh = new NewsListViewHolder(v);
 
             v.setOnClickListener(new View.OnClickListener() {

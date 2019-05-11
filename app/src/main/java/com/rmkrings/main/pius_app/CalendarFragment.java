@@ -28,7 +28,7 @@ import com.rmkrings.data.calendar.DayItem;
 import com.rmkrings.data.calendar.MonthItem;
 import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.helper.Cache;
-import com.rmkrings.http.HttpResponseCallback;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.pius_app_for_android.R;

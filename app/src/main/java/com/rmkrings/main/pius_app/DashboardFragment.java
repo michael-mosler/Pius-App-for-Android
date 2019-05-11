@@ -31,7 +31,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
-import com.rmkrings.http.HttpResponseCallback;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.pius_app_for_android.R;
