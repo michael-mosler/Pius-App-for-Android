@@ -4,11 +4,11 @@ import com.rmkrings.helper.AppDefaults;
 
 import java.net.URL;
 
-public class NewsLoader extends HttpGetLoader {
+public class PostingsLoader extends HttpGetLoader {
 
     @Override
     protected URL getURL(String digest) throws java.net.MalformedURLException {
-        String urlString = String.format("%s/v2/news", AppDefaults.getBaseUrl());
+        String urlString = String.format("%s/v2/postings", AppDefaults.getBaseUrl());
 
         if (digest != null) {
             urlString += String.format("?digest=%s", digest);

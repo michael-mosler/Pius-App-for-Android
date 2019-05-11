@@ -67,7 +67,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
         } else {
-            TextView itemView = (TextView) mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, viewGroup, false);
+            TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, viewGroup, false);
             vh = new TextViewHolder(itemView);
         }
 
@@ -92,7 +92,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             MessageItem messageItem = (MessageItem)listItems.get(i);
             ((TextViewHolder)viewHolder).textView.setGravity(messageItem.getGravity());
             ((TextViewHolder)viewHolder).textView.setText(messageItem.getMessageText());
-
         }
     }
 

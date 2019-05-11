@@ -6,7 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Vertretungsplan {
     private String tickerText;
@@ -78,5 +82,20 @@ public class Vertretungsplan {
     @Nullable
     public String getDigest() {
         return digest;
+    }
+
+    @Nullable
+    public VertretungsplanForDate getTodaysSchedule() {
+        final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+        final String today = dateFormat.format(new Date());
+
+        for (VertretungsplanForDate vertretungsplanForDate: vertretungsplaene) {
+            String date = vertretungsplanForDate.getDate();
+            if (date.substring(date.length() - 10).equals(today)) {
+                return vertretungsplanForDate;
+            }
+        }
+
+        return null;
     }
 }

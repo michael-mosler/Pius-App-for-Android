@@ -2,28 +2,17 @@ package com.rmkrings.loader;
 
 import android.util.Base64;
 import java.io.IOException;
-import java.util.regex.Pattern;
-import java.util.logging.Logger;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import com.rmkrings.helper.AppDefaults;
-import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpGetRequest;
 import com.rmkrings.http.HttpRequestData;
 import com.rmkrings.http.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 
 public class VertretungsplanLoader {
-    private Pattern matchEmptyCourse;
     private String forGrade;
-    private String baseUrl = String.format("%s/v2/vertretungsplan", AppDefaults.getBaseUrl());
-    private URL url;
-    private Cache cache;
-    private String cacheFileName;
-    private String digestFileName;
-
-    private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
 
     public VertretungsplanLoader(String forGrade) {
         this.forGrade = forGrade;

@@ -1,6 +1,8 @@
 package com.rmkrings.data.vertretungsplan;
 
-public abstract class VertretungsplanListItem {
+import com.rmkrings.data.MessageItem;
+
+public abstract class VertretungsplanListItem extends MessageItem {
     public static final int courseHeader = 0;
     public static final int detailItem = 1;
     public static final int remarkItem = 2;

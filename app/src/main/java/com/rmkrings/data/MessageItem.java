@@ -11,6 +11,8 @@ public class MessageItem extends BaseListItem implements Serializable {
     private String messageText;
     private int gravity;
 
+    public MessageItem() { }
+
     public MessageItem(String message) {
         this.messageText = message;
         this.gravity = Gravity.NO_GRAVITY;

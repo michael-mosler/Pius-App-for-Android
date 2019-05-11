@@ -13,12 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rmkrings.data.BaseListItem;
 import com.rmkrings.data.adapter.VertetungsplanDetailListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanDetailItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
-import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.pius_app_for_android.R;
 
@@ -36,7 +36,7 @@ public class VertretungsplanDetailFragment extends Fragment {
     // Local State
     private GradeItem gradeItem;
     private String date;
-    private ArrayList<VertretungsplanListItem> list = new ArrayList<>();
+    private ArrayList<BaseListItem> list = new ArrayList<>();
 
     public VertretungsplanDetailFragment() {
         // Required empty public constructor
@@ -115,7 +115,7 @@ public class VertretungsplanDetailFragment extends Fragment {
      * table content.
      * eturn - Populated list
      */
-    private void prepareVertretungsplanItems(ArrayList<VertretungsplanListItem> list) {
+    private void prepareVertretungsplanItems(ArrayList<BaseListItem> list) {
         list.clear();
 
         for (String[] a: gradeItem.getVertretungsplanItems()) {

@@ -9,7 +9,7 @@ public class VertretungsplanForDate {
     private String date;
     private ArrayList<GradeItem> gradeItems;
 
-    public VertretungsplanForDate(JSONObject data) throws Exception {
+    VertretungsplanForDate(JSONObject data) throws Exception {
         try {
             date = data.getString("title");
         }

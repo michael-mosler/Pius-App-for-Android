@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import com.rmkrings.data.BaseListItem;
+import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanDetailItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
@@ -23,14 +25,14 @@ import com.rmkrings.pius_app_for_android.R;
  * a certain grade and date. It displays all items from the list.
  */
 public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<VertretungsplanListItem> list;
+    private ArrayList<BaseListItem> list;
 
     /**
      * TextView view holder: Holds data for items that contain a single TextView.
      */
-    static class TextViewViewHolder extends RecyclerView.ViewHolder {
+    static class TextViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
-        TextViewViewHolder(TextView v) {
+        TextViewHolder(TextView v) {
             super(v);
             textView = v;
         }
@@ -51,7 +53,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
         }
     }
 
-    public VertetungsplanDetailListAdapter(ArrayList<VertretungsplanListItem> list) {
+    public VertetungsplanDetailListAdapter(ArrayList<BaseListItem> list) {
         this.list = list;
     }
 
@@ -75,7 +77,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
         switch(viewType) {
             case VertretungsplanListItem.courseHeader: {
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
-                vh = new TextViewViewHolder(itemView);
+                vh = new TextViewHolder(itemView);
                 break;
             }
 
@@ -87,13 +89,19 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
 
             case VertretungsplanListItem.remarkItem: {
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, parent, false);
-                vh = new TextViewViewHolder(itemView);
+                vh = new TextViewHolder(itemView);
+                break;
+            }
+
+            case VertretungsplanListItem.message: {
+                TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, parent, false);
+                vh = new TextViewHolder(itemView);
                 break;
             }
 
             default: { // EVA item
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_eva_item, parent, false);
-                vh = new TextViewViewHolder(itemView);
+                vh = new TextViewHolder(itemView);
                 break;
             }
         }
@@ -102,14 +110,13 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         int type = getItemViewType(position);
 
         switch(type) {
             case VertretungsplanListItem.courseHeader: {
                 VertretungsplanHeaderItem headerItem = (VertretungsplanHeaderItem)list.get(position);
-                TextViewViewHolder viewHolder = (TextViewViewHolder)holder;
-                viewHolder.textView.setText(
+                ((TextViewHolder)viewHolder).textView.setText(
                         (headerItem.getCourse().length() > 0)
                                 ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
                                 : String.format("%s. Stunde", headerItem.getLesson()));
@@ -118,28 +125,31 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
 
             case VertretungsplanListItem.detailItem: {
                 VertretungsplanDetailItem detailItem = (VertretungsplanDetailItem)list.get(position);
-                DetailItemViewHolder viewHolder = (DetailItemViewHolder)holder;
+                DetailItemViewHolder detailItemViewHolder = (DetailItemViewHolder)viewHolder;
 
-                viewHolder.substitutionType.setText(detailItem.getSubstitutionType());
-
-                viewHolder.room.setText(detailItem.getRoom(), TextView.BufferType.SPANNABLE);
-                FormatHelper.roomText(viewHolder.room);
-
-                viewHolder.teacher.setText(detailItem.getTeacher());
+                detailItemViewHolder.substitutionType.setText(detailItem.getSubstitutionType());
+                detailItemViewHolder.room.setText(detailItem.getRoom(), TextView.BufferType.SPANNABLE);
+                FormatHelper.roomText(detailItemViewHolder.room);
+                detailItemViewHolder.teacher.setText(detailItem.getTeacher());
                 break;
             }
 
             case VertretungsplanListItem.remarkItem: {
                 VertretungsplanRemarkItem remarkItem = (VertretungsplanRemarkItem)list.get(position);
-                TextViewViewHolder viewHolder = (TextViewViewHolder)holder;
-                viewHolder.textView.setText(remarkItem.getRemarkText());
+                ((TextViewHolder)viewHolder).textView.setText(remarkItem.getRemarkText());
                 break;
             }
 
             case VertretungsplanListItem.evaItem: {
                 VertretungsplanEvaItem evaItem = (VertretungsplanEvaItem)list.get(position);
-                TextViewViewHolder viewHolder = (TextViewViewHolder)holder;
-                viewHolder.textView.setText(evaItem.getEvaText());
+                ((TextViewHolder)viewHolder).textView.setText(evaItem.getEvaText());
+                break;
+            }
+
+            case VertretungsplanListItem.message: {
+                MessageItem messageItem = (MessageItem)list.get(position);
+                ((TextViewHolder)viewHolder).textView.setGravity(messageItem.getGravity());
+                ((TextViewHolder)viewHolder).textView.setText(messageItem.getMessageText());
                 break;
             }
         }
