@@ -32,11 +32,11 @@ import java.util.Objects;
 
 public class TodayVertretungsplanFragment extends Fragment {
     // Outlets
-    RecyclerView mItemList;
-    VertetungsplanDetailListAdapter mVertetungsplanDetailListAdapter;
+    private RecyclerView mItemList;
+    private VertetungsplanDetailListAdapter mVertetungsplanDetailListAdapter;
 
     // Local State
-    private ArrayList<BaseListItem> listItems = new ArrayList<>();
+    private final ArrayList<BaseListItem> listItems = new ArrayList<>();
 
     public TodayVertretungsplanFragment() {
         // Required empty public constructor
@@ -63,11 +63,6 @@ public class TodayVertretungsplanFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     private boolean canUseDashboard(){

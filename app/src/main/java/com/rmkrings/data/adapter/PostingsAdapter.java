@@ -19,7 +19,7 @@ public class PostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final ArrayList<BaseListItem> listItems;
 
     static class TextViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        final TextView textView;
         TextViewHolder(TextView v) {
             super(v);
             textView = v;
@@ -27,8 +27,8 @@ public class PostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class PostingsViewHolder extends RecyclerView.ViewHolder {
-        TextView messageView;
-        TextView timestampView;
+        final TextView messageView;
+        final TextView timestampView;
 
         PostingsViewHolder(ConstraintLayout itemView) {
             super(itemView);

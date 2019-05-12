@@ -17,10 +17,10 @@ import com.rmkrings.pius_app_for_android.R;
 import java.util.ArrayList;
 
 public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<CalendarListItem> dateList;
+    private final ArrayList<CalendarListItem> dateList;
 
     static class TextViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        final TextView textView;
         TextViewHolder(TextView v) {
             super(v);
             textView = v;
@@ -29,8 +29,8 @@ public class CalendarSearchListAdapter extends RecyclerView.Adapter<RecyclerView
 
     static class DateListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dateView;
-        TextView eventView;
+        final TextView dateView;
+        final TextView eventView;
         DateListViewHolder(@NonNull ConstraintLayout itemView) {
             super(itemView);
             dateView = itemView.findViewById(R.id.date);

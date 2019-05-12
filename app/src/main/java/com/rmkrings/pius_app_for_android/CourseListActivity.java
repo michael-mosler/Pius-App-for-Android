@@ -30,8 +30,8 @@ public class CourseListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
 
     // Internal state.
-    private Config config = new Config();
-    private ArrayList<String> courseList = new ArrayList<>();
+    private final Config config = new Config();
+    private final ArrayList<String> courseList = new ArrayList<>();
 
     /**
      * Sets titles for a picker.

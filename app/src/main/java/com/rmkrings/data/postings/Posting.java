@@ -1,6 +1,7 @@
 package com.rmkrings.data.postings;
 
 import com.rmkrings.data.MessageItem;
+import com.rmkrings.helper.DateHelper;
 
 import org.json.JSONObject;
 
@@ -13,14 +14,10 @@ public class Posting extends MessageItem implements Serializable {
     private String postingMessage;
     private String timestamp;
 
-    public Posting(String postingMessage, String timestamp) {
-        this.postingMessage = postingMessage;
-        this.timestamp = timestamp;
-    }
-
     Posting(JSONObject data) throws Exception {
         postingMessage = data.getString("message");
-        timestamp = data.getString("timestamp");
+        timestamp = DateHelper.convert(
+                data.getString("timestamp").replace("Z", "+00:00"), "yyyy-MM-dd'T'HH:mm:ssz", "EEEE, d. MMMM yyyy, HH:mm 'Uhr'");
     }
 
     public String getPostingMessage() {

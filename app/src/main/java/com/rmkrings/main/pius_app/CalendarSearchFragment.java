@@ -28,15 +28,12 @@ import java.util.ArrayList;
 public class CalendarSearchFragment extends Fragment {
     private static final String ARG_PARAM1 = "calendar";
 
-    // Outlets
-    private EditText mSearchInput = null;
-    private RecyclerView mDateList = null;
     private CalendarSearchListAdapter mCalendarSearchListAdapter = null;
 
     // Local state
     private Calendar calendar;
     private Calendar filteredCalendar;
-    private ArrayList<CalendarListItem> listItems = new ArrayList<>();
+    private final ArrayList<CalendarListItem> listItems = new ArrayList<>();
 
     public CalendarSearchFragment() {
         // Required empty public constructor
@@ -68,8 +65,9 @@ public class CalendarSearchFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mSearchInput = view.findViewById(R.id.searchinput);
-        mDateList = view.findViewById(R.id.datelist);
+        // Outlets
+        EditText mSearchInput = view.findViewById(R.id.searchinput);
+        RecyclerView mDateList = view.findViewById(R.id.datelist);
 
         mSearchInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,11 +99,6 @@ public class CalendarSearchFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     public void onResume() {

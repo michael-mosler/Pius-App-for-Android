@@ -5,8 +5,8 @@ import com.rmkrings.interfaces.HttpResponseCallback;
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpRequestData {
-    private HttpsURLConnection connection;
-    private HttpResponseCallback callback;
+    private final HttpsURLConnection connection;
+    private final HttpResponseCallback callback;
 
     public HttpRequestData(HttpsURLConnection connection, HttpResponseCallback callback) {
         this.connection = connection;

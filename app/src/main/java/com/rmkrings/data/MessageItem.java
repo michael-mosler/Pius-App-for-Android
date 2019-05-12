@@ -1,9 +1,5 @@
 package com.rmkrings.data;
 
-import android.view.Gravity;
-
-import com.rmkrings.data.calendar.CalendarListItem;
-
 import java.io.Serializable;
 
 public class MessageItem extends BaseListItem implements Serializable {
@@ -11,12 +7,14 @@ public class MessageItem extends BaseListItem implements Serializable {
     private String messageText;
     private int gravity;
 
-    public MessageItem() { }
+    protected MessageItem() { }
 
+    /*
     public MessageItem(String message) {
         this.messageText = message;
         this.gravity = Gravity.NO_GRAVITY;
     }
+    */
 
     public MessageItem(String message, int gravity) {
         this.messageText = message;

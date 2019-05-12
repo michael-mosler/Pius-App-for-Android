@@ -16,11 +16,11 @@ import com.rmkrings.pius_app_for_android.R;
 
 public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<String> courseList;
+    private final ArrayList<String> courseList;
 
-    public static class CourseListItemViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-        ImageButton deleteButton;
+    static class CourseListItemViewHolder extends RecyclerView.ViewHolder {
+        final TextView textView;
+        final ImageButton deleteButton;
 
         CourseListItemViewHolder(LinearLayout l) {
             super(l);

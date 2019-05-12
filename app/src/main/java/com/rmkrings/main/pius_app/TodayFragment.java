@@ -42,7 +42,6 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
     // Outlets
     private SwipeRefreshLayout mFragment = null;
     private ProgressBar mProgressBar;
-    private TextView mDate = null;
     private TodayPostingsFragment mTodayPostingsFragment = null;
     private TodayVertretungsplanFragment mTodayVertetungsplanFragment = null;
     private TodayCalendarFragment mTodayCalendarFragment = null;
@@ -54,7 +53,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
     private String digestFileName() { return String.format("%s.md5", grade); }
     private String cacheFileName() { return String.format("%s.json", grade); }
 
-    private Cache cache = new Cache();
+    private final Cache cache = new Cache();
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
@@ -84,7 +83,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         mTodayPostingsFragment = (TodayPostingsFragment)getChildFragmentManager().findFragmentById(R.id.postingsfragment);
         mTodayVertetungsplanFragment = (TodayVertretungsplanFragment)getChildFragmentManager().findFragmentById(R.id.vertretungsplanfragment);
 
-        mDate = view.findViewById(R.id.date);
+        TextView mDate = view.findViewById(R.id.date);
         mTodayCalendarFragment = (TodayCalendarFragment)getChildFragmentManager().findFragmentById(R.id.calendarfragment);
 
         DateFormat dateFormat = new SimpleDateFormat("EEEE, d. MMMM", Locale.GERMANY);
@@ -105,11 +104,6 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     public void onResume() {
@@ -153,7 +147,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         String data;
         JSONObject jsonData;
 
-        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
             mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
             return;
@@ -170,7 +164,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
             jsonData = new JSONObject(data);
             Vertretungsplan vertretungsplan = new Vertretungsplan(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
                 cache.store(digestFileName(), vertretungsplan.getDigest());
             }
 

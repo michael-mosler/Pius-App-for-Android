@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 public class CalendarDateListAdapter extends RecyclerView.Adapter<CalendarDateListAdapter.DateListViewHolder> {
 
-    private ArrayList<DayItem> dateList;
+    private final ArrayList<DayItem> dateList;
 
     static class DateListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dateView;
-        TextView eventView;
+        final TextView dateView;
+        final TextView eventView;
         DateListViewHolder(@NonNull ConstraintLayout itemView) {
             super(itemView);
             dateView = itemView.findViewById(R.id.date);

@@ -4,7 +4,7 @@ import com.rmkrings.helper.StringHelper;
 
 public class VertretungsplanRemarkItem extends VertretungsplanListItem {
 
-    private String remarkText;
+    private final String remarkText;
 
     public VertretungsplanRemarkItem(String remarkText) {
         this.remarkText = StringHelper.replaceHtmlEntities(remarkText);

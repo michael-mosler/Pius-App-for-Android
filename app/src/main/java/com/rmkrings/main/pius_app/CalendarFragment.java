@@ -53,10 +53,10 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private final String digestFileName = "calendar.md5";
     private final String cacheFileName = "calendar.json";
 
-    private Cache cache = new Cache();
+    private final Cache cache = new Cache();
     private Calendar calendar;
-    private ArrayList<String> monthList = new ArrayList<>();
-    private ArrayList<DayItem> dateList = new ArrayList<>();
+    private final ArrayList<String> monthList = new ArrayList<>();
+    private final ArrayList<DayItem> dateList = new ArrayList<>();
     private FragmentActivity fragmentActivity;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
@@ -115,11 +115,6 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         Objects.requireNonNull(getActivity()).setTitle(R.string.title_calendar);
@@ -170,7 +165,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
 
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
             new AlertDialog.Builder(Objects.requireNonNull(getContext()))
                     .setTitle(getResources().getString(R.string.title_calendar))
@@ -198,7 +193,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             jsonData = new JSONObject(data);
             calendar = new Calendar(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
+            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
                 cache.store(digestFileName, calendar.getDigest());
             }
 

@@ -25,13 +25,13 @@ import com.rmkrings.pius_app_for_android.R;
  * a certain grade and date. It displays all items from the list.
  */
 public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<BaseListItem> list;
+    private final ArrayList<BaseListItem> list;
 
     /**
      * TextView view holder: Holds data for items that contain a single TextView.
      */
     static class TextViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        final TextView textView;
         TextViewHolder(TextView v) {
             super(v);
             textView = v;
@@ -42,9 +42,9 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
      * Holds information for DetailItem list entries.
      */
     static class DetailItemViewHolder extends RecyclerView.ViewHolder {
-        TextView substitutionType;
-        TextView room;
-        TextView teacher;
+        final TextView substitutionType;
+        final TextView room;
+        final TextView teacher;
         DetailItemViewHolder(LinearLayout l) {
             super(l);
             substitutionType = l.findViewById(R.id.substitutionType);

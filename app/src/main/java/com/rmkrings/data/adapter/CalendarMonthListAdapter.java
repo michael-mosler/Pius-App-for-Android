@@ -15,12 +15,12 @@ import java.util.ArrayList;
 
 public class CalendarMonthListAdapter extends RecyclerView.Adapter<CalendarMonthListAdapter.MonthListViewHolder> {
 
-    private ViewSelectedCallback fragment;
-    private ArrayList<String> monthList;
+    private final ViewSelectedCallback fragment;
+    private final ArrayList<String> monthList;
     private int selectedButtonIndex = -1;
 
     static class MonthListViewHolder extends RecyclerView.ViewHolder {
-        Button buttonView;
+        final Button buttonView;
         MonthListViewHolder(@NonNull ConstraintLayout itemView) {
             super(itemView);
             buttonView = itemView.findViewById(R.id.button);

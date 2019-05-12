@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity
     private ProgressBar mProgressBar;
 
     // Internal state.
-    private Config config = new Config();
+    private final Config config = new Config();
     private String sUserName = "";
     private String sPassword = "";
 
@@ -341,6 +341,7 @@ public class SettingsActivity extends AppCompatActivity
      */
     @Override
     public void execute(HttpResponseData data) {
+        boolean success = false;
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         mProgressBar.setVisibility(View.GONE);
         mLoginButton.setEnabled(true);
@@ -350,7 +351,8 @@ public class SettingsActivity extends AppCompatActivity
         if (data.isError() || (data.getHttpStatusCode() != 200 && data.getHttpStatusCode() != 401)) {
             message = getResources().getString(R.string.text_logon_error);
         } else {
-            message = getResources().getString((data.getHttpStatusCode() == 200) ? R.string.text_logged_on : R.string.text_invalid_credentials);
+            success = data.getHttpStatusCode() == 200;
+            message = getResources().getString((success) ? R.string.text_logged_on : R.string.text_invalid_credentials);
         }
 
         new AlertDialog.Builder(this)
@@ -361,7 +363,7 @@ public class SettingsActivity extends AppCompatActivity
 
         // Store current authentication state in user settings and update text of
         // login button.
-        if (data.getHttpStatusCode() == 200) {
+        if (success) {
             AppDefaults.setAuthenticated(true);
             mUserName.setEnabled(false);
             mPassword.setEnabled(false);

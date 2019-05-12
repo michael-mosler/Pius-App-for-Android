@@ -36,7 +36,7 @@ public class VertretungsplanDetailFragment extends Fragment {
     // Local State
     private GradeItem gradeItem;
     private String date;
-    private ArrayList<BaseListItem> list = new ArrayList<>();
+    private final ArrayList<BaseListItem> list = new ArrayList<>();
 
     public VertretungsplanDetailFragment() {
         // Required empty public constructor
@@ -90,11 +90,6 @@ public class VertretungsplanDetailFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override

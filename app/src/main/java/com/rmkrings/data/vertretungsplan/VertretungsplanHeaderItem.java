@@ -14,8 +14,8 @@ import java.util.regex.Pattern;
 
 public class VertretungsplanHeaderItem extends VertretungsplanListItem {
 
-    private String course;
-    private String lesson;
+    private final String course;
+    private final String lesson;
 
     public VertretungsplanHeaderItem(String course, String lesson) {
         this.course = course;

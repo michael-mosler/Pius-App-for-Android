@@ -45,9 +45,9 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
     private final String digestFileName = "news.md5";
     private final String cacheFileName = "news.json";
 
-    private Cache cache = new Cache();
+    private final Cache cache = new Cache();
     private NewsItems newsItems;
-    private ArrayList<BaseListItem> newsItemList = new ArrayList<>();
+    private final ArrayList<BaseListItem> newsItemList = new ArrayList<>();
     private ParentFragment parentFragment;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
@@ -79,11 +79,6 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     public void show(ParentFragment parentFragment) {
@@ -126,7 +121,7 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
         String data;
         JSONObject jsonData;
 
-        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
             setMessage(getResources().getString(R.string.error_failed_to_load_data));
             return;
@@ -143,7 +138,7 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
             jsonData = new JSONObject(data);
             newsItems = new NewsItems(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && newsItems.getDigest() != null) {
+            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && newsItems.getDigest() != null) {
                 cache.store(digestFileName, newsItems.getDigest());
             }
 

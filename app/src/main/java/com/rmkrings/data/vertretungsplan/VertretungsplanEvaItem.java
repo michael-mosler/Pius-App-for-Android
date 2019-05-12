@@ -4,7 +4,7 @@ import com.rmkrings.helper.StringHelper;
 
 public class VertretungsplanEvaItem extends VertretungsplanListItem {
 
-    private String evaText;
+    private final String evaText;
 
     public VertretungsplanEvaItem(String evaText) {
         this.evaText = StringHelper.replaceHtmlEntities(evaText);

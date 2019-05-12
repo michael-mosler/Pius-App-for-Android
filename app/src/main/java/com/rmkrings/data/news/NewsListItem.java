@@ -5,7 +5,7 @@ import com.rmkrings.data.BaseListItem;
 public class NewsListItem extends BaseListItem {
     public static final int news = 0;
 
-    private NewsItem newsItem;
+    private final NewsItem newsItem;
 
     public NewsListItem(NewsItem newsItem) {
         this.newsItem = newsItem;

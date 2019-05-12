@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 public class CalendarMessage extends CalendarListItem implements Serializable {
 
-    private String messageText;
-    private int gravity;
+    private final String messageText;
+    private final int gravity;
 
     public CalendarMessage(String message) {
         this.messageText = message;

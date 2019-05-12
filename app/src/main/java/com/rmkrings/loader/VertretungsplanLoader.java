@@ -6,13 +6,14 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import com.rmkrings.helper.AppDefaults;
+import com.rmkrings.helper.Reachability;
 import com.rmkrings.http.HttpGetRequest;
 import com.rmkrings.http.HttpRequestData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 
 public class VertretungsplanLoader {
-    private String forGrade;
+    private final String forGrade;
 
     public VertretungsplanLoader(String forGrade) {
         this.forGrade = forGrade;
@@ -56,8 +57,7 @@ public class VertretungsplanLoader {
 
     public void load(HttpResponseCallback callback, String digest) {
         try {
-            // @TODO Reachability check
-            if (true) {
+            if (Reachability.isReachable()) {
                 URL url = getVertretungsplanURL(forGrade, digest);
                 HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");

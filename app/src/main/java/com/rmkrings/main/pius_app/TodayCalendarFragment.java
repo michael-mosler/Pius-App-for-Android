@@ -80,11 +80,6 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
         super.onAttach(context);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     public void show(ParentFragment parentFragment) {
         this.parentFragment = parentFragment;
         reload();
@@ -131,7 +126,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
         String data;
         JSONObject jsonData;
 
-        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
             setMessage(getResources().getString(R.string.error_failed_to_load_data));
             return;
@@ -148,7 +143,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
             jsonData = new JSONObject(data);
             calendar = new Calendar(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
+            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
                 cache.store(digestFileName, calendar.getDigest());
             }
 

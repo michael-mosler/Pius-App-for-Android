@@ -1,7 +1,7 @@
 package com.rmkrings.data.calendar;
 
 public class MonthHeaderItem extends CalendarListItem {
-    private String monthName;
+    private final String monthName;
 
     public MonthHeaderItem(String monthName) {
         this.monthName = monthName;

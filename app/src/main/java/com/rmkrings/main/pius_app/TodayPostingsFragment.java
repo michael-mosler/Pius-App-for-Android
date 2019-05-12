@@ -82,11 +82,6 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
         super.onAttach(context);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     private void reload() {
         String digest;
 
@@ -101,7 +96,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
         postingsLoader.load(this, digest);
     }
 
-    public void show(String message, ParentFragment parentFragment) {
+    private void show(String message, ParentFragment parentFragment) {
         itemlist.clear();
         itemlist.add(new MessageItem(message, Gravity.CENTER));
         mPostingsAdapter.notifyDataSetChanged();
@@ -137,7 +132,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
         String data;
         JSONObject jsonData;
 
-        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
             show(getResources().getString(R.string.error_failed_to_load_data), parentFragment);
             return;
@@ -154,7 +149,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
             jsonData = new JSONObject(data);
             postings = new Postings(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && postings.getDigest() != null) {
+            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && postings.getDigest() != null) {
                 cache.store(digestFileName, postings.getDigest());
             }
 

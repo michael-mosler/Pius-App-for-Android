@@ -16,13 +16,13 @@ import com.rmkrings.pius_app_for_android.R;
 
 public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
+    private final Context context;
 
     // Header titles
-    private List<String> listDataHeader; // header titles
+    private final List<String> listDataHeader; // header titles
 
     // child data in format of header title, child title
-    private HashMap<String, List<String>> listDataChild;
+    private final HashMap<String, List<String>> listDataChild;
 
     public VertretungsplanListAdapter(
             Context context, List<String> listDataHeader,

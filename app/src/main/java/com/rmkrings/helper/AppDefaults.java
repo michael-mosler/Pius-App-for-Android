@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AppDefaults {
-    static private SharedPreferences sharedPreferences = PiusApplication.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);
-    static private SharedPreferences.Editor edit = sharedPreferences.edit();
+    static private final SharedPreferences sharedPreferences = PiusApplication.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);
+    static private final SharedPreferences.Editor edit = sharedPreferences.edit();
 
     static SharedPreferences getSharedPreferences() {
         return sharedPreferences;

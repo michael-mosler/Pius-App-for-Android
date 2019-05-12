@@ -21,14 +21,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
-        app:theme="@style/NavigationBarTheme"
         app:itemHorizontalTranslationEnabled="false"
-        app:itemIconTint="@drawable/nav_bar_colors"
-        app:itemTextColor="@drawable/nav_bar_colors"
+        app:itemIconTint="@color/nav_bar_colors"
+        app:itemTextColor="@color/nav_bar_colors"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" >
-    </android.support.design.widget.BottomNavigationView>
+        app:menu="@menu/navigation"
+        app:theme="@style/NavigationBarTheme"/>
 </android.support.constraint.ConstraintLayout>

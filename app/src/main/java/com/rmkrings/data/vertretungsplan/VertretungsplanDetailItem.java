@@ -4,9 +4,9 @@ import com.rmkrings.helper.StringHelper;
 
 public class VertretungsplanDetailItem extends VertretungsplanListItem {
 
-    private String substitutionType;
-    private String room;
-    private String teacher;
+    private final String substitutionType;
+    private final String room;
+    private final String teacher;
 
 
     public VertretungsplanDetailItem(String substitutionType, String room, String teacher) {

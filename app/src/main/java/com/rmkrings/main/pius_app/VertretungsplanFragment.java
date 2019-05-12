@@ -25,6 +25,7 @@ import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.adapter.VertretungsplanListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
+import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
@@ -50,15 +51,15 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     private VertretungsplanListAdapter mVertretunsplanListAdapter;
 
     // Local state.
-    private String digestFileName = "vertretungsplan.md5";
-    private String cacheFileName = "vertretungsplan.json";
+    private final String digestFileName = "vertretungsplan.md5";
+    private final String cacheFileName = "vertretungsplan.json";
 
     private boolean mustCollapseGroups = false;
-    private Cache cache = new Cache();
+    private final Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;
-    private String[] metaData = new String[2];
-    private ArrayList<String> listDataHeader = new ArrayList<>(0);
-    private HashMap<String, List<String>> listDataChild = new HashMap<>(0);
+    private final String[] metaData = new String[2];
+    private final ArrayList<String> listDataHeader = new ArrayList<>(0);
+    private final HashMap<String, List<String>> listDataChild = new HashMap<>(0);
     private FragmentActivity fragmentActivity;
 
     private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
@@ -128,13 +129,24 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+
+        if (!AppDefaults.isAuthenticated()) {
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+                    .setTitle(getResources().getString(R.string.title_substitution_schedule))
+                    .setMessage(getResources().getString(R.string.error_cannot_use_vertretungsplan))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (getFragmentManager() != null) {
+                                getFragmentManager().popBackStack();
+                            }
+                        }
+                    })
+                    .show();
+            return;
+        }
 
         Objects.requireNonNull(getActivity()).setTitle(R.string.title_substitution_schedule);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
@@ -202,7 +214,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         mFragment.setRefreshing(false);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Vertretungsplan. HTTP Status code %d.", responseData.getHttpStatusCode()));
             new AlertDialog.Builder(Objects.requireNonNull(getContext()))
                     .setTitle(getResources().getString(R.string.title_substitution_schedule))
@@ -230,7 +242,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
             jsonData = new JSONObject(data);
             vertretungsplan = new Vertretungsplan(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
                 cache.store(digestFileName, vertretungsplan.getDigest());
             }
 

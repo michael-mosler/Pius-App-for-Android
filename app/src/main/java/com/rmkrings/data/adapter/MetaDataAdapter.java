@@ -1,5 +1,6 @@
 package com.rmkrings.data.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -10,10 +11,10 @@ import com.rmkrings.helper.StringHelper;
 import com.rmkrings.pius_app_for_android.R;
 
 public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDataViewHolder> {
-    private String[] dataset;
+    private final String[] dataset;
 
-    public static class MetaDataViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+    static class MetaDataViewHolder extends RecyclerView.ViewHolder {
+        final TextView textView;
         MetaDataViewHolder(TextView v) {
             super(v);
             textView = v;
@@ -26,8 +27,9 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
     }
 
     // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
-    public MetaDataAdapter.MetaDataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MetaDataAdapter.MetaDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new view
         TextView v = (TextView)LayoutInflater
                 .from(parent.getContext())
@@ -38,7 +40,7 @@ public class MetaDataAdapter extends RecyclerView.Adapter<MetaDataAdapter.MetaDa
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MetaDataViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MetaDataViewHolder holder, int position) {
         holder.textView.setText(StringHelper.replaceHtmlEntities(dataset[position]));
     }
 

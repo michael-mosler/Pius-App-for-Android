@@ -59,11 +59,11 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     private String digestFileName() { return String.format("%s.md5", grade); }
     private String cacheFileName() { return String.format("%s.json", grade); }
 
-    private Cache cache = new Cache();
+    private final Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;
-    private String[] metaData = new String[2];
-    private ArrayList<String> listDataHeader = new ArrayList<>(0);
-    private HashMap<String, List<VertretungsplanListItem>> listDataChild = new HashMap<>(0);
+    private final String[] metaData = new String[2];
+    private final ArrayList<String> listDataHeader = new ArrayList<>(0);
+    private final HashMap<String, List<VertretungsplanListItem>> listDataChild = new HashMap<>(0);
 
     private final static Logger logger = Logger.getLogger(VertretungsplanLoader.class.getName());
 
@@ -115,11 +115,6 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override
@@ -249,7 +244,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mFragment.setRefreshing(false);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Dashboard. HTTP Status code %d.", responseData.getHttpStatusCode()));
             new AlertDialog.Builder(Objects.requireNonNull(getContext()))
                     .setTitle(getResources().getString(R.string.title_dashboard))
@@ -277,7 +272,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
             jsonData = new JSONObject(data);
             vertretungsplan = new Vertretungsplan(jsonData);
 
-            if (responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
                 cache.store(digestFileName(), vertretungsplan.getDigest());
             }
 

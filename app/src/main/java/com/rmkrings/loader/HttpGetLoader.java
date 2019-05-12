@@ -1,5 +1,6 @@
 package com.rmkrings.loader;
 
+import com.rmkrings.helper.Reachability;
 import com.rmkrings.http.HttpGetRequest;
 import com.rmkrings.http.HttpRequestData;
 import com.rmkrings.interfaces.HttpResponseCallback;
@@ -15,8 +16,7 @@ abstract class HttpGetLoader {
 
     public void load(HttpResponseCallback callback, String digest) {
         try {
-            // @TODO Reachability check
-            if (true) {
+            if (Reachability.isReachable()) {
                 URL url = getURL(digest);
                 HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");
