@@ -22,6 +22,7 @@ import com.rmkrings.data.calendar.DayItem;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
+import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.pius_app_for_android.R;
 
@@ -42,6 +43,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
     private final Cache cache = new Cache();
     private Calendar calendar;
     private final ArrayList<CalendarListItem> dateList = new ArrayList<>();
+    private ParentFragment parentFragment;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
@@ -83,9 +85,8 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
         super.onDetach();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    public void show(ParentFragment parentFragment) {
+        this.parentFragment = parentFragment;
         reload();
     }
 
@@ -157,5 +158,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
             e.printStackTrace();
             setMessage(getResources().getString(R.string.error_failed_to_load_data));
         }
+
+        parentFragment.notifyDoneRefreshing();
     }
 }

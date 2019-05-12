@@ -41,6 +41,11 @@ public class PostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.listItems = listItems;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return listItems.get(position).getType();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

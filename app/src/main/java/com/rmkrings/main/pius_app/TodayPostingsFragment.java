@@ -21,6 +21,7 @@ import com.rmkrings.data.postings.Postings;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
+import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.PostingsLoader;
 import com.rmkrings.pius_app_for_android.R;
@@ -43,6 +44,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     private final Cache cache = new Cache();
     private Postings postings;
     private final ArrayList<BaseListItem> itemlist = new ArrayList<>();
+    private ParentFragment parentFragment;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
@@ -61,6 +63,11 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
         mPostings.addItemDecoration(new DividerItemDecoration(mPostings.getContext(), DividerItemDecoration.VERTICAL));
         mPostingsAdapter = new PostingsAdapter(itemlist);
         mPostings.setAdapter(mPostingsAdapter);
+
+        Objects.requireNonNull(getFragmentManager())
+                .beginTransaction()
+                .hide(this)
+                .commit();
     }
 
     @Override
@@ -94,20 +101,34 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
         postingsLoader.load(this, digest);
     }
 
-    public void show(String message) {
+    public void show(String message, ParentFragment parentFragment) {
         itemlist.clear();
         itemlist.add(new MessageItem(message, Gravity.CENTER));
         mPostingsAdapter.notifyDataSetChanged();
+        parentFragment.notifyDoneRefreshing();
     }
 
-    public void show() {
+    public void show(ParentFragment parentFragment) {
+        this.parentFragment = parentFragment;
         reload();
     }
 
     private void setPostings() {
-        itemlist.clear();
-        itemlist.addAll(Objects.requireNonNull(postings.getPostings()));
-        mPostingsAdapter.notifyDataSetChanged();
+        if (postings.getPostings() != null && postings.getPostings().size() == 0) {
+            Objects.requireNonNull(getFragmentManager())
+                    .beginTransaction()
+                    .hide(this)
+                    .commit();
+        } else {
+            Objects.requireNonNull(getFragmentManager())
+                    .beginTransaction()
+                    .show(this)
+                    .commit();
+            itemlist.clear();
+            itemlist.addAll(Objects.requireNonNull(postings.getPostings()));
+            mPostingsAdapter.notifyDataSetChanged();
+        }
+        parentFragment.notifyDoneRefreshing();
     }
 
     @SuppressLint("DefaultLocale")
@@ -118,7 +139,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
 
         if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            show(getResources().getString(R.string.error_failed_to_load_data));
+            show(getResources().getString(R.string.error_failed_to_load_data), parentFragment);
             return;
         }
 
@@ -141,7 +162,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
         }
         catch (Exception e) {
             e.printStackTrace();
-            show(getResources().getString(R.string.error_failed_to_load_data));
+            show(getResources().getString(R.string.error_failed_to_load_data), parentFragment);
         }
     }
 }

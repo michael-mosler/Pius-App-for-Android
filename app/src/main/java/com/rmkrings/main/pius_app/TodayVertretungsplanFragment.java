@@ -22,9 +22,12 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
+import com.rmkrings.helper.AppDefaults;
+import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.pius_app_for_android.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class TodayVertretungsplanFragment extends Fragment {
@@ -67,22 +70,40 @@ public class TodayVertretungsplanFragment extends Fragment {
         super.onDetach();
     }
 
-    public void show(String message) {
-        listItems.clear();
-        listItems.add(new MessageItem(message, Gravity.CENTER));
-        mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+    private boolean canUseDashboard(){
+        return (AppDefaults.isAuthenticated() && (AppDefaults.hasLowerGrade() || (AppDefaults.hasUpperGrade() && AppDefaults.getCourseList().size() > 0)));
     }
 
-    public void show(Vertretungsplan vertretungsplan) {
+    public void show(String message, ParentFragment parentFragment) {
+        if (!canUseDashboard()) {
+            Objects.requireNonNull(getFragmentManager())
+                    .beginTransaction()
+                    .hide(this)
+                    .commit();
+        } else {
+            Objects.requireNonNull(getFragmentManager())
+                    .beginTransaction()
+                    .show(this)
+                    .commit();
+
+            listItems.clear();
+            listItems.add(new MessageItem(message, Gravity.CENTER));
+            mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+        }
+
+        parentFragment.notifyDoneRefreshing();
+    }
+
+    public void show(Vertretungsplan vertretungsplan, ParentFragment parentFragment) {
         VertretungsplanForDate vertretungsplanForDate = vertretungsplan.getTodaysSchedule();
 
         if (vertretungsplanForDate == null) {
-            show(getResources().getString(R.string.text_empty_schedule));
+            show(getResources().getString(R.string.text_empty_schedule), parentFragment);
             return;
         }
 
         if (vertretungsplanForDate.getGradeItems().size() == 0) {
-            show(getResources().getString(R.string.text_empty_schedule));
+            show(getResources().getString(R.string.text_empty_schedule), parentFragment);
             return;
         }
 
@@ -112,10 +133,11 @@ public class TodayVertretungsplanFragment extends Fragment {
         }
 
         if (listItems.size() == 0) {
-            show(getResources().getString(R.string.text_empty_schedule));
+            show(getResources().getString(R.string.text_empty_schedule), parentFragment);
             return;
         }
 
         mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+        parentFragment.notifyDoneRefreshing();
     }
 }

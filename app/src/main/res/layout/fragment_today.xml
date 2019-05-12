@@ -1,81 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fragment="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/todayFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rmkrings.main.pius_app.TodayFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="8dp">
+            android:layout_height="match_parent">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="4dp" />
-
-            <TextView
-                android:id="@+id/date"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                tools:text="Samstag, 4. Mai 2019 (B-Woche)" />
+                android:paddingEnd="8dp">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="8dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="8dp">
 
-            <fragment
-                android:id="@+id/postingsfragment"
-                android:name="com.rmkrings.main.pius_app.TodayPostingsFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_today_postings" />
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="16dp" />
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        tools:text="Samstag, 4. Mai 2019 (B-Woche)" />
 
-            <fragment
-                android:id="@+id/vertretungsplanfragment"
-                android:name="com.rmkrings.main.pius_app.TodayVertretungsplanFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_today_vertretungsplan" />
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="16dp" />
+                    <fragment
+                        android:id="@+id/postingsfragment"
+                        android:name="com.rmkrings.main.pius_app.TodayPostingsFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:layout="@layout/fragment_today_postings" />
 
-            <fragment
-                android:id="@+id/calendarfragment"
-                android:name="com.rmkrings.main.pius_app.TodayCalendarFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_today_calendar" />
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="16dp" />
+                    <fragment
+                        android:id="@+id/vertretungsplanfragment"
+                        android:name="com.rmkrings.main.pius_app.TodayVertretungsplanFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:layout="@layout/fragment_today_vertretungsplan" />
 
-            <fragment
-                android:id="@+id/newsfragment"
-                android:name="com.rmkrings.main.pius_app.TodayNewsFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_today_news" />
-        </LinearLayout>
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp" />
+
+                    <fragment
+                        android:id="@+id/calendarfragment"
+                        android:name="com.rmkrings.main.pius_app.TodayCalendarFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:layout="@layout/fragment_today_calendar" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp" />
+
+                    <fragment
+                        android:id="@+id/newsfragment"
+                        android:name="com.rmkrings.main.pius_app.TodayNewsFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:layout="@layout/fragment_today_news" />
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            fragment:layout_constraintBottom_toBottomOf="parent"
+            fragment:layout_constraintLeft_toLeftOf="parent"
+            fragment:layout_constraintRight_toRightOf="parent"
+            fragment:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
     </android.support.constraint.ConstraintLayout>
-</ScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

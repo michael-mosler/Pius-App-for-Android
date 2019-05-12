@@ -55,6 +55,18 @@ public class AppDefaults {
         return AppDefaults.getSelectedGradeRow() != 0;
     }
 
+    public static boolean hasLowerGrade() {
+        Config config = new Config();
+        int selectedGradeRow = getSelectedGradeRow();
+        return config.isLowerGrade(config.getGrades()[selectedGradeRow]);
+    }
+
+    public static boolean hasUpperGrade() {
+        Config config = new Config();
+        int selectedGradeRow = getSelectedGradeRow();
+        return config.isUpperGrade(config.getGrades()[selectedGradeRow]);
+    }
+
     public static int getSelectedClassRow() {
         return sharedPreferences.getInt("selectedClassRow", 0);
     }

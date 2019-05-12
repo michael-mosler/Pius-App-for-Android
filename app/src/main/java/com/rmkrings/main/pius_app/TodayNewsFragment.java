@@ -24,6 +24,7 @@ import com.rmkrings.data.news.NewsListItem;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
+import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.NewsLoader;
@@ -47,6 +48,7 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
     private Cache cache = new Cache();
     private NewsItems newsItems;
     private ArrayList<BaseListItem> newsItemList = new ArrayList<>();
+    private ParentFragment parentFragment;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
@@ -84,9 +86,8 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
         super.onDetach();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    public void show(ParentFragment parentFragment) {
+        this.parentFragment = parentFragment;
         reload();
     }
 
@@ -152,6 +153,8 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
             setMessage(getResources().getString(R.string.error_failed_to_load_data));
             e.printStackTrace();
         }
+
+        parentFragment.notifyDoneRefreshing();
     }
 
     @Override

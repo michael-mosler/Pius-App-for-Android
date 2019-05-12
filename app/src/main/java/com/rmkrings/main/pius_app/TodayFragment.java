@@ -7,9 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
@@ -18,6 +20,7 @@ import com.rmkrings.helper.Cache;
 import com.rmkrings.helper.DateHelper;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
+import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.pius_app_for_android.R;
@@ -34,15 +37,19 @@ import java.util.logging.Logger;
 
 /**
  */
-public class TodayFragment extends Fragment implements HttpResponseCallback {
+public class TodayFragment extends Fragment implements HttpResponseCallback, ParentFragment {
+
     // Outlets
-    TextView mDate = null;
-    TodayPostingsFragment mTodayPostingsFragment = null;
-    TodayVertretungsplanFragment mTodayVertetungsplanFragment = null;
-    TodayCalendarFragment mTodayCalendarFragment = null;
-    TodayNewsFragment mTodayNewsFragment = null;
+    private SwipeRefreshLayout mFragment = null;
+    private ProgressBar mProgressBar;
+    private TextView mDate = null;
+    private TodayPostingsFragment mTodayPostingsFragment = null;
+    private TodayVertretungsplanFragment mTodayVertetungsplanFragment = null;
+    private TodayCalendarFragment mTodayCalendarFragment = null;
+    private TodayNewsFragment mTodayNewsFragment = null;
 
     // Local State
+    private int pendingRefreshs;
     private String grade;
     private String digestFileName() { return String.format("%s.md5", grade); }
     private String cacheFileName() { return String.format("%s.json", grade); }
@@ -63,6 +70,16 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mFragment = view.findViewById(R.id.todayFragment);
+        mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reload(true);
+            }
+        });
+
+        mProgressBar = view.findViewById(R.id.progressBar);
 
         mTodayPostingsFragment = (TodayPostingsFragment)getChildFragmentManager().findFragmentById(R.id.postingsfragment);
         mTodayVertetungsplanFragment = (TodayVertretungsplanFragment)getChildFragmentManager().findFragmentById(R.id.vertretungsplanfragment);
@@ -101,11 +118,13 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(0).setChecked(true);
 
-        reload();
+        reload(false);
     }
 
-    private void reload() {
+    private void reload(boolean refreshing) {
         String digest;
+
+        pendingRefreshs = 4;
 
         if (cache.fileExists(cacheFileName()) && cache.fileExists(digestFileName())) {
             digest = cache.read(digestFileName());
@@ -114,19 +133,18 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
             digest = null;
         }
 
-        /*
         if (!refreshing) {
             mProgressBar.setVisibility(View.VISIBLE);
         }
-        */
 
-        mTodayPostingsFragment.show();
+        mTodayPostingsFragment.show(this);
 
         // We load Vertretungsplan from here as data might be needed in several child fragments.
         VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(grade);
         vertretungsplanLoader.load(this, digest);
-        // mTodayCalendarFragment.show();
-        // mTodayNewsFragment.show();
+
+        mTodayCalendarFragment.show(this);
+        mTodayNewsFragment.show(this);
     }
 
     @SuppressLint("DefaultLocale")
@@ -137,8 +155,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
 
         if (responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            mTodayPostingsFragment.show(getResources().getString(R.string.error_failed_to_load_data));
-            mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data));
+            mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
             return;
         }
 
@@ -157,12 +174,21 @@ public class TodayFragment extends Fragment implements HttpResponseCallback {
                 cache.store(digestFileName(), vertretungsplan.getDigest());
             }
 
-            mTodayVertetungsplanFragment.show(vertretungsplan);
+            mTodayVertetungsplanFragment.show(vertretungsplan, this);
         }
         catch (Exception e) {
-            mTodayPostingsFragment.show(getResources().getString(R.string.error_failed_to_load_data));
-            mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data));
+            mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notifyDoneRefreshing() {
+        pendingRefreshs -= 1;
+
+        if (pendingRefreshs <= 0) {
+            mFragment.setRefreshing(false);
+            mProgressBar.setVisibility(View.INVISIBLE);
         }
     }
 }
