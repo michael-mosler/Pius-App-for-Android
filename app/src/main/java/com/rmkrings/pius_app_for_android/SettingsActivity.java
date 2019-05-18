@@ -1,7 +1,9 @@
 package com.rmkrings.pius_app_for_android;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.NumberPicker;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.rmkrings.helper.Config;
 import com.rmkrings.helper.AppDefaults;
@@ -233,6 +236,7 @@ public class SettingsActivity extends AppCompatActivity
      * The iOS viewDidLoad equivalent. Do all the initialisation stuff.
      * @param savedInstanceState - Saved instance state to return to.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -324,6 +328,16 @@ public class SettingsActivity extends AppCompatActivity
                 startActivity(a);
             }
         });
+
+        TextView mVersionInfo = findViewById(R.id.version);
+        try {
+            String versionName = getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+            mVersionInfo.setText(versionName);
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            mVersionInfo.setText("Dev");
+        }
     }
 
     @Override

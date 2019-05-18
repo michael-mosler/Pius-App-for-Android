@@ -93,12 +93,14 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
         }
 
         mNewsListAdapter.notifyDataSetChanged();
+        parentFragment.notifyDoneRefreshing();
     }
 
     private void setMessage(String message) {
         newsItemList.clear();
         newsItemList.add(new MessageItem(message, Gravity.CENTER));
         mNewsListAdapter.notifyDataSetChanged();
+        parentFragment.notifyDoneRefreshing();
     }
 
     private void reload() {
@@ -148,8 +150,6 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
             setMessage(getResources().getString(R.string.error_failed_to_load_data));
             e.printStackTrace();
         }
-
-        parentFragment.notifyDoneRefreshing();
     }
 
     @Override

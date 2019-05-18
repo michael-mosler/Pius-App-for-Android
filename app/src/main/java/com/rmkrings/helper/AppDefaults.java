@@ -2,8 +2,11 @@ package com.rmkrings.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import com.rmkrings.main.pius_app.PiusApplication;
+import com.rmkrings.pius_app_for_android.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,7 +26,14 @@ public class AppDefaults {
 
 
     static public String getBaseUrl() {
-        return "https://pius-gateway-ng.eu-gb.mybluemix.net";
+        try {
+            ApplicationInfo ai = PiusApplication.getAppContext().getPackageManager().getApplicationInfo(PiusApplication.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
+            return (String)ai.metaData.get("host");
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "https://pius-gateway-ng.eu-gb.mybluemix.net";
+        }
     }
 
     /*
@@ -140,5 +150,17 @@ public class AppDefaults {
     public static ArrayList<String> getCourseList() {
         Set<String> s = sharedPreferences.getStringSet("courseList", null);
         return (s != null) ? new ArrayList<>(s) : new ArrayList<String>();
+    }
+
+    /*
+     * Version Code
+     */
+    public static void setVersionCode(int versionCode) {
+        edit.putInt("versionCode", versionCode);
+        edit.commit();
+    }
+
+    public static int getVersionCode() {
+        return sharedPreferences.getInt("versionCode", -1);
     }
 }

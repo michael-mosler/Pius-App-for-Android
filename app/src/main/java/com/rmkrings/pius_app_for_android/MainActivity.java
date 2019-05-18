@@ -1,5 +1,6 @@
 package com.rmkrings.pius_app_for_android;
 
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.content.Intent;
 
+import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Reachability;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.main.pius_app.CalendarFragment;
@@ -93,6 +95,17 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
     public void onResume() {
         super.onResume();
         setTitle(R.string.title_home);
+
+        try {
+            int currentVersionCode = getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode;
+            if (currentVersionCode > AppDefaults.getVersionCode()) {
+                // Any thing that need to be migrated goes in here.
+                AppDefaults.setVersionCode(currentVersionCode);
+            }
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

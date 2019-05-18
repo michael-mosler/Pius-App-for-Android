@@ -31,8 +31,6 @@ import java.util.Objects;
 
 
 public class TodayVertretungsplanFragment extends Fragment {
-    // Outlets
-    private RecyclerView mItemList;
     private VertetungsplanDetailListAdapter mVertetungsplanDetailListAdapter;
 
     // Local State
@@ -45,7 +43,8 @@ public class TodayVertretungsplanFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mItemList = view.findViewById(R.id.itemlist);
+        // Outlets
+        RecyclerView mItemList = view.findViewById(R.id.itemlist);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PiusApplication.getAppContext(), LinearLayoutManager.VERTICAL, false);
         mItemList.setLayoutManager(mLayoutManager);

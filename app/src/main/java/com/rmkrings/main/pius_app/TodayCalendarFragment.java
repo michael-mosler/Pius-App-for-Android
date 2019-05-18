@@ -98,12 +98,14 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
         }
 
         mCalendarSearchListAdapter.notifyDataSetChanged();
+        parentFragment.notifyDoneRefreshing();
     }
 
     private void setMessage(String message) {
         dateList.clear();
         dateList.add(new CalendarMessage(message, Gravity.CENTER));
         mCalendarSearchListAdapter.notifyDataSetChanged();
+        parentFragment.notifyDoneRefreshing();
     }
 
     private void reload() {
@@ -153,7 +155,5 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
             e.printStackTrace();
             setMessage(getResources().getString(R.string.error_failed_to_load_data));
         }
-
-        parentFragment.notifyDoneRefreshing();
     }
 }
