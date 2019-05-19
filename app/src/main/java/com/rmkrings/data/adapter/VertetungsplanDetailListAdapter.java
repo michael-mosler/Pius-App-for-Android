@@ -71,7 +71,6 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
-
         LayoutInflater mLayoutInflater = LayoutInflater.from(parent.getContext());
 
         switch(viewType) {

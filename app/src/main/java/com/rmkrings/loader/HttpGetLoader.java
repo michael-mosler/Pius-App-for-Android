@@ -14,12 +14,17 @@ import javax.net.ssl.HttpsURLConnection;
 abstract class HttpGetLoader {
     protected abstract URL getURL(String digest) throws java.net.MalformedURLException;
 
+    public HttpsURLConnection addRequestProperties(HttpsURLConnection connection) {
+        return connection;
+    }
+
     public void load(HttpResponseCallback callback, String digest) {
         try {
             if (Reachability.isReachable()) {
                 URL url = getURL(digest);
                 HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");
+                connection = addRequestProperties(connection);
 
                 HttpGetRequest request = new HttpGetRequest();
                 HttpRequestData data = new HttpRequestData(connection, callback);

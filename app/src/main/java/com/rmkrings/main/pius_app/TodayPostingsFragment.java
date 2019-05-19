@@ -109,21 +109,23 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     }
 
     private void setPostings() {
-        if (postings.getPostings() != null && postings.getPostings().size() == 0) {
-            Objects.requireNonNull(getFragmentManager())
-                    .beginTransaction()
-                    .hide(this)
-                    .commit();
-        } else {
-            Objects.requireNonNull(getFragmentManager())
-                    .beginTransaction()
-                    .show(this)
-                    .commit();
-            itemlist.clear();
-            itemlist.addAll(Objects.requireNonNull(postings.getPostings()));
-            mPostingsAdapter.notifyDataSetChanged();
+        if (getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
+            if (postings.getPostings() != null && postings.getPostings().size() == 0) {
+                Objects.requireNonNull(getFragmentManager())
+                        .beginTransaction()
+                        .hide(this)
+                        .commit();
+            } else {
+                Objects.requireNonNull(getFragmentManager())
+                        .beginTransaction()
+                        .show(this)
+                        .commit();
+                itemlist.clear();
+                itemlist.addAll(Objects.requireNonNull(postings.getPostings()));
+                mPostingsAdapter.notifyDataSetChanged();
+            }
+            parentFragment.notifyDoneRefreshing();
         }
-        parentFragment.notifyDoneRefreshing();
     }
 
     @SuppressLint("DefaultLocale")

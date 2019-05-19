@@ -69,23 +69,25 @@ public class TodayVertretungsplanFragment extends Fragment {
     }
 
     public void show(String message, ParentFragment parentFragment) {
-        if (!canUseDashboard()) {
-            Objects.requireNonNull(getFragmentManager())
-                    .beginTransaction()
-                    .hide(this)
-                    .commit();
-        } else {
-            Objects.requireNonNull(getFragmentManager())
-                    .beginTransaction()
-                    .show(this)
-                    .commit();
+        if (getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
+            if (!canUseDashboard()) {
+                Objects.requireNonNull(getFragmentManager())
+                        .beginTransaction()
+                        .hide(this)
+                        .commit();
+            } else {
+                Objects.requireNonNull(getFragmentManager())
+                        .beginTransaction()
+                        .show(this)
+                        .commit();
 
-            listItems.clear();
-            listItems.add(new MessageItem(message, Gravity.CENTER));
-            mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+                listItems.clear();
+                listItems.add(new MessageItem(message, Gravity.CENTER));
+                mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+            }
+
+            parentFragment.notifyDoneRefreshing();
         }
-
-        parentFragment.notifyDoneRefreshing();
     }
 
     public void show(Vertretungsplan vertretungsplan, ParentFragment parentFragment) {

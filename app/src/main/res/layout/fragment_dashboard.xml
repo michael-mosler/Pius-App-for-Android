@@ -55,20 +55,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp" />
 
-            <TextView
-                android:id="@+id/lastupdate"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:textSize="17sp" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@string/text_last_changed" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lastupdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:textSize="17sp"
+                        tools:text="17.05.2019 15:26 Uhr" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/text_last_changed" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/evaButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:layout_weight="0"
+                    android:background="#00FDFFFF"
+                    android:contentDescription="@string/label_eva"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="8dp"
+                    android:src="@drawable/ic_pencil_blue" />
+
+            </LinearLayout>
 
             <ExpandableListView
                 android:id="@+id/vertretungsplanListView"

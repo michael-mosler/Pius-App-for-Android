@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -52,7 +55,9 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     private RecyclerView.Adapter mMetaDataAdapter;
     private TextView mLastUpdate;
     private ExpandableListView mDashboardListView;
+    private ImageButton mEvaButton;
     private DashboardListAdapter mDashboardListAdapter;
+    private FragmentActivity fragmentActivity;
 
     // Local state.
     private String grade;
@@ -96,14 +101,23 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mDashboardListAdapter = new DashboardListAdapter(PiusApplication.getAppContext(), listDataHeader, listDataChild);
         mDashboardListView.setAdapter(mDashboardListAdapter);
 
+        mEvaButton = view.findViewById(R.id.evaButton);
+        mEvaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, new EvaFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
         mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 reload(true);
             }
         });
-
-        grade = AppDefaults.getGradeSetting();
     }
 
     @Override
@@ -115,11 +129,15 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        fragmentActivity = (FragmentActivity)context;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        grade = AppDefaults.getGradeSetting();
+        mEvaButton.setVisibility(AppDefaults.hasUpperGrade() ? View.VISIBLE : View.INVISIBLE);
 
         if (!canUseDashboard()) {
             new AlertDialog.Builder(Objects.requireNonNull(getContext()))

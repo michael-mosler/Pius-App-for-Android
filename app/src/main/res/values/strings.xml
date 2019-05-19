@@ -12,6 +12,7 @@
     <string name="title_news">News</string>
     <string name="title_postings">Benachrichtigungen</string>
     <string name="title_settings">Einstellungen</string>
+    <string name="title_eva">EVA</string>
     <string name="title_add_courses">Kurse hinzufügen</string>
     <string name="title_logon">Anmeldung</string>
     <string name="title_delete_course_list_all">Kursliste löschen</string>
@@ -32,6 +33,7 @@
     <string name="label_delete">Löschen</string>
     <string name="label_delete_all">Alles löschen</string>
     <string name="label_search">Suchen</string>
+    <string name="label_eva">EVA</string>
     <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
 
     <string name="text_logged_on">Du bist nun angemeldet.</string>
@@ -43,6 +45,7 @@
     <string name="text_course_list_info">Hier legst Du fest, für welche Kurse im Dashboard und bei Push-Benachrichtigungen berücksichtigt werden.</string>
     <string name="text_empty_calendar">Für heute steht nichts im Kalender.</string>
     <string name="text_empty_schedule">Heute hast Du keinen Vertretungsunterricht.</string>
+    <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
 
     <string name="error_cannot_use_vertretungsplan">Melde Dich in den Einstellungen an, um den Vertretungsplan zu verwenden.\n
         \nHast Du alle Informationen angegeben, dann kannst Du das Widget verwenden und Push-Benachrichtigungen erhalten.\n
