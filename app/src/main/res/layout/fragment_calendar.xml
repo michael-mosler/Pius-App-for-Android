@@ -52,7 +52,6 @@
                 </android.support.v7.widget.RecyclerView>
 
                 <View
-                    android:id="@+id/divider"
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
