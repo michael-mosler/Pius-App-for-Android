@@ -6,7 +6,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.rmkrings.main.pius_app.PiusApplication;
-import com.rmkrings.pius_app_for_android.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -2,7 +2,7 @@ package com.rmkrings.data.eva;
 
 public class EvaDateItem extends EvaListItem {
 
-    private String date;
+    private final String date;
 
     public EvaDateItem(String date) {
         this.date = date;

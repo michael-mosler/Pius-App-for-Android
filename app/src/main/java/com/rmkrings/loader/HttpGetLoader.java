@@ -14,7 +14,7 @@ import javax.net.ssl.HttpsURLConnection;
 abstract class HttpGetLoader {
     protected abstract URL getURL(String digest) throws java.net.MalformedURLException;
 
-    public HttpsURLConnection addRequestProperties(HttpsURLConnection connection) {
+    HttpsURLConnection addRequestProperties(HttpsURLConnection connection) {
         return connection;
     }
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Pius App for Android</string>
 
     <string name="button_mycourses">Meine Kurse</string>
@@ -36,10 +36,10 @@
     <string name="label_eva">EVA</string>
     <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
 
-    <string name="text_logged_on">Du bist nun angemeldet.</string>
+    <string name="text_logged_on" tools:keep="@string/text_logged_on">Du bist nun angemeldet.</string>
     <string name="text_logged_out">Du bist nun abgemeldet.</string>
-    <string name="text_invalid_credentials">Die Anmeldedaten sind ungültig.</string>
-    <string name="text_logon_error">Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.</string>
+    <string name="text_invalid_credentials" tools:keep="@string/text_invalid_credentials">Die Anmeldedaten sind ungültig.</string>
+    <string name="text_logon_error" tools:keep="@string/text_logon_error">Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.</string>
     <string name="text_last_changed">Letzte Änderung</string>
     <string name="text_confirm_delete_course_list">Bist Du sicher, dass Du die gesamte Kursliste löschen möchtest?</string>
     <string name="text_course_list_info">Hier legst Du fest, für welche Kurse im Dashboard und bei Push-Benachrichtigungen berücksichtigt werden.</string>

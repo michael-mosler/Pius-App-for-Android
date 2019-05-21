@@ -1,5 +1,6 @@
 package com.rmkrings.helper;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.security.KeyPairGeneratorSpec;
@@ -12,6 +13,8 @@ import java.math.BigInteger;
 import java.security.Key;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,11 +68,11 @@ class Crypto {
     }
 
     private byte[] rsaEncrypt(byte[] secret) throws Exception {
-        KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry)keyStore.getEntry(KEY_ALIAS, null);
+        PublicKey publicKey = keyStore.getCertificate(KEY_ALIAS).getPublicKey();
 
         // Encrypt the text
         Cipher inputCipher = Cipher.getInstance(RSA_MODE, getRSAProvider());
-        inputCipher.init(Cipher.ENCRYPT_MODE, privateKeyEntry.getCertificate().getPublicKey());
+        inputCipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, inputCipher);
@@ -80,10 +83,10 @@ class Crypto {
     }
 
     private byte[] rsaDecrypt(byte[] encrypted) throws Exception {
-        KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry)keyStore.getEntry(KEY_ALIAS, null);
+        PrivateKey privateKey = (PrivateKey)keyStore.getKey(KEY_ALIAS, null);
 
         Cipher output = Cipher.getInstance(RSA_MODE, "AndroidKeyStoreBCWorkaround");
-        output.init(Cipher.DECRYPT_MODE, privateKeyEntry.getPrivateKey());
+        output.init(Cipher.DECRYPT_MODE, privateKey);
 
         CipherInputStream cipherInputStream = new CipherInputStream(
                 new ByteArrayInputStream(encrypted), output);
@@ -132,7 +135,7 @@ class Crypto {
     }
 
     String encrypt(String input) throws Exception {
-        Cipher c = Cipher.getInstance(AES_MODE, "BC");
+        @SuppressLint("GetInstance") Cipher c = Cipher.getInstance(AES_MODE);
         c.init(Cipher.ENCRYPT_MODE, getSecretKey());
         byte[] encodedBytes = c.doFinal(input.getBytes());
         return  Base64.encodeToString(encodedBytes, Base64.DEFAULT);
@@ -140,7 +143,7 @@ class Crypto {
 
 
     String decrypt(String input) throws Exception {
-        Cipher c = Cipher.getInstance(AES_MODE, "BC");
+        @SuppressLint("GetInstance") Cipher c = Cipher.getInstance(AES_MODE);
         c.init(Cipher.DECRYPT_MODE, getSecretKey());
 
         byte[] encrypted = Base64.decode(input, Base64.DEFAULT);

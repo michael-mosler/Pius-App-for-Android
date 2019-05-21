@@ -21,6 +21,7 @@ public class EvaItem implements Serializable {
         }
     }
 
+    @SuppressWarnings("unused")
     public String getUuid() {
         return uuid;
     }

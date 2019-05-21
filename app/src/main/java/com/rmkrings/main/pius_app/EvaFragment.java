@@ -49,7 +49,7 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
     private final String digestFileName = "eva.md5";
     private final String cacheFileName = "eva.json";
 
-    private Cache cache = new Cache();
+    private final Cache cache = new Cache();
     private Eva eva;
     private final ArrayList<BaseListItem> evaList = new ArrayList<>();
 

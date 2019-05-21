@@ -2,12 +2,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
 
     <!-- The background color, preferably the same as your normal theme -->
-    <item android:drawable="@color/colorPiusBlue"/>
+    <item android:drawable="@color/colorLauncherBgnd"/>
 
     <!-- Your product logo - 144dp color version of your app icon -->
     <item>
-        <bitmap
-            android:src="@drawable/pius_app_launch_logo"
+        <nine-patch
+            android:src="@drawable/ic_splash"
             android:gravity="center"/>
     </item>
 </layer-list>

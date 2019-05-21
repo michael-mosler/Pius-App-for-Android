@@ -2,7 +2,7 @@ package com.rmkrings.data.eva;
 
 public class EvaCourseItem extends EvaListItem {
 
-    private String course;
+    private final String course;
 
     public EvaCourseItem(String course) {
         this.course = course;
