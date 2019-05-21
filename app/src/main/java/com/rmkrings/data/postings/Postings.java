@@ -17,7 +17,7 @@ public class Postings implements Serializable {
     // @serial
     private String digest;
 
-    public Postings(JSONObject data) throws Exception {
+    public Postings(JSONObject data) throws RuntimeException {
         try {
             postings = new ArrayList<>();
             JSONArray jsonPostings = data.optJSONArray("messages");
@@ -29,7 +29,7 @@ public class Postings implements Serializable {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Failed to process posting messages"));
+            throw(new RuntimeException("Failed to process posting messages"));
         }
 
         try {

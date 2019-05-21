@@ -12,7 +12,7 @@ public class NewsItems {
     private ArrayList<NewsItem> newsItems;
     private String digest;
 
-    public NewsItems(JSONObject data) throws Exception{
+    public NewsItems(JSONObject data) throws RuntimeException{
         try {
             newsItems = new ArrayList<>();
             JSONArray jsonNewsItems = data.getJSONArray("newsItems");
@@ -24,7 +24,7 @@ public class NewsItems {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Failed to process news items"));
+            throw(new RuntimeException("Failed to process news items"));
         }
 
         try {

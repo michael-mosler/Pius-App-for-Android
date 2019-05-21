@@ -18,7 +18,7 @@ public class Eva implements Serializable {
     // @serial
     private String digest;
 
-    public Eva(JSONObject data) throws Exception {
+    public Eva(JSONObject data) throws RuntimeException {
         try {
             dates = new ArrayList<>();
             evaData = new HashMap<>();
@@ -40,7 +40,7 @@ public class Eva implements Serializable {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed to process EVA items");
+            throw new RuntimeException("Failed to process EVA items");
         }
 
         try {

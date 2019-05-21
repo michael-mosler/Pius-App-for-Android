@@ -9,13 +9,13 @@ public class VertretungsplanForDate {
     private String date;
     private ArrayList<GradeItem> gradeItems;
 
-    VertretungsplanForDate(JSONObject data) throws Exception {
+    VertretungsplanForDate(JSONObject data) throws RuntimeException {
         try {
             date = data.getString("title");
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Expected property title not present in date item"));
+            throw(new RuntimeException("Expected property title not present in date item"));
         }
 
         try {
@@ -29,7 +29,7 @@ public class VertretungsplanForDate {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Failed to process grade items for date " + date));
+            throw(new RuntimeException("Failed to process grade items for date " + date));
         }
     }
 

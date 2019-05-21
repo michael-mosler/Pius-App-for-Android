@@ -19,12 +19,12 @@ public class Vertretungsplan {
     private ArrayList<VertretungsplanForDate> vertretungsplaene;
     private String digest;
 
-    public Vertretungsplan(JSONObject data) throws Exception {
+    public Vertretungsplan(JSONObject data) throws RuntimeException {
         try {
             tickerText = data.getString("tickerText");
         } catch (JSONException e) {
             e.printStackTrace();
-            throw(new Exception("Expected property tickerText not available in Vertetungsplan data"));
+            throw(new RuntimeException("Expected property tickerText not available in Vertetungsplan data"));
         }
 
         try {
@@ -38,7 +38,7 @@ public class Vertretungsplan {
             lastUpdate = data.getString("lastUpdate");
         } catch (JSONException e) {
             e.printStackTrace();
-            throw(new Exception("Expected property lastUpdate not available in Vertetungsplan data"));
+            throw(new RuntimeException("Expected property lastUpdate not available in Vertetungsplan data"));
         }
 
         try {
@@ -52,7 +52,7 @@ public class Vertretungsplan {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception(("Failed to process date items from Vertretungsplan")));
+            throw(new RuntimeException(("Failed to process date items from Vertretungsplan")));
         }
 
         try {

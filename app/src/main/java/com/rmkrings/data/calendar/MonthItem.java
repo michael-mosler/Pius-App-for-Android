@@ -25,14 +25,14 @@ public class MonthItem implements Serializable {
         dayItems = new ArrayList<>();
     }
 
-    MonthItem(JSONObject data) throws Exception {
+    MonthItem(JSONObject data) throws RuntimeException {
         try {
             String fullName = StringHelper.replaceHtmlEntities(data.getString("name"));
             name = fullName.substring(0, 3) + " " + fullName.substring(fullName.length() - 2);
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Expected property name not found in month item"));
+            throw(new RuntimeException("Expected property name not found in month item"));
         }
 
         try {
@@ -46,7 +46,7 @@ public class MonthItem implements Serializable {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Failed to process day items for calendar month " + name));
+            throw(new RuntimeException("Failed to process day items for calendar month " + name));
         }
     }
 

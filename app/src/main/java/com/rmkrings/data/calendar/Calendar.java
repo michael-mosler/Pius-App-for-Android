@@ -22,7 +22,7 @@ public class Calendar implements Serializable {
         digest = null;
     }
 
-    public Calendar(JSONObject data) throws Exception {
+    public Calendar(JSONObject data) throws RuntimeException {
         try {
             monthItems = new ArrayList<>();
             JSONArray jsonMonthItems = data.optJSONArray("monthItems");
@@ -34,7 +34,7 @@ public class Calendar implements Serializable {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Failed to process calendar monthItems"));
+            throw(new RuntimeException("Failed to process calendar monthItems"));
         }
 
         try {

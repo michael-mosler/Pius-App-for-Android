@@ -13,13 +13,13 @@ public final class GradeItem implements Serializable {
     // @serial
     private ArrayList<String[]> vertretungsplanItems;
 
-    GradeItem(JSONObject data) throws Exception {
+    GradeItem(JSONObject data) throws RuntimeException {
         try {
             grade = data.getString("grade");
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Expected property grade not found in grade item"));
+            throw(new RuntimeException("Expected property grade not found in grade item"));
         }
 
         try {
@@ -38,7 +38,7 @@ public final class GradeItem implements Serializable {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw(new Exception("Failed to process details items for grade " + grade));
+            throw(new RuntimeException("Failed to process details items for grade " + grade));
         }
     }
 

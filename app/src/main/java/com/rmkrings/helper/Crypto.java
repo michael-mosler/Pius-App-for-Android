@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.security.KeyPairGeneratorSpec;
-import android.security.keystore.KeyProperties;
 import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
@@ -53,7 +52,7 @@ class Crypto {
                     .setStartDate(start.getTime())
                     .setEndDate(end.getTime())
                     .build();
-            KeyPairGenerator kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, AndroidKeyStore);
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", AndroidKeyStore);
             kpg.initialize(spec);
             kpg.generateKeyPair();
         }

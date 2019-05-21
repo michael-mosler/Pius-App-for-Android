@@ -8,7 +8,7 @@ public class NewsItem {
     private String heading;
     private String text;
 
-    public NewsItem(JSONObject data) throws Exception {
+    NewsItem(JSONObject data) throws RuntimeException {
         try {
             img = data.optString("img");
             href = data.optString("href");
@@ -17,7 +17,7 @@ public class NewsItem {
         }
         catch(Exception e) {
             e.printStackTrace();
-            throw(new Exception(("Failed to process news item")));
+            throw(new RuntimeException(("Failed to process news item")));
         }
     }
 

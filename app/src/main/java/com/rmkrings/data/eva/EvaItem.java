@@ -9,7 +9,7 @@ public class EvaItem implements Serializable {
     private String course;
     private String evaText;
 
-    EvaItem(JSONObject data) throws Exception {
+    EvaItem(JSONObject data) throws RuntimeException {
         try {
             uuid = data.getString("uuid");
             course = data.getString("course");
@@ -17,7 +17,7 @@ public class EvaItem implements Serializable {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed to process EvaItem");
+            throw new RuntimeException("Failed to process EvaItem");
         }
     }
 
