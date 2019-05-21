@@ -158,6 +158,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         Objects.requireNonNull(getActivity()).setTitle(grade);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(2).setChecked(true);
+        mNavigationView.getMenu().getItem(2).setTitle(grade);
 
         reload(false);
     }

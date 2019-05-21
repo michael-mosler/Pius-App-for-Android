@@ -64,76 +64,84 @@ public class TodayVertretungsplanFragment extends Fragment {
         super.onAttach(context);
     }
 
-    private boolean canUseDashboard(){
+    public boolean canUseDashboard(){
         return (AppDefaults.isAuthenticated() && (AppDefaults.hasLowerGrade() || (AppDefaults.hasUpperGrade() && AppDefaults.getCourseList().size() > 0)));
     }
 
     public void show(String message, ParentFragment parentFragment) {
         if (getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
-            if (!canUseDashboard()) {
+            Objects.requireNonNull(getFragmentManager())
+                    .beginTransaction()
+                    .show(this)
+                    .commit();
+
+            listItems.clear();
+            listItems.add(new MessageItem(message, Gravity.CENTER));
+            mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+
+            parentFragment.notifyDoneRefreshing();
+        }
+    }
+
+    public void show(@Nullable Vertretungsplan vertretungsplan, ParentFragment parentFragment) {
+        if (getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
+            if (vertretungsplan == null) {
                 Objects.requireNonNull(getFragmentManager())
                         .beginTransaction()
                         .hide(this)
                         .commit();
+                parentFragment.notifyDoneRefreshing();
             } else {
                 Objects.requireNonNull(getFragmentManager())
                         .beginTransaction()
                         .show(this)
                         .commit();
 
+                VertretungsplanForDate vertretungsplanForDate = vertretungsplan.getTodaysSchedule();
+
+                if (vertretungsplanForDate == null) {
+                    show(getResources().getString(R.string.text_empty_schedule), parentFragment);
+                    return;
+                }
+
+                if (vertretungsplanForDate.getGradeItems().size() == 0) {
+                    show(getResources().getString(R.string.text_empty_schedule), parentFragment);
+                    return;
+                }
+
                 listItems.clear();
-                listItems.add(new MessageItem(message, Gravity.CENTER));
-                mVertetungsplanDetailListAdapter.notifyDataSetChanged();
-            }
+                // There is only one grade item when in dashboard mode.
+                for (GradeItem g : vertretungsplanForDate.getGradeItems()) {
+                    for (String[] a : g.getVertretungsplanItems()) {
+                        // Check if the current item can be accepted, i.e. must be displayed.
+                        VertretungsplanHeaderItem headerItem = new VertretungsplanHeaderItem(a[2], a[0]);
+                        if (headerItem.accept()) {
+                            VertretungsplanDetailItem detailItem = new VertretungsplanDetailItem(a[1], a[3], a[4]);
+                            VertretungsplanRemarkItem remarkItem = new VertretungsplanRemarkItem(a[6]);
 
-            parentFragment.notifyDoneRefreshing();
-        }
-    }
+                            listItems.add(headerItem);
+                            listItems.add(detailItem);
 
-    public void show(Vertretungsplan vertretungsplan, ParentFragment parentFragment) {
-        VertretungsplanForDate vertretungsplanForDate = vertretungsplan.getTodaysSchedule();
+                            if (remarkItem.getRemarkText().length() > 0) {
+                                listItems.add(remarkItem);
+                            }
 
-        if (vertretungsplanForDate == null) {
-            show(getResources().getString(R.string.text_empty_schedule), parentFragment);
-            return;
-        }
-
-        if (vertretungsplanForDate.getGradeItems().size() == 0) {
-            show(getResources().getString(R.string.text_empty_schedule), parentFragment);
-            return;
-        }
-
-        listItems.clear();
-        // There is only one grade item when in dashboard mode.
-        for (GradeItem g: vertretungsplanForDate.getGradeItems()) {
-            for (String[] a: g.getVertretungsplanItems()) {
-                // Check if the current item can be accepted, i.e. must be displayed.
-                VertretungsplanHeaderItem headerItem = new VertretungsplanHeaderItem(a[2], a[0]);
-                if (headerItem.accept()) {
-                    VertretungsplanDetailItem detailItem = new VertretungsplanDetailItem(a[1], a[3], a[4]);
-                    VertretungsplanRemarkItem remarkItem = new VertretungsplanRemarkItem(a[6]);
-
-                    listItems.add(headerItem);
-                    listItems.add(detailItem);
-
-                    if (remarkItem.getRemarkText().length() > 0) {
-                        listItems.add(remarkItem);
-                    }
-
-                    if (a.length > 7) {
-                        VertretungsplanEvaItem evaItem = new VertretungsplanEvaItem(a[7]);
-                        listItems.add(evaItem);
+                            if (a.length > 7) {
+                                VertretungsplanEvaItem evaItem = new VertretungsplanEvaItem(a[7]);
+                                listItems.add(evaItem);
+                            }
+                        }
                     }
                 }
+
+                if (listItems.size() == 0) {
+                    show(getResources().getString(R.string.text_empty_schedule), parentFragment);
+                    return;
+                }
+
+                mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+                parentFragment.notifyDoneRefreshing();
             }
         }
-
-        if (listItems.size() == 0) {
-            show(getResources().getString(R.string.text_empty_schedule), parentFragment);
-            return;
-        }
-
-        mVertetungsplanDetailListAdapter.notifyDataSetChanged();
-        parentFragment.notifyDoneRefreshing();
     }
 }

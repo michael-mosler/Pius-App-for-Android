@@ -49,9 +49,8 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
 
     // Local State
     private int pendingRefreshs;
-    private String grade;
-    private String digestFileName() { return String.format("%s.md5", grade); }
-    private String cacheFileName() { return String.format("%s.json", grade); }
+    private String digestFileName() { return String.format("%s.md5", AppDefaults.getGradeSetting()); }
+    private String cacheFileName() { return String.format("%s.json", AppDefaults.getGradeSetting()); }
 
     private final Cache cache = new Cache();
 
@@ -90,8 +89,6 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         mDate.setText(String.format("%s (%s-Woche)", dateFormat.format(new Date()), DateHelper.week()));
 
         mTodayNewsFragment = (TodayNewsFragment)getChildFragmentManager().findFragmentById(R.id.newsfragment);
-
-        grade = AppDefaults.getGradeSetting();
     }
 
     @Override
@@ -134,8 +131,14 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         mTodayPostingsFragment.show(this);
 
         // We load Vertretungsplan from here as data might be needed in several child fragments.
-        VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(grade);
-        vertretungsplanLoader.load(this, digest);
+        // If fragment tells us that dashboard cannot be used we do not load data but
+        // call show with a null Vertretunsgplan. This will hide according box.
+        if (mTodayVertetungsplanFragment.canUseDashboard()) {
+            VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(AppDefaults.getGradeSetting());
+            vertretungsplanLoader.load(this, digest);
+        } else {
+            mTodayVertetungsplanFragment.show((Vertretungsplan)null, this);
+        }
 
         mTodayCalendarFragment.show(this);
         mTodayNewsFragment.show(this);

@@ -103,6 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
+                android:groupIndicator="@null"
                 android:paddingTop="8dp" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
