@@ -17,8 +17,6 @@ The unofficial Pius App for Android offers students of the [Pius Gymnasium Aache
 
 You can find our privacy policy [here](https://github.com/michael-mosler/Pius-App/wiki/Datenschutzrichtlinie).
 
-
-
 [contributors-shield]: https://img.shields.io/github/contributors/michael-mosler/Pius-App-for-Android.svg?style=for-the-badge
 [contributors-url]: https://github.com/michael-mosler/Pius-App-for-Android/graphs/contributors
 [issues-shield]: https://img.shields.io/github/issues/michael-mosler/Pius-App-for-Android.svg?style=for-the-badge
