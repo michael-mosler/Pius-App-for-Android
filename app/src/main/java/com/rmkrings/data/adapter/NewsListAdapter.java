@@ -1,5 +1,6 @@
 package com.rmkrings.data.adapter;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +13,24 @@ import android.widget.TextView;
 import com.rmkrings.data.BaseListItem;
 import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.news.NewsListItem;
+import com.rmkrings.helper.KitkatSocketFactory;
 import com.rmkrings.interfaces.ViewSelectedCallback;
+import com.rmkrings.main.pius_app.PiusApplication;
 import com.rmkrings.pius_app_for_android.R;
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.OkHttpClient;
 
 public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -49,6 +63,22 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.fragment = fragment;
     }
 
+    private X509TrustManager provideX509TrustManager() {
+        try {
+            TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            factory.init((KeyStore) null);
+            TrustManager[] trustManagers = factory.getTrustManagers();
+            return (X509TrustManager) trustManagers[0];
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -79,15 +109,40 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int type = getItemViewType(i);
 
         if (type == NewsListItem.news) {
-            NewsListItem newsListItem = (NewsListItem)listItems.get(i);
-            NewsListViewHolder newsListViewHolder = (NewsListViewHolder)viewHolder;
+            NewsListItem newsListItem = (NewsListItem) listItems.get(i);
+            NewsListViewHolder newsListViewHolder = (NewsListViewHolder) viewHolder;
             newsListViewHolder.headingView.setText(newsListItem.getNewsItem().getHeading());
             newsListViewHolder.textView.setText(newsListItem.getNewsItem().getText());
-            Picasso.get()
-                    .load(newsListItem.getNewsItem().getImg())
-                    .resize(64, 64)
-                    .centerCrop()
-                    .into(newsListViewHolder.imageView);
+
+            // On Kitkat we need to provide a SSL Socket factory which enables TLS 1.1/1.2
+            // to Picasso. This makes things much more complicated.
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+                try {
+                    OkHttpClient.Builder okb=new OkHttpClient.Builder()
+                            .sslSocketFactory(new KitkatSocketFactory(), Objects.requireNonNull(provideX509TrustManager()));
+                    OkHttpClient ok=okb.build();
+
+                    Picasso picasso = new Picasso.Builder(PiusApplication.getAppContext())
+                            .downloader(new OkHttp3Downloader(ok))
+                            .build();
+
+                    picasso
+                            .load(newsListItem.getNewsItem().getImg())
+                            .resize(64, 64)
+                            .centerCrop()
+                            .into(newsListViewHolder.imageView);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // From API level 20 onwards it gets simpler.
+                Picasso.get()
+                        .load(newsListItem.getNewsItem().getImg())
+                        .resize(64, 64)
+                        .centerCrop()
+                        .into(newsListViewHolder.imageView);
+            }
         } else {
             MessageItem messageItem = (MessageItem)listItems.get(i);
             ((TextViewHolder)viewHolder).textView.setGravity(messageItem.getGravity());

@@ -1,12 +1,14 @@
 package com.rmkrings.http;
 
 import android.os.AsyncTask;
+import android.os.Build;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
 
+import com.rmkrings.helper.KitkatSocketFactory;
 import com.rmkrings.loader.VertretungsplanLoader;
 
 public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpResponseData> {
@@ -24,6 +26,17 @@ public class HttpGetRequest extends AsyncTask<HttpRequestData, Void, HttpRespons
             connection.setReadTimeout(60000);
             connection.setConnectTimeout(10000);
             connection.setUseCaches(false);
+
+            // On Kitkat we need to provide our own SSL Socket factory as by default TLS 1.1 and
+            // TLS 1.2 are disabled. Backend on the other hand does not support TLS 1.0 any longer.
+            // Actually nobody should use 1.0!
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)
+            try {
+                connection.setSSLSocketFactory(new KitkatSocketFactory());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
             connection.connect();
 

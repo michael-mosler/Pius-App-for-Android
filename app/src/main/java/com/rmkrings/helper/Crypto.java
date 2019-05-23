@@ -84,7 +84,7 @@ class Crypto {
     private byte[] rsaDecrypt(byte[] encrypted) throws Exception {
         PrivateKey privateKey = (PrivateKey)keyStore.getKey(KEY_ALIAS, null);
 
-        Cipher output = Cipher.getInstance(RSA_MODE, "AndroidKeyStoreBCWorkaround");
+        Cipher output = Cipher.getInstance(RSA_MODE, getRSAProvider());
         output.init(Cipher.DECRYPT_MODE, privateKey);
 
         CipherInputStream cipherInputStream = new CipherInputStream(

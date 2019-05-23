@@ -24,7 +24,7 @@ public class AppDefaults {
     }
 
 
-    static public String getBaseUrl() {
+    public static String getBaseUrl() {
         try {
             ApplicationInfo ai = PiusApplication.getAppContext().getPackageManager().getApplicationInfo(PiusApplication.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
             return (String)ai.metaData.get("host");
@@ -38,13 +38,25 @@ public class AppDefaults {
     /*
      * Authenticated flag
      */
-    static public boolean isAuthenticated() {
+    public static boolean isAuthenticated() {
         boolean authenticated = sharedPreferences.getBoolean("authenticated", false);
         return (authenticated && !"".equals(getPassword()));
     }
 
-    static public void setAuthenticated(boolean authenticated) {
+    public static void setAuthenticated(boolean authenticated) {
         edit.putBoolean("authenticated", authenticated);
+        edit.commit();
+    }
+
+    /*
+     * Show intro flag.
+     */
+    public static boolean hasShowIntro() {
+        return sharedPreferences.getBoolean("showIntro", true);
+    }
+
+    public static void setShowIntro(boolean showIntro) {
+        edit.putBoolean("showIntro", showIntro);
         edit.commit();
     }
 

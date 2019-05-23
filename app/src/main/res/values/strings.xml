@@ -5,6 +5,7 @@
     <string name="button_login">Anmelden</string>
     <string name="button_logout">Abmelden</string>
 
+    <string name="title_welcome">Willkommen!</string>
     <string name="title_home">Heute</string>
     <string name="title_substitution_schedule">Vertretungsplan</string>
     <string name="title_dashboard">Dashboard</string>
@@ -17,13 +18,14 @@
     <string name="title_logon">Anmeldung</string>
     <string name="title_delete_course_list_all">Kursliste löschen</string>
 
-    <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zum Erhalt von Push-Benachrichtigungen Deine Klasse bzw. Jahrgangsstufe ein.</string>
+    <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zur Verwendung des Dashboards Deine Klasse bzw. Jahrgangsstufe ein.</string>
     <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>
     <string name="label_app_name">Pius-App für Android Version</string>
     <string name="label_copyright">
         © Felix Krings und Michael Mosler-Krings\n
-        \nUnter https://github.com/michael-mosler/Pius-App findest Du weitere Infos zur App.
-        Informationen zu unserer Datenschutzrichtlinie findest Du unter https://github.com/michael-mosler/Pius-App/wiki/Datenschutzrichtlinie.
+        \nUnter https://github.com/michael-mosler/Pius-App-for-Android findest Du weitere Infos zur App.
+        Informationen zu unserer Datenschutzrichtlinie findest Du unter https://github.com/michael-mosler/Pius-App-for-Android/wiki/Datenschutzrichtlinie.
+        \n\nWir verwenden Picasso (https://https://square.github.io/picasso/) für das Laden, Caching und Anzeigen von Bildern.
     </string>
 
     <string name="label_grade">Jahrgangsstufe</string>
@@ -35,6 +37,7 @@
     <string name="label_search">Suchen</string>
     <string name="label_eva">EVA</string>
     <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
+    <string name="label_start_now">Jetzt loslegen!</string>
 
     <string name="text_logged_on" tools:keep="@string/text_logged_on">Du bist nun angemeldet.</string>
     <string name="text_logged_out">Du bist nun abgemeldet.</string>
@@ -47,12 +50,15 @@
     <string name="text_empty_schedule">Heute hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
 
+    <string name="text_intro">
+        Schön, dass Du die Pius-App für Android verwendest!\n
+        \nMelde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.
+    </string>
+
     <string name="error_cannot_use_vertretungsplan">Melde Dich in den Einstellungen an, um den Vertretungsplan zu verwenden.\n
-        \nHast Du alle Informationen angegeben, dann kannst Du das Widget verwenden und Push-Benachrichtigungen erhalten.\n
         \nTippe unten auf Einstellungen, um mit der Konfiguration zu beginnen.
     </string>
     <string name="error_cannot_use_dashboard">Melde Dich in den Einstellungen an und lege Deine Klasse/Jahrgangsstufe fest, um das Dashboard zu verwenden. Wenn Du in der Oberstufe bist, musst Du auch Deine Kursliste hinzufügen, um ein personalisiertes Dashboard zu erhalten.\n
-        \nHast Du alle Informationen angegeben, dann kannst Du das Widget verwenden und Push-Benachrichtigungen erhalten.\n
         \nTippe unten auf Einstellungen, um mit der Konfiguration zu beginnen.
     </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>

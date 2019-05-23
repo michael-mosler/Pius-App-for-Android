@@ -140,7 +140,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mEvaButton.setVisibility(AppDefaults.hasUpperGrade() ? View.VISIBLE : View.INVISIBLE);
 
         if (!canUseDashboard()) {
-            new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_dashboard))
                     .setMessage(getResources().getString(R.string.error_cannot_use_dashboard))
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -265,7 +265,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
 
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Dashboard. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_dashboard))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -300,6 +300,18 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
             setVertretungsplanList();
         } catch (Exception e) {
             e.printStackTrace();
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                    .setTitle(getResources().getString(R.string.title_dashboard))
+                    .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (getFragmentManager() != null) {
+                                getFragmentManager().popBackStack();
+                            }
+                        }
+                    })
+                    .show();
         }
     }
 

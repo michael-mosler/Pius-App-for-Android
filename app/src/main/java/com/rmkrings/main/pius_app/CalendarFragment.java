@@ -167,7 +167,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
 
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_calendar))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -200,6 +200,18 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             setMonthList();
         } catch (Exception e) {
             e.printStackTrace();
+            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                    .setTitle(getResources().getString(R.string.title_calendar))
+                    .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (getFragmentManager() != null) {
+                                getFragmentManager().popBackStack();
+                            }
+                        }
+                    })
+                    .show();
         }
     }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import com.rmkrings.main.pius_app.DashboardFragment;
 import com.rmkrings.main.pius_app.PiusApplication;
 import com.rmkrings.main.pius_app.VertretungsplanFragment;
 import com.rmkrings.main.pius_app.TodayFragment;
+
 
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {
@@ -89,6 +91,17 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayout, new TodayFragment());
         transaction.commit();
+
+        // If App is used for the very first time show information
+        // that user should log in to Pius website in Settings.
+        if (AppDefaults.hasShowIntro()) {
+            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                    .setTitle(getResources().getString(R.string.title_welcome))
+                    .setMessage(getResources().getString(R.string.text_intro))
+                    .setPositiveButton(getResources().getString(R.string.label_start_now), null)
+                    .show();
+            AppDefaults.setShowIntro(false);
+        }
     }
 
     @Override

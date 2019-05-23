@@ -24,8 +24,7 @@ import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 
-public class SettingsActivity extends AppCompatActivity
-        implements HttpResponseCallback
+public class SettingsActivity extends AppCompatActivity implements HttpResponseCallback
 {
 
     // Outlets
@@ -212,7 +211,7 @@ public class SettingsActivity extends AppCompatActivity
             updateLoginButtonText(false);
 
             // Inform user on new login state.
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_logon))
                     .setMessage(getResources().getString(R.string.text_logged_out))
                     .setPositiveButton(android.R.string.ok, null)
@@ -369,7 +368,7 @@ public class SettingsActivity extends AppCompatActivity
             message = getResources().getString((success) ? R.string.text_logged_on : R.string.text_invalid_credentials);
         }
 
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this, R.style.AlertDialogTheme)
                 .setTitle(getResources().getString(R.string.title_logon))
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, null)

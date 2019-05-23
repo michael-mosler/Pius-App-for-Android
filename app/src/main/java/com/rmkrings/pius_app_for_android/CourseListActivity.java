@@ -134,7 +134,7 @@ public class CourseListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Inform user on new login state.
-                new AlertDialog.Builder(self)
+                new AlertDialog.Builder(self, R.style.AlertDialogTheme)
                         .setTitle(getResources().getString(R.string.title_delete_course_list_all))
                         .setMessage(getResources().getString(R.string.text_confirm_delete_course_list))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
