@@ -2,7 +2,7 @@
 <resources>
     <color name="colorLauncherBgnd">#72ABDD</color>
     <color name="colorPrimary">#699FCD</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#535353</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorPiusBlue">#699FCD</color>
     <color name="colorPiusLightBlue">#56A1D2</color>

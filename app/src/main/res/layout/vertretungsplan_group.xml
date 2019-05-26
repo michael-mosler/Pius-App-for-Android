@@ -3,6 +3,7 @@
   Expandable Group Header
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -13,6 +14,7 @@
         android:id="@+id/vertretungsplan_list_group"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
         android:textSize="17sp"
-        android:textColor="@android:color/white" />
+        tools:text="Test" />
 </LinearLayout>
