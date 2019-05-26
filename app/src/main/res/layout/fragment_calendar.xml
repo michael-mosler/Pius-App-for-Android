@@ -57,16 +57,24 @@
                     android:layout_weight="0"
                     android:background="?android:attr/listDivider" />
 
-                <ImageButton
-                    android:id="@+id/searchbutton"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:contentDescription="@string/label_search"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="0dp"
-                    android:src="@drawable/ic_search"
-                    android:tint="@color/colorPiusBlue" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:background="@android:color/white">
+
+                    <ImageButton
+                        android:id="@+id/searchbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/white"
+                        android:contentDescription="@string/label_search"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:src="@drawable/ic_search"
+                        android:tint="@color/colorPiusBlue" />
+                </FrameLayout>
 
             </LinearLayout>
 
