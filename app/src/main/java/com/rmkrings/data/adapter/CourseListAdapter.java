@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.activities.R;
 
 
 public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

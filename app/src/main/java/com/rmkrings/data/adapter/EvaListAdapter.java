@@ -11,8 +11,8 @@ import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.eva.EvaCourseItem;
 import com.rmkrings.data.eva.EvaDateItem;
 import com.rmkrings.data.eva.EvaListItem;
-import com.rmkrings.main.pius_app.PiusApplication;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.pius_app_for_android;
+import com.rmkrings.activities.R;
 
 import java.util.ArrayList;
 
@@ -84,7 +84,7 @@ public class EvaListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case EvaListItem.evaCourseItem: {
                 EvaCourseItem evaCourseItem = (EvaCourseItem)list.get(position);
                 ((TextViewHolder)holder).textView.setText(evaCourseItem.getCourse());
-                ((TextViewHolder)holder).textView.setBackgroundColor(PiusApplication.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
+                ((TextViewHolder)holder).textView.setBackgroundColor(pius_app_for_android.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
                 break;
             }
 

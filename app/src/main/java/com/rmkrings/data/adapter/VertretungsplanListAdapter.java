@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.activities.R;
 
 public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
 

@@ -6,7 +6,7 @@
     android:id="@+id/todayFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rmkrings.main.pius_app.TodayFragment">
+    tools:context="com.rmkrings.fragments.TodayFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
 
                     <fragment
                         android:id="@+id/postingsfragment"
-                        android:name="com.rmkrings.main.pius_app.TodayPostingsFragment"
+                        android:name="com.rmkrings.fragments.TodayPostingsFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:layout="@layout/fragment_today_postings" />
@@ -59,7 +59,7 @@
 
                     <fragment
                         android:id="@+id/vertretungsplanfragment"
-                        android:name="com.rmkrings.main.pius_app.TodayVertretungsplanFragment"
+                        android:name="com.rmkrings.fragments.TodayVertretungsplanFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:layout="@layout/fragment_today_vertretungsplan" />
@@ -70,7 +70,7 @@
 
                     <fragment
                         android:id="@+id/calendarfragment"
-                        android:name="com.rmkrings.main.pius_app.TodayCalendarFragment"
+                        android:name="com.rmkrings.fragments.TodayCalendarFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:layout="@layout/fragment_today_calendar" />
@@ -81,7 +81,7 @@
 
                     <fragment
                         android:id="@+id/newsfragment"
-                        android:name="com.rmkrings.main.pius_app.TodayNewsFragment"
+                        android:name="com.rmkrings.fragments.TodayNewsFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:layout="@layout/fragment_today_news" />

@@ -15,8 +15,8 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.FormatHelper;
 import com.rmkrings.helper.StringHelper;
-import com.rmkrings.main.pius_app.PiusApplication;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.pius_app_for_android;
+import com.rmkrings.activities.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -103,7 +103,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
         switch(vertretungsplanListItem.getType()) {
             case VertretungsplanListItem.courseHeader: {
                 VertretungsplanHeaderItem headerItem = (VertretungsplanHeaderItem)vertretungsplanListItem;
-                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.vertretungsplan_header_item, null);
 
                 TextView tv = (TextView)convertView;
@@ -111,14 +111,14 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
                         (headerItem.getCourse().length() > 0)
                                 ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
                                 : String.format("%s. Stunde", headerItem.getLesson()));
-                tv.setBackgroundColor(PiusApplication.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
+                tv.setBackgroundColor(pius_app_for_android.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
                 break;
             }
 
             case VertretungsplanListItem.detailItem: {
                 TextView tv;
                 VertretungsplanDetailItem detailItem = (VertretungsplanDetailItem)vertretungsplanListItem;
-                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.veretretungsplan_detail_item, null);
 
                 tv = convertView.findViewById(R.id.substitutionType);
@@ -135,7 +135,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
 
             case VertretungsplanListItem.remarkItem: {
                 VertretungsplanRemarkItem remarkItem = (VertretungsplanRemarkItem)vertretungsplanListItem;
-                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.vertretungsplan_remark_item, null);
 
                 TextView tv = (TextView)convertView;
@@ -145,7 +145,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
 
             case VertretungsplanListItem.evaItem: {
                 VertretungsplanEvaItem evaItem = (VertretungsplanEvaItem)vertretungsplanListItem;
-                LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.vertretungsplan_eva_item, null);
 
                 TextView tv = (TextView)convertView;

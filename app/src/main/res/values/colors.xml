@@ -11,4 +11,8 @@
 
     <color name="colorEnabled">@color/colorPiusBlue</color>
     <color name="colorDisabled">#969696</color>
+
+    <color name="colorAdded">#79CC15</color>
+    <color name="colorDeleted">@color/colorAccent</color>
+    <color name="colorChanged">@color/colorEva</color>
 </resources>

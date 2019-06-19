@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.rmkrings.main.PiusApp.PiusApplication"
+        applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -14,10 +14,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0]
+            manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe']
         }
         debug {
-            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0]
+            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe']
+        }
+        localhost {
+            manifestPlaceholders = [host: 'http://localhost:3000', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe']
+            signingConfig signingConfigs.debug
+            debuggable = true
         }
     }
 }
@@ -35,6 +40,8 @@ dependencies {
     implementation 'com.android.support:mediarouter-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //noinspection GradleDependency
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
 }
 
 // This is to fix the errors : java.lang.NoClassDefFoundError: Failed resolution of: Landroid/view/View$OnUnhandledKeyEventListener;
@@ -48,3 +55,5 @@ configurations.all {
         }
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

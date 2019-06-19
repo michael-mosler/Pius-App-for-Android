@@ -12,7 +12,7 @@ import com.rmkrings.data.calendar.CalendarMessage;
 import com.rmkrings.data.calendar.DayItem;
 import com.rmkrings.data.calendar.MonthHeaderItem;
 import com.rmkrings.helper.FormatHelper;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.activities.R;
 
 import java.util.ArrayList;
 

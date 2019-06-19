@@ -5,7 +5,7 @@
     android:id="@+id/vertretungsplanFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rmkrings.main.pius_app.VertretungsplanFragment">
+    tools:context="com.rmkrings.fragments.VertretungsplanFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

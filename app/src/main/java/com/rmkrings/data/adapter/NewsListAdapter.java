@@ -15,8 +15,8 @@ import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.news.NewsListItem;
 import com.rmkrings.helper.KitkatSocketFactory;
 import com.rmkrings.interfaces.ViewSelectedCallback;
-import com.rmkrings.main.pius_app.PiusApplication;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.pius_app_for_android;
+import com.rmkrings.activities.R;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -122,7 +122,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .sslSocketFactory(new KitkatSocketFactory(), Objects.requireNonNull(provideX509TrustManager()));
                     OkHttpClient ok=okb.build();
 
-                    Picasso picasso = new Picasso.Builder(PiusApplication.getAppContext())
+                    Picasso picasso = new Picasso.Builder(pius_app_for_android.getAppContext())
                             .downloader(new OkHttp3Downloader(ok))
                             .build();
 

@@ -7,8 +7,8 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.widget.TextView;
 
-import com.rmkrings.main.pius_app.PiusApplication;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.pius_app_for_android;
+import com.rmkrings.activities.R;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class FormatHelper {
         Spannable spannable = (Spannable)text;
         for (Point span: spans) {
             spannable.setSpan(
-                    new BackgroundColorSpan(PiusApplication.getAppContext().getResources().getColor(R.color.colorHighlight)),
+                    new BackgroundColorSpan(pius_app_for_android.getAppContext().getResources().getColor(R.color.colorHighlight)),
                     span.x, span.y, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }

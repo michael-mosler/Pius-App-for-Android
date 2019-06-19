@@ -7,7 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
-import com.rmkrings.main.pius_app.PiusApplication;
+import com.rmkrings.pius_app_for_android;
 
 public class Reachability extends BroadcastReceiver {
     private static Reachability self;
@@ -22,7 +22,7 @@ public class Reachability extends BroadcastReceiver {
     }
 
     public static boolean isReachable() {
-        ConnectivityManager cm = (ConnectivityManager)PiusApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) pius_app_for_android.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }

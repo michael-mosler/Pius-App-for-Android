@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.rmkrings.data.BaseListItem;
 import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.postings.Posting;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.activities.R;
 
 import java.util.ArrayList;
 

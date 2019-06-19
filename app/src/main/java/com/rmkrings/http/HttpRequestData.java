@@ -2,22 +2,34 @@ package com.rmkrings.http;
 
 import com.rmkrings.interfaces.HttpResponseCallback;
 
-import javax.net.ssl.HttpsURLConnection;
+import java.net.URLConnection;
 
 public class HttpRequestData {
-    private final HttpsURLConnection connection;
+    private final URLConnection connection;
     private final HttpResponseCallback callback;
+    private final String body;
 
-    public HttpRequestData(HttpsURLConnection connection, HttpResponseCallback callback) {
+    public HttpRequestData(URLConnection connection, HttpResponseCallback callback) {
         this.connection = connection;
         this.callback = callback;
+        this.body = null;
     }
 
-    HttpsURLConnection getConnection() {
+    public HttpRequestData(URLConnection connection, HttpResponseCallback callback, String body) {
+        this.connection = connection;
+        this.callback = callback;
+        this.body = body;
+    }
+
+    URLConnection getConnection() {
         return connection;
     }
 
     HttpResponseCallback getCallback() {
         return callback;
+    }
+
+    String getBody() {
+        return body;
     }
 }

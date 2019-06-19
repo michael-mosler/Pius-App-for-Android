@@ -24,7 +24,7 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.x500.X500Principal;
 
-import com.rmkrings.main.pius_app.PiusApplication;
+import com.rmkrings.pius_app_for_android;
 
 class Crypto {
     private static final String RSA_MODE =  "RSA/ECB/PKCS1Padding";
@@ -45,7 +45,7 @@ class Crypto {
             Calendar start = Calendar.getInstance();
             Calendar end = Calendar.getInstance();
             end.add(Calendar.YEAR, 30);
-            KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(PiusApplication.getAppContext())
+            KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(pius_app_for_android.getAppContext())
                     .setAlias(KEY_ALIAS)
                     .setSubject(new X500Principal("CN=" + KEY_ALIAS))
                     .setSerialNumber(BigInteger.TEN)

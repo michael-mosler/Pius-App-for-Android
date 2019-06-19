@@ -4,7 +4,7 @@ import com.rmkrings.helper.AppDefaults;
 
 import java.net.URL;
 
-public class PostingsLoader extends HttpGetLoader {
+public class PostingsLoader extends HttpGet {
 
     @Override
     protected URL getURL(String digest) throws java.net.MalformedURLException {

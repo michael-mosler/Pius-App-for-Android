@@ -5,14 +5,14 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.rmkrings.main.pius_app.PiusApplication;
+import com.rmkrings.pius_app_for_android;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class AppDefaults {
-    static private final SharedPreferences sharedPreferences = PiusApplication.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);
+    static private final SharedPreferences sharedPreferences = pius_app_for_android.getAppContext().getSharedPreferences("com.rmkrings.pius_app", Context.MODE_PRIVATE);
     static private final SharedPreferences.Editor edit = sharedPreferences.edit();
 
     static SharedPreferences getSharedPreferences() {
@@ -26,7 +26,7 @@ public class AppDefaults {
 
     public static String getBaseUrl() {
         try {
-            ApplicationInfo ai = PiusApplication.getAppContext().getPackageManager().getApplicationInfo(PiusApplication.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
+            ApplicationInfo ai = pius_app_for_android.getAppContext().getPackageManager().getApplicationInfo(pius_app_for_android.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
             return (String)ai.metaData.get("host");
         }
         catch (PackageManager.NameNotFoundException e) {

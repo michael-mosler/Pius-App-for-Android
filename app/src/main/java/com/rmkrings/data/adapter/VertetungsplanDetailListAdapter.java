@@ -18,7 +18,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.FormatHelper;
 import com.rmkrings.helper.StringHelper;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.activities.R;
 
 /**
  * Adapter for Vertretungsplan detailed list. It expects a list of VertretungsplanItems for
@@ -110,7 +110,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        int type = getItemViewType(position);
+        final int type = getItemViewType(position);
 
         switch(type) {
             case VertretungsplanListItem.courseHeader: {

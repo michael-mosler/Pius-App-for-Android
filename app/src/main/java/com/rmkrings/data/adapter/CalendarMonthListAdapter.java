@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.rmkrings.interfaces.ViewSelectedCallback;
-import com.rmkrings.pius_app_for_android.R;
+import com.rmkrings.activities.R;
 
 import java.util.ArrayList;
 

@@ -4,9 +4,9 @@ import android.util.Base64;
 
 import com.rmkrings.helper.AppDefaults;
 
-import javax.net.ssl.HttpsURLConnection;
+import java.net.URLConnection;
 
-abstract class HttpAuthenticatedGetLoader extends HttpGetLoader {
+abstract class HttpAuthenticatedGetLoader extends HttpGet {
     static String getAndEncodeCredentials(String username, String password) {
         String realUsername;
         String realPassword;
@@ -26,7 +26,7 @@ abstract class HttpAuthenticatedGetLoader extends HttpGetLoader {
     }
 
     @Override
-    public HttpsURLConnection addRequestProperties(HttpsURLConnection connection) {
+    public URLConnection addRequestProperties(URLConnection connection) {
         super
                 .addRequestProperties(connection)
                 .addRequestProperty("Authorization", "Basic " + getAndEncodeCredentials(null, null));

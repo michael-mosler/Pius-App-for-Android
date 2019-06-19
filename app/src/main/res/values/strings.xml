@@ -15,6 +15,7 @@
     <string name="title_settings">Einstellungen</string>
     <string name="title_eva">EVA</string>
     <string name="title_add_courses">Kurse hinzufügen</string>
+    <string name="title_my_subst_schedule_changes">Deine Änderungen am Vertretungsplan</string>
     <string name="title_logon">Anmeldung</string>
     <string name="title_delete_course_list_all">Kursliste löschen</string>
 
@@ -39,6 +40,10 @@
     <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
     <string name="label_start_now">Jetzt loslegen!</string>
 
+    <string name="label_deleted">Gelöscht</string>
+    <string name="label_changed">Geändert</string>
+    <string name="label_added">Hinhzugefügt</string>
+
     <string name="text_logged_on" tools:keep="@string/text_logged_on">Du bist nun angemeldet.</string>
     <string name="text_logged_out">Du bist nun abgemeldet.</string>
     <string name="text_invalid_credentials" tools:keep="@string/text_invalid_credentials">Die Anmeldedaten sind ungültig.</string>
@@ -62,4 +67,5 @@
         \nTippe unten auf Einstellungen, um mit der Konfiguration zu beginnen.
     </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
+    <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
 </resources>

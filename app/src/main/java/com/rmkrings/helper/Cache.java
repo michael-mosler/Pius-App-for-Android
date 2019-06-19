@@ -9,20 +9,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.logging.Logger;
 
-import com.rmkrings.main.pius_app.PiusApplication;
+import com.rmkrings.pius_app_for_android;
 
 public class Cache {
     private final static Logger logger = Logger.getLogger(Cache.class.getName());
 
     public boolean fileExists(String filename) {
-        File file = PiusApplication.getAppContext().getFileStreamPath(filename);
+        File file = pius_app_for_android.getAppContext().getFileStreamPath(filename);
         return file.exists();
     }
 
     // Store data under given filename in cache directory.
     public void store(String filename, String data) {
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(PiusApplication.getAppContext().openFileOutput(filename, Context.MODE_PRIVATE));
+            OutputStreamWriter writer = new OutputStreamWriter(pius_app_for_android.getAppContext().openFileOutput(filename, Context.MODE_PRIVATE));
             BufferedWriter bw = new BufferedWriter(writer);
             bw.write(data);
             bw.close();
@@ -42,7 +42,7 @@ public class Cache {
         StringBuilder data = new StringBuilder();
 
         try {
-            InputStreamReader reader = new InputStreamReader(PiusApplication.getAppContext().openFileInput(filename));
+            InputStreamReader reader = new InputStreamReader(pius_app_for_android.getAppContext().openFileInput(filename));
             BufferedReader br = new BufferedReader(reader);
 
             while ((d = br.readLine()) != null) {
