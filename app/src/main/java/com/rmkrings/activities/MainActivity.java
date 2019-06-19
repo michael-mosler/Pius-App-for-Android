@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.content.Intent;
-import android.widget.Button;
 
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Reachability;
@@ -21,9 +20,6 @@ import com.rmkrings.fragments.DashboardFragment;
 import com.rmkrings.pius_app_for_android;
 import com.rmkrings.fragments.VertretungsplanFragment;
 import com.rmkrings.fragments.TodayFragment;
-
-import java.util.Objects;
-
 
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {

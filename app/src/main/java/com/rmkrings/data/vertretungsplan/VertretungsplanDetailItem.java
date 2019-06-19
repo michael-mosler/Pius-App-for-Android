@@ -16,6 +16,7 @@ public class VertretungsplanDetailItem extends VertretungsplanListItem {
         this.outdated = false;
     }
 
+    @SuppressWarnings("SameParameterValue")
     VertretungsplanDetailItem(String substitutionType, String room, String teacher, Boolean outdated) {
         this.substitutionType = StringHelper.replaceHtmlEntities(substitutionType);
         this.room = StringHelper.replaceHtmlEntities(room);

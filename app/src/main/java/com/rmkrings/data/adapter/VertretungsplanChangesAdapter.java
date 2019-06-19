@@ -145,7 +145,7 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
                     default: {
                         bgndColor = pius_app_for_android.getAppContext().getResources().getColor(R.color.colorAdded);
                         fgndColor = Color.BLACK;
-                        readableChangeType = pius_app_for_android.getAppContext().getResources().getString(R.string.label_deleted);
+                        readableChangeType = pius_app_for_android.getAppContext().getResources().getString(R.string.label_added);
                     }
                 }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class VertretungsplanChangeList {
-    private HashMap<String, ArrayList<VertretungsplanChangeDetailItem>> changes;
+    private final HashMap<String, ArrayList<VertretungsplanChangeDetailItem>> changes;
 
     public VertretungsplanChangeList(JSONArray jsonData) throws RuntimeException {
         changes = new HashMap<>();
