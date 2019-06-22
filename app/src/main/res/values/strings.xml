@@ -42,7 +42,7 @@
 
     <string name="label_deleted">Gelöscht</string>
     <string name="label_changed">Geändert</string>
-    <string name="label_added">Hinhzugefügt</string>
+    <string name="label_added">Hinzugefügt</string>
 
     <string name="text_logged_on" tools:keep="@string/text_logged_on">Du bist nun angemeldet.</string>
     <string name="text_logged_out">Du bist nun abgemeldet.</string>

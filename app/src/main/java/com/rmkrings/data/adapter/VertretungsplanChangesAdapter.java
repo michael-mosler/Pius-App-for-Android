@@ -2,6 +2,7 @@ package com.rmkrings.data.adapter;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -137,7 +138,7 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
 
                     case "DELETED": {
                         bgndColor = pius_app_for_android.getAppContext().getResources().getColor(R.color.colorDeleted);
-                        fgndColor = Color.BLACK;
+                        fgndColor = Color.WHITE;
                         readableChangeType = pius_app_for_android.getAppContext().getResources().getString(R.string.label_deleted);
                         break;
                     }
@@ -152,6 +153,7 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
                 ((VertretungsplanChangesAdapter.TextViewHolder)holder).textView.setText(readableChangeType);
                 ((VertretungsplanChangesAdapter.TextViewHolder)holder).textView.setTextColor(fgndColor);
                 ((VertretungsplanChangesAdapter.TextViewHolder)holder).textView.setBackgroundColor(bgndColor);
+                ((VertretungsplanChangesAdapter.TextViewHolder)holder).textView.setGravity(Gravity.CENTER);
                 break;
             }
 

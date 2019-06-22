@@ -88,10 +88,16 @@ public class ScheduleChangedActivity extends AppCompatActivity {
 
             ArrayList<VertretungsplanChangeDetailItem> a = change.getValue();
             for (VertretungsplanChangeDetailItem d: a) {
-                list.add(new VertretungsplanHeaderItem(d.getCourse(), d.getLesson()));
                 list.add(new VertretungsplanChangeTypeItem(d.getChangeType()));
-                list.add(d.getDetailNew());
-                list.add(d.getDetailOld());
+                list.add(new VertretungsplanHeaderItem(d.getCourse(), d.getLesson()));
+
+                if (d.getDetailNew() != null) {
+                    list.add(d.getDetailNew());
+                }
+
+                if (d.getDetailOld() != null) {
+                    list.add(d.getDetailOld());
+                }
 
                 VertretungsplanRemarkItem r = new VertretungsplanRemarkItem(d.getRemark());
                 if (r.getRemarkText().trim().length() != 0) {
