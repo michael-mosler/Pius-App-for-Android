@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.pius_app_for_android;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +41,7 @@ public class HttpDeviceTokenSetter extends HttpPost {
                     .put("apiKey", apiKey)
                     .put("deviceToken", token)
                     .put("grade", grade)
-                    .put("courseList", courseList)
+                    .put("courseList", new JSONArray(courseList))
                     .put("messagingProvider", messagingProvider);
 
             return jsonData.toString();
