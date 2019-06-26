@@ -4,6 +4,8 @@ Welche Funktionen gibt es?
 
 - aktueller Vertretungsplan
 - Nach Kursen gefilterter Vertretungsplan
+- Push-Benachrichtigungen bei Änderungen an Deinem Vetretungsplan
+- Abfrage Deiner EVA-Aufgaben der letzten Tage
 - Aktuelle News der Schule
 - Einfacher Einblick in den Terminkalender des Pius Gymnasium
 - Offline Abfrage des Vertretungsplans
