@@ -84,7 +84,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mFragment = view.findViewById(R.id.dashboardFragment);
+        mFragment = view.findViewById(R.id.swipeRefreshLayout);
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMetaData = view.findViewById(R.id.metadata);
         mLastUpdate = view.findViewById(R.id.lastupdate);

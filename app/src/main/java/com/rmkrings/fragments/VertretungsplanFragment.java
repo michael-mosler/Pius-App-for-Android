@@ -55,7 +55,6 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     private final String digestFileName = "vertretungsplan.md5";
     private final String cacheFileName = "vertretungsplan.json";
 
-    private boolean mustCollapseGroups = false;
     private final Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;
     private final String[] metaData = new String[2];
@@ -76,7 +75,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mFragment = view.findViewById(R.id.vertretungsplanFragment);
+        mFragment = view.findViewById(R.id.swipeRefreshLayout);
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMetaData = view.findViewById(R.id.metadata);
         mLastUpdate = view.findViewById(R.id.lastupdate);
@@ -199,11 +198,9 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
 
         mVertretunsplanListAdapter.notifyDataSetChanged();
 
-        for (int i = 0; mustCollapseGroups && i < listDataHeader.size(); i++) {
+        for (int i = 0; i < listDataHeader.size(); i++) {
             mVertretungsplanListView.collapseGroup(i);
         }
-
-        mustCollapseGroups = false;
     }
 
     @SuppressLint("DefaultLocale")

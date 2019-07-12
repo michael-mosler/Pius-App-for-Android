@@ -1,8 +1,9 @@
 package com.rmkrings.loader;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import javax.net.ssl.HttpsURLConnection;
+import java.net.URLConnection;
 
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.http.HttpRequest;
@@ -40,8 +41,8 @@ public class VertretungsplanLoader extends HttpAuthenticatedGetLoader {
     public static void validateLogin(String forUser, String withPassword, HttpResponseCallback callback) {
         try {
             URL url = new URL(String.format("%s/validateLogin", AppDefaults.getBaseUrl()));
-            HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
-            connection.setRequestMethod("HEAD");
+            URLConnection connection = url.openConnection();
+            ((HttpURLConnection)connection).setRequestMethod("HEAD");
             connection.addRequestProperty("Authorization", "Basic " + getAndEncodeCredentials(forUser, withPassword));
 
             HttpRequest request = new HttpRequest();
