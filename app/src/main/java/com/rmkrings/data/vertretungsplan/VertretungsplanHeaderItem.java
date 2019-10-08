@@ -103,7 +103,8 @@ public class VertretungsplanHeaderItem extends VertretungsplanListItem {
             String mappedCourse = course
                     .replace(" ", "")
                     .replace("GK", "G")
-                    .replace("LK", "L");
+                    .replace("LK", "L")
+                    .replace("ZK", "Z");
 
             if (currentCourse.equals(mappedCourse)) {
                 return true;

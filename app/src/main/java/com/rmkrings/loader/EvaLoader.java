@@ -32,7 +32,8 @@ public class EvaLoader extends HttpAuthenticatedGetLoader {
                 String s = course
                         .replace(" ", "")
                         .replace("GK", "G")
-                        .replace("LK", "L");
+                        .replace("LK", "L")
+                        .replace("ZK", "Z");
                 mappedCourseList.append((mappedCourseList.length() == 0) ? s : String.format(",%s", s));
             }
 
