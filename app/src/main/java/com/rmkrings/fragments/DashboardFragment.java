@@ -62,6 +62,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
 
     // Local state.
     private String grade;
+    private Boolean reloadOnResume = true;
     private String digestFileName() { return String.format("%s.md5", grade); }
     private String cacheFileName() { return String.format("%s.json", grade); }
 
@@ -131,6 +132,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity)context;
+        reloadOnResume = true;
     }
 
     @Override
@@ -161,7 +163,13 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mNavigationView.getMenu().getItem(2).setChecked(true);
         mNavigationView.getMenu().getItem(2).setTitle(grade);
 
-        reload(false);
+        if (reloadOnResume) {
+            reload(false);
+        } else {
+            setLastUpdate();
+        }
+
+        reloadOnResume = false;
     }
 
     private void reload(boolean refreshing) {
@@ -183,13 +191,17 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     }
 
     private void setMetaData() {
-        this.metaData[0] = vertretungsplan.getTickerText();
-        this.metaData[1] = vertretungsplan.getAdditionalText();
-        mMetaDataAdapter.notifyDataSetChanged();
+        if (vertretungsplan != null) {
+            this.metaData[0] = vertretungsplan.getTickerText();
+            this.metaData[1] = vertretungsplan.getAdditionalText();
+            mMetaDataAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setLastUpdate() {
-        mLastUpdate.setText(vertretungsplan.getLastUpdate());
+        if (vertretungsplan != null) {
+            mLastUpdate.setText(vertretungsplan.getLastUpdate());
+        }
     }
 
     private void setVertretungsplanList() {

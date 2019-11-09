@@ -173,8 +173,10 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     private void updateLoginButtonText(boolean authenticated) {
         if (authenticated) {
             mLoginButton.setText(getResources().getString(R.string.button_logout));
+            mLoginButton.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
         } else {
             mLoginButton.setText(getResources().getString(R.string.button_login));
+            mLoginButton.setBackgroundColor(getResources().getColor(R.color.colorPiusBlue));
         }
     }
 

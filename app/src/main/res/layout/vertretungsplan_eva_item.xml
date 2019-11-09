@@ -8,5 +8,6 @@
     android:paddingTop="2dp"
     android:paddingEnd="8dp"
     android:paddingBottom="2dp"
+    android:textColor="@color/colorPrimaryDark"
     android:textSize="15sp"
     tools:text="Test" />
