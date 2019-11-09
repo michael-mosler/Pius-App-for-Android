@@ -52,6 +52,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     private VertretungsplanListAdapter mVertretunsplanListAdapter;
 
     // Local state.
+    private Boolean reloadOnResume = true;
     private final String digestFileName = "vertretungsplan.md5";
     private final String cacheFileName = "vertretungsplan.json";
 
@@ -126,6 +127,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity)context;
+        reloadOnResume = true;
     }
 
     @Override
@@ -152,7 +154,13 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(1).setChecked(true);
 
-        reload(false);
+        if (reloadOnResume) {
+            reload(false);
+        } else {
+            setLastUpdate();
+        }
+
+        reloadOnResume = false;
     }
 
     private void reload(boolean refreshing) {
@@ -174,13 +182,17 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
     }
 
     private void setMetaData() {
-        this.metaData[0] = vertretungsplan.getTickerText();
-        this.metaData[1] = vertretungsplan.getAdditionalText();
-        mAdapter.notifyDataSetChanged();
+        if (vertretungsplan != null) {
+            this.metaData[0] = vertretungsplan.getTickerText();
+            this.metaData[1] = vertretungsplan.getAdditionalText();
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setLastUpdate() {
-        mLastUpdate.setText(vertretungsplan.getLastUpdate());
+        if (vertretungsplan != null) {
+            mLastUpdate.setText(vertretungsplan.getLastUpdate());
+        }
     }
 
     private void setVertretungsplanList() {
