@@ -70,10 +70,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             TrustManager[] trustManagers = factory.getTrustManagers();
             return (X509TrustManager) trustManagers[0];
         }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        catch (KeyStoreException e) {
+        catch (NoSuchAlgorithmException | KeyStoreException e) {
             e.printStackTrace();
         }
 

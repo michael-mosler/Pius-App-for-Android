@@ -40,10 +40,7 @@ abstract class HttpPost {
                 // message.
                 callback.execute(new HttpResponseData(null, true));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            callback.execute(new HttpResponseData(500, true));
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
             callback.execute(new HttpResponseData(500, true));
         }

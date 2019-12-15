@@ -15,4 +15,5 @@
     <color name="colorAdded">#79CC15</color>
     <color name="colorDeleted">@color/colorAccent</color>
     <color name="colorChanged">@color/colorEva</color>
+
 </resources>

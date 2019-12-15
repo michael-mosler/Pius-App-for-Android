@@ -44,12 +44,7 @@ public class EvaListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
         switch (viewType) {
-            case EvaListItem.evaDateItem: {
-                TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
-                vh = new EvaListAdapter.TextViewHolder(itemView);
-                break;
-            }
-
+            case EvaListItem.evaDateItem:
             case EvaListItem.evaCourseItem: {
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
                 vh = new EvaListAdapter.TextViewHolder(itemView);

@@ -62,19 +62,15 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
         LayoutInflater mLayoutInflater = LayoutInflater.from(parent.getContext());
 
         switch(viewType) {
-            case VertretungsplanChangeListItem.groupItem: {
-                TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
-                vh = new VertretungsplanChangesAdapter.TextViewHolder(itemView);
-                break;
-            }
-
+            case VertretungsplanChangeListItem.groupItem:
             case VertretungsplanChangeListItem.courseHeader: {
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
                 vh = new VertretungsplanChangesAdapter.TextViewHolder(itemView);
                 break;
             }
 
-            case VertretungsplanChangeListItem.changeTypeItem: {
+            case VertretungsplanChangeListItem.changeTypeItem:
+            case VertretungsplanChangeListItem.remarkItem: {
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, parent, false);
                 vh = new VertretungsplanChangesAdapter.TextViewHolder(itemView);
                 break;
@@ -83,12 +79,6 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
             case VertretungsplanChangeListItem.detailItem: {
                 LinearLayout itemView = (LinearLayout)mLayoutInflater.inflate(R.layout.veretretungsplan_detail_item, parent, false);
                 vh = new VertretungsplanChangesAdapter.DetailItemViewHolder(itemView);
-                break;
-            }
-
-            case VertretungsplanChangeListItem.remarkItem: {
-                TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, parent, false);
-                vh = new VertretungsplanChangesAdapter.TextViewHolder(itemView);
                 break;
             }
 
