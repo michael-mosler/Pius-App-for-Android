@@ -25,6 +25,8 @@ import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.notifications.PiusAppMessageService;
 
+import cdflynn.android.library.checkview.CheckView;
+
 public class SettingsActivity extends AppCompatActivity implements HttpResponseCallback
 {
 
@@ -36,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     private NumberPicker mGradePicker;
     private NumberPicker mClassPicker;
     private ProgressBar mProgressBar;
+    private CheckView mSuccessCheckMark;
 
     // Internal state.
     private final Config config = new Config();
@@ -213,13 +216,6 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
             AppDefaults.setAuthenticated(false);
             updateLoginButtonText(false);
 
-            // Inform user on new login state.
-            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                    .setTitle(getResources().getString(R.string.title_logon))
-                    .setMessage(getResources().getString(R.string.text_logged_out))
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-
             mUserName.setEnabled(true);
             mPassword.setEnabled(true);
         }
@@ -253,6 +249,8 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         mPassword = findViewById(R.id.password);
         mLoginButton = findViewById(R.id.login);
         mProgressBar = findViewById((R.id.progressBar));
+        mSuccessCheckMark = findViewById(R.id.successCheckMark);
+        mSuccessCheckMark.setVisibility(View.GONE);
 
         titlesForGradePicker();
         titlesForClassPicker();
@@ -365,36 +363,49 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
      */
     @Override
     public void execute(HttpResponseData data) {
-        boolean success = false;
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         mProgressBar.setVisibility(View.GONE);
         mLoginButton.setEnabled(true);
 
-        // Show popup with info outcome.
-        String message;
-        if (data.isError() || (data.getHttpStatusCode() != 200 && data.getHttpStatusCode() != 401)) {
-            message = getResources().getString(R.string.text_logon_error);
-        } else {
-            success = data.getHttpStatusCode() == 200;
-            message = getResources().getString((success) ? R.string.text_logged_on : R.string.text_invalid_credentials);
-        }
-
-        new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                .setTitle(getResources().getString(R.string.title_logon))
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
-
         // Store current authentication state in user settings and update text of
         // login button.
-        if (success) {
+        if (data.getHttpStatusCode() == 200) {
             AppDefaults.setAuthenticated(true);
             mUserName.setEnabled(false);
             mPassword.setEnabled(false);
             updateLoginButtonText(true);
+
+            mSuccessCheckMark.setVisibility(View.VISIBLE);
+            mSuccessCheckMark.check();
+            mSuccessCheckMark.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSuccessCheckMark.setVisibility(View.GONE);
+                }
+            }, 2000);
         } else {
             AppDefaults.setAuthenticated(false);
             updateLoginButtonText(false);
         }
-    }
+
+        // Show popup with info outcome.
+        // Check if app is finishing. Only if not we may show popup.
+        // Otherwise app is likely to crash as context is getting lost.
+        String message;
+        if (!isFinishing() && data.getHttpStatusCode() != 200) {
+            if (data.isError()) {
+                message = getResources().getString(R.string.text_logon_error);
+            } else if (data.getHttpStatusCode() != 401) {
+                message = getResources().getString(R.string.text_logon_error);
+            } else {
+                message = getResources().getString(R.string.text_invalid_credentials);
+            }
+
+            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                    .setTitle(getResources().getString(R.string.title_logon))
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+        }
+     }
 }

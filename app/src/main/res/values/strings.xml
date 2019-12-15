@@ -45,7 +45,6 @@
     <string name="label_added">Hinzugefügt</string>
 
     <string name="text_logged_on" tools:keep="@string/text_logged_on">Du bist nun angemeldet.</string>
-    <string name="text_logged_out">Du bist nun abgemeldet.</string>
     <string name="text_invalid_credentials" tools:keep="@string/text_invalid_credentials">Die Anmeldedaten sind ungültig.</string>
     <string name="text_logon_error" tools:keep="@string/text_logon_error">Es ist ein Fehler aufgetreten. Bitte überprüfe Deine Internetverbindung und versuche es noch einmal.</string>
     <string name="text_last_changed">Letzte Änderung</string>

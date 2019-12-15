@@ -86,12 +86,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
                 break;
             }
 
-            case VertretungsplanListItem.remarkItem: {
-                TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, parent, false);
-                vh = new TextViewHolder(itemView);
-                break;
-            }
-
+            case VertretungsplanListItem.remarkItem:
             case VertretungsplanListItem.message: {
                 TextView itemView = (TextView)mLayoutInflater.inflate(R.layout.vertretungsplan_remark_item, parent, false);
                 vh = new TextViewHolder(itemView);
