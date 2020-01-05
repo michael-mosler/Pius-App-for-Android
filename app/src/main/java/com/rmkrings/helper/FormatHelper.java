@@ -1,8 +1,10 @@
 package com.rmkrings.helper;
 
 import android.graphics.Point;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.widget.TextView;
@@ -14,6 +16,11 @@ import java.util.ArrayList;
 
 public class FormatHelper {
 
+    /**
+     * Takes a text view displaying room substitution and, if → is contained in text, strikes
+     * through text right before →
+     * @param v - Textview holding room substitution text.
+     */
     public static void roomText(TextView v) {
         if (v.length() == 0) {
             return;
@@ -28,6 +35,30 @@ public class FormatHelper {
         }
     }
 
+    /**
+     * Takes a room substitution string and if → is contained then strikes through
+     * text right before →.
+     * @param s - Room substitution string
+     * @return Formatted room substitution string.
+     */
+    public static Spanned roomText(String s) {
+        if (s.isEmpty()) {
+            return new SpannedString("");
+        }
+
+        int pos = s.indexOf("→");
+        if (pos > 1) {
+            s = String.format("<strike>%s</strike>%s", s.substring(0, pos - 1), s.substring(pos));
+        }
+
+        return Html.fromHtml(s);
+    }
+
+    /**
+     * Highlights positions in text of a given text view.
+     * @param v - Textview to highlight text in.
+     * @param spans - Positions to highlight.
+     */
     public static void highlight(TextView v, ArrayList<Point> spans) {
         if (v.length() == 0) {
             return;

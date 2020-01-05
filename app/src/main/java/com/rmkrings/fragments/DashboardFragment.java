@@ -3,6 +3,7 @@ package com.rmkrings.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +39,8 @@ import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.activities.R;
+import com.rmkrings.notifications.DashboardWidgetUpdateService;
+import com.rmkrings.widgets.DashboardWidget;
 import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
@@ -301,6 +304,11 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         } else {
             data = cache.read(cacheFileName());
         }
+
+        // Update widget when new data has been loaded.
+        Context context = pius_app_for_android.getAppContext();
+        Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
+        context.startService(intent);
 
         try {
             jsonData = new JSONObject(data);

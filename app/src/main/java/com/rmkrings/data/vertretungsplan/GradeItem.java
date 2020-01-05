@@ -42,6 +42,12 @@ public final class GradeItem implements Serializable {
         }
     }
 
+    GradeItem(GradeItem from, String[] vertretungsplanItem) {
+        grade = from.grade;
+        vertretungsplanItems = new ArrayList<>();
+        vertretungsplanItems.add(vertretungsplanItem);
+    }
+
     public String getGrade() {
         return grade;
     }

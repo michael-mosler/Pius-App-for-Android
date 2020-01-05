@@ -47,9 +47,9 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
         final TextView teacher;
         DetailItemViewHolder(LinearLayout l) {
             super(l);
-            substitutionType = l.findViewById(R.id.substitutionType);
-            room = l.findViewById(R.id.room);
-            teacher = l.findViewById(R.id.teacher);
+            substitutionType = l.findViewById(R.id.widgetSubstitutionTypeItem);
+            room = l.findViewById(R.id.widgetRoomItem);
+            teacher = l.findViewById(R.id.widgetTeacherItem);
         }
     }
 
