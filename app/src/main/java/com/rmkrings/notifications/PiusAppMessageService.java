@@ -3,6 +3,7 @@ package com.rmkrings.notifications;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
@@ -19,15 +20,23 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.rmkrings.activities.R;
 import com.rmkrings.activities.ScheduleChangedActivity;
+import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.AppDefaults;
+import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.HttpDeviceTokenSetter;
+import com.rmkrings.pius_app_for_android;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class PiusAppMessageService extends FirebaseMessagingService implements HttpResponseCallback {
+
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
@@ -71,6 +80,27 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(0, builder.build());
         }
+
+        // If schedule data is attached update dashboard data cache and then
+        // reload widget.
+        if (remoteMessage.getData().containsKey("substitutionSchedule")) {
+            try {
+                final String data = remoteMessage.getData().get("substitutionSchedule");
+                final Vertretungsplan vertretungsplan = new Vertretungsplan(new JSONObject(data));
+                final String grade = AppDefaults.getGradeSetting();
+                final Cache cache = new Cache();
+                cache.store(Config.digestFilename(grade), vertretungsplan.getDigest());
+                cache.store(Config.cacheFilename(grade), data);
+
+                // Update widget when new data has been loaded.
+                Context context = pius_app_for_android.getAppContext();
+                Intent widgetIntent = new Intent(context, DashboardWidgetUpdateService.class);
+                context.startService(widgetIntent);
+            }
+            catch(JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void updateDeviceToken() {
@@ -104,4 +134,5 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
 
     @Override
     public void execute(HttpResponseData data) { /* void */ }
+
 }

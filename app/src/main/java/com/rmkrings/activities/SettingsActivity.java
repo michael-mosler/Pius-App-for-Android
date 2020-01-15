@@ -23,7 +23,9 @@ import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
+import com.rmkrings.notifications.DashboardWidgetUpdateService;
 import com.rmkrings.notifications.PiusAppMessageService;
+import com.rmkrings.pius_app_for_android;
 
 import cdflynn.android.library.checkview.CheckView;
 
@@ -350,6 +352,11 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        // Update widget when new data has been loaded.
+        Context context = pius_app_for_android.getAppContext();
+        Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
+        context.startService(intent);
 
         PiusAppMessageService piusAppMessageService = new PiusAppMessageService();
         piusAppMessageService.updateDeviceToken();

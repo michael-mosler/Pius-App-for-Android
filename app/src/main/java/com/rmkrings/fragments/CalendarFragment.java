@@ -26,6 +26,7 @@ import com.rmkrings.data.adapter.CalendarMonthListAdapter;
 import com.rmkrings.data.calendar.Calendar;
 import com.rmkrings.data.calendar.DayItem;
 import com.rmkrings.data.calendar.MonthItem;
+import com.rmkrings.helper.Config;
 import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.interfaces.HttpResponseCallback;
@@ -51,8 +52,8 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private Button mSelectedButton = null;
 
     // Local State
-    private final String digestFileName = "calendar.md5";
-    private final String cacheFileName = "calendar.json";
+    private final String digestFileName = Config.digestFilename("calendar");
+    private final String cacheFileName = Config.cacheFilename("calendar");
 
     private final Cache cache = new Cache();
     private Calendar calendar;

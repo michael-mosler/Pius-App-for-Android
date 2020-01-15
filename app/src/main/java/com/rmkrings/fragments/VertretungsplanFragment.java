@@ -27,6 +27,7 @@ import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.activities.R;
@@ -53,8 +54,8 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
 
     // Local state.
     private Boolean reloadOnResume = true;
-    private final String digestFileName = "vertretungsplan.md5";
-    private final String cacheFileName = "vertretungsplan.json";
+    private final String digestFileName = Config.digestFilename("vertretungsplan");
+    private final String cacheFileName = Config.cacheFilename("vertretungsplan");
 
     private final Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;

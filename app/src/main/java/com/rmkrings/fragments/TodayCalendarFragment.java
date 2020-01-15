@@ -20,6 +20,7 @@ import com.rmkrings.data.calendar.CalendarListItem;
 import com.rmkrings.data.calendar.CalendarMessage;
 import com.rmkrings.data.calendar.DayItem;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.ParentFragment;
@@ -39,8 +40,8 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
     private CalendarSearchListAdapter mCalendarSearchListAdapter;
 
     // Local State
-    private final String digestFileName = "calendar.md5";
-    private final String cacheFileName = "calendar.json";
+    private final String digestFileName = Config.digestFilename("calendar");
+    private final String cacheFileName = Config.cacheFilename("calendar");
     private final Cache cache = new Cache();
     private Calendar calendar;
     private final ArrayList<CalendarListItem> dateList = new ArrayList<>();

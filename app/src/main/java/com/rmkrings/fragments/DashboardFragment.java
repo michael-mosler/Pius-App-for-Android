@@ -35,6 +35,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
@@ -66,8 +67,8 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     // Local state.
     private String grade;
     private Boolean reloadOnResume = true;
-    private String digestFileName() { return String.format("%s.md5", grade); }
-    private String cacheFileName() { return String.format("%s.json", grade); }
+    private String digestFileName() { return Config.digestFilename(grade); }
+    private String cacheFileName() { return Config.cacheFilename(grade); }
 
     private final Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;

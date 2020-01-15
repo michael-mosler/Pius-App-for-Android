@@ -3,22 +3,33 @@
     android:id="@+id/dashboardWidgetLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/widget_margin"
-    android:background="@drawable/layout_corners"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_border_top_corners_pius_blue_bg"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp"
+        android:text="@string/title_widget"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        tools:text="@string/title_widget" />
 
     <TextView
         android:id="@+id/widgetVertretungsplanHeaderItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_top_corners"
+        android:background="@color/colorPiusBlue"
         android:paddingStart="8dp"
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
         android:textColor="@android:color/white"
-        android:textSize="17sp"
-        tools:text="Test" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/widgetVertretungsplanSubHeaderItem"
@@ -30,16 +41,18 @@
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
         android:textColor="@android:color/white"
-        android:textSize="17sp"
+        android:textSize="14sp"
         tools:text="Test" />
 
     <LinearLayout
+        android:id="@+id/widgetDetailsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/layout_border_sides_white_bg"
         android:orientation="horizontal"
         android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:paddingTop="2dp"
+        android:paddingEnd="8dp"
         android:paddingBottom="2dp">
 
         <TextView
@@ -48,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
+            android:textSize="14sp"
             tools:text="Art der Vertretung" />
 
         <TextView
@@ -57,7 +70,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="textStart"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
+            android:textSize="14sp"
             tools:text="Raum" />
 
         <TextView
@@ -65,7 +78,7 @@
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
+            android:textSize="14sp"
             tools:text="Lehrer" />
     </LinearLayout>
 
@@ -73,33 +86,35 @@
         android:id="@+id/widgetCommentItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/layout_border_sides_white_bg"
         android:paddingStart="8dp"
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp"
+        android:textSize="14sp"
         tools:text="Test" />
 
     <TextView
         android:id="@+id/widgetEvaItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorEva"
+        android:background="@drawable/layout_border_sides_eva_bg"
         android:paddingStart="8dp"
         android:paddingTop="2dp"
         android:paddingEnd="8dp"
         android:paddingBottom="2dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp"
+        android:textSize="14sp"
         tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren," />
 
     <TextView
         android:id="@+id/widgetLastUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/layout_border_bottom_corners_white_bg"
         android:textAlignment="center"
-        android:background="@drawable/layout_bottom_corners"
+        android:textSize="12sp"
         tools:text="Letzte Aktualisierung" />
 
 </LinearLayout>

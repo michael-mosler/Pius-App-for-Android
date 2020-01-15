@@ -19,6 +19,7 @@ import com.rmkrings.data.MessageItem;
 import com.rmkrings.data.adapter.PostingsAdapter;
 import com.rmkrings.data.postings.Postings;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.interfaces.ParentFragment;
@@ -40,8 +41,8 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     private PostingsAdapter mPostingsAdapter;
 
     // Local State
-    private final String digestFileName = "postings.md5";
-    private final String cacheFileName = "postings.json";
+    private final String digestFileName = Config.digestFilename("postings");
+    private final String cacheFileName = Config.cacheFilename("postings");
     private final Cache cache = new Cache();
     private Postings postings;
     private final ArrayList<BaseListItem> itemlist = new ArrayList<>();

@@ -5,6 +5,7 @@
     <string name="button_login">Anmelden</string>
     <string name="button_logout">Abmelden</string>
 
+    <string name="title_widget">Pius App Vertretungsplan</string>
     <string name="title_welcome">Willkommen!</string>
     <string name="title_home">Heute</string>
     <string name="title_substitution_schedule">Vertretungsplan</string>
@@ -52,6 +53,7 @@
     <string name="text_course_list_info">Hier legst Du fest, welche Kurse im Dashboard und bei Push-Benachrichtigungen berücksichtigt werden.</string>
     <string name="text_empty_calendar">Für heute steht nichts im Kalender.</string>
     <string name="text_empty_schedule">Heute hast Du keinen Vertretungsunterricht.</string>
+    <string name="text_empty_future_schedule">In den nächsten Tagen hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
 
     <string name="text_intro">
@@ -65,7 +67,10 @@
     <string name="error_cannot_use_dashboard">Melde Dich in den Einstellungen an und lege Deine Klasse/Jahrgangsstufe fest, um das Dashboard zu verwenden. Wenn Du in der Oberstufe bist, musst Du auch Deine Kursliste hinzufügen, um ein personalisiertes Dashboard zu erhalten.\n
         \nTippe unten auf Einstellungen, um mit der Konfiguration zu beginnen.
     </string>
+    <string name="error_cannot_use_dashboard_widget">Melde Dich in den Einstellungen an und lege Deine Klasse/Jahrgangsstufe fest, um das Widget zu verwenden. Wenn Du in der Oberstufe bist, musst Du auch Deine Kursliste hinzufügen, um ein personalisiertes Dashboard zu erhalten.
+    </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
+    <string name="error_no_data">Es gibt noch keine Daten, die das Widget anzeigen kann. Es kann einen Moment dauern, bis diese zur Verfügung stehen.</string>
     <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>

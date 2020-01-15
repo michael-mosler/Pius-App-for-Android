@@ -19,6 +19,41 @@ public class Config {
 
     private final String[] lessonStartTimes = { "07:55", "08:40", "09:45", "10:35", "11:25", "12:40", "13:25", "14:30", "15:15", "16:00", "16:45" };
 
+    /**
+     * This is a shortcut for String.format("%s.md5", pattern)
+     * @param pattern - Variable part of filename
+     * @return - Filename
+     */
+    public static String digestFilename(String pattern) { return String.format("%s.md5", pattern); }
+
+    /**
+     * This is a shortcut for String.format("%s.json", pattern)
+     * @param pattern - Variable part of filename
+     * @return - Filename
+     */
+    public static String cacheFilename(String pattern) { return String.format("%s.json", pattern); }
+
+    /**
+     * Checks if grade is upper grade.
+     * @param grade - The grade to check.
+     * @return - true when upper grade
+     */
+    public boolean isUpperGrade(String grade)  {
+        return Arrays.asList(upperGrades).contains(grade);
+    }
+
+    /**
+     * Checks if grade is a lower grade.
+     * @param grade - The grade to check.
+     * @return - true when lower grade
+     */
+    public boolean isLowerGrade(String grade) {
+        return Arrays.asList(lowerGrades).contains(grade);
+    }
+
+    /*
+     * Getters...
+     */
     public String[] getLessonStartTimes() {
         return lessonStartTimes;
     }
@@ -37,24 +72,6 @@ public class Config {
 
     String[] getShortClasses() {
         return shortClasses;
-    }
-
-    /**
-     * Checks if grade is upper grade.
-     * @param grade - The grade to check.
-     * @return - true when upper grade
-     */
-    public boolean isUpperGrade(String grade)  {
-        return Arrays.asList(upperGrades).contains(grade);
-    }
-
-    /**
-     * Checks if grade is a lower grade.
-     * @param grade - The grade to check.
-     * @return - true when lower grade
-     */
-    public boolean isLowerGrade(String grade) {
-        return Arrays.asList(lowerGrades).contains(grade);
     }
 
     public String[] getCourses() {
