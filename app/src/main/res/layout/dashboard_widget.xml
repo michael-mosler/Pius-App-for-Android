@@ -114,6 +114,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/layout_border_bottom_corners_white_bg"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="12sp"
         tools:text="Letzte Aktualisierung" />
 

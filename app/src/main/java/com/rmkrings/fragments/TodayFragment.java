@@ -154,7 +154,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         String data;
         JSONObject jsonData;
 
-        if (!getActivity().isFinishing()) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
             if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
                 logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
                 mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);

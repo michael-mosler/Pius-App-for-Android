@@ -24,7 +24,9 @@ import com.rmkrings.fragments.TodayFragment;
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {
 
-    static public final String targetDashboard = "dashboard";
+    public static String getTargetDashboard() {
+        return "dashboard";
+    }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         // Start alternate fragment on request.
         String target = getIntent().getStringExtra("target");
-        if (target != null && target.equals(targetDashboard)) {
+        if (target != null && target.equals(getTargetDashboard())) {
             startFragment(new DashboardFragment(), false);
         }
     }

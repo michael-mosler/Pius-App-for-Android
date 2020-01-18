@@ -48,7 +48,7 @@ public class ScheduleChangedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent a = new Intent(ScheduleChangedActivity.this, MainActivity.class);
-                a.putExtra("target", MainActivity.targetDashboard);
+                a.putExtra("target", MainActivity.getTargetDashboard());
                 startActivity(a);
             }
         });
