@@ -31,14 +31,6 @@ public class DashboardWidget extends AppWidgetProvider {
     private PendingIntent pendingIntent;
 
     /**
-     * Checks if dashboard can be used. If it can than widget also can show data.
-     * @return - Returns true if dashboard can be used.
-     */
-    private static boolean canUseDashboard(){
-        return (AppDefaults.isAuthenticated() && (AppDefaults.hasLowerGrade() || (AppDefaults.hasUpperGrade() && AppDefaults.getCourseList().size() > 0)));
-    }
-
-    /**
      * Show a given message in comment view of Pius App widget. All other views get
      * hidden.
      * @param remoteViews - Remote views to use to control visibilty and to set text
@@ -72,7 +64,7 @@ public class DashboardWidget extends AppWidgetProvider {
             final String grade = AppDefaults.getGradeSetting();
             final String cacheFileName = Config.cacheFilename(grade);
 
-            if (!canUseDashboard()) {
+            if (!Config.canUseDashboard()) {
                 showMessage(remoteViews, context.getResources().getString(R.string.error_cannot_use_dashboard_widget));
             } else if (!cache.fileExists(cacheFileName)) {
                 showMessage(remoteViews, context.getResources().getString(R.string.error_no_data));

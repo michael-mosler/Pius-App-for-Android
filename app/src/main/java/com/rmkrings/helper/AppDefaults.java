@@ -60,6 +60,15 @@ public class AppDefaults {
         edit.commit();
     }
 
+    public static int getSavedVersionCode() {
+        return sharedPreferences.getInt("savedVersionCode", 0);
+    }
+
+    public static void setSavedVersionCode(int versionCode) {
+        edit.putInt("savedVersionCode", versionCode);
+        edit.commit();
+    }
+
     /*
      * Grade and Class
      */
@@ -76,7 +85,7 @@ public class AppDefaults {
         return AppDefaults.getSelectedGradeRow() != 0;
     }
 
-    public static boolean hasLowerGrade() {
+    static boolean hasLowerGrade() {
         Config config = new Config();
         int selectedGradeRow = getSelectedGradeRow();
         return config.isLowerGrade(config.getGrades()[selectedGradeRow]);

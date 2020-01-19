@@ -137,7 +137,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         // We load Vertretungsplan from here as data might be needed in several child fragments.
         // If fragment tells us that dashboard cannot be used we do not load data but
         // call show with a null Vertretunsgplan. This will hide according box.
-        if (mTodayVertetungsplanFragment.canUseDashboard()) {
+        if (Config.canUseDashboard()) {
             VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(AppDefaults.getGradeSetting());
             vertretungsplanLoader.load(this, digest);
         } else {

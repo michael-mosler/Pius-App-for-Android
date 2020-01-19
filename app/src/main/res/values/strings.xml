@@ -4,6 +4,16 @@
     <string name="button_mycourses">Meine Kurse</string>
     <string name="button_login">Anmelden</string>
     <string name="button_logout">Abmelden</string>
+    <string name="button_welcome_start">Jetzt loslegen</string>
+
+    <string name="welcome_new_in_version">Neu in der Version 1.4:</string>
+    <string name="welcome_new_1">Füge Deinem Homescreen ein Widget hinzu, das Dir Deine nächste Vertretungsstunde anzeigt.</string>
+    <string name="welcome_title_overview">Funktionen im Überblick:</string>
+    <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
+    <string name="welcome_function_vertretungsplan">Greife mit der App ganz einfach auf den gesamten aktuellen Vertretungsplan zu.</string>
+    <string name="welcome_function_dashboard">Wähle Klasse oder Jahrgangsstufe aus und personalisiere Deinen Vetretungsplan. Verwende das Widget und werde bei Änderungen benachrichtigt.</string>
+    <string name="welcome_function_calendar">Dursuche ganz einfach mit dem Kalender die Termine der Schule.</string>
+
 
     <string name="title_widget">Pius App Vertretungsplan</string>
     <string name="title_welcome">Willkommen!</string>
@@ -57,8 +67,7 @@
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
 
     <string name="text_intro">
-        Schön, dass Du die Pius-App für Android verwendest!\n
-        \nMelde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.
+        Melde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.
     </string>
 
     <string name="error_cannot_use_vertretungsplan">Melde Dich in den Einstellungen an, um den Vertretungsplan zu verwenden.\n
@@ -74,4 +83,5 @@
     <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="title_activity_whats_new">What\'s New</string>
 </resources>

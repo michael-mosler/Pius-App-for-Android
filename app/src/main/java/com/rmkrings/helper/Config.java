@@ -34,6 +34,14 @@ public class Config {
     public static String cacheFilename(String pattern) { return String.format("%s.json", pattern); }
 
     /**
+     * Checks if dashboard can be used. If it can than widget also can show data.
+     * @return - Returns true if dashboard can be used.
+     */
+    public static boolean canUseDashboard(){
+        return (AppDefaults.isAuthenticated() && (AppDefaults.hasLowerGrade() || (AppDefaults.hasUpperGrade() && AppDefaults.getCourseList().size() > 0)));
+    }
+
+    /**
      * Checks if grade is upper grade.
      * @param grade - The grade to check.
      * @return - true when upper grade

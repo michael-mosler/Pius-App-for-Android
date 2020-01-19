@@ -116,13 +116,18 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         // If App is used for the very first time show information
         // that user should log in to Pius website in Settings.
-        if (AppDefaults.hasShowIntro()) {
-            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                    .setTitle(getResources().getString(R.string.title_welcome))
-                    .setMessage(getResources().getString(R.string.text_intro))
-                    .setPositiveButton(getResources().getString(R.string.label_start_now), null)
-                    .show();
-            AppDefaults.setShowIntro(false);
+        int versionCode;
+        try {
+            versionCode = getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode;
+        }
+        catch(PackageManager.NameNotFoundException e) {
+            versionCode = 0;
+        }
+
+        if (versionCode > AppDefaults.getSavedVersionCode()) {
+            AppDefaults.setSavedVersionCode(versionCode);
+            Intent a = new Intent(this, WhatsNewActivity.class);
+            startActivity(a);
         }
     }
 
