@@ -1,5 +1,10 @@
 package com.rmkrings.helper;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+
+import com.rmkrings.pius_app_for_android;
+
 import java.util.Arrays;
 
 public class Config {
@@ -18,6 +23,24 @@ public class Config {
     private final String[] shortClasses =  { "", "A", "B", "C", "D", "E" };
 
     private final String[] lessonStartTimes = { "07:55", "08:40", "09:45", "10:35", "11:25", "12:40", "13:25", "14:30", "15:15", "16:00", "16:45" };
+
+    /**
+     * Get always show welcome screen information. This should return true for debug build only.
+     * @return "true" if welcome screen should be shown, even if version code has not changed.
+     */
+    public static Boolean getAlwaysShowWelcome() {
+        try {
+            ApplicationInfo ai = pius_app_for_android.getAppContext().getPackageManager().getApplicationInfo(pius_app_for_android.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
+            return (Boolean)ai.metaData.get("alwaysShowWelcome");
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * This is a shortcut for String.format("%s.md5", pattern)

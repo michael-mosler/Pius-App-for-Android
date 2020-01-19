@@ -18,7 +18,7 @@ android {
             manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe']
         }
         debug {
-            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe']
+            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: true]
         }
         localhost {
             manifestPlaceholders = [host: 'http://localhost:3000', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe']

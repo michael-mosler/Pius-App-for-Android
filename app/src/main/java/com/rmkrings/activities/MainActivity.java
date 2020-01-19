@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.content.Intent;
 
 import com.rmkrings.helper.AppDefaults;
+import com.rmkrings.helper.Config;
 import com.rmkrings.helper.Reachability;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.fragments.CalendarFragment;
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
             versionCode = 0;
         }
 
-        if (versionCode > AppDefaults.getSavedVersionCode()) {
+        if (versionCode > AppDefaults.getSavedVersionCode() || Config.getAlwaysShowWelcome()) {
             AppDefaults.setSavedVersionCode(versionCode);
             Intent a = new Intent(this, WhatsNewActivity.class);
             startActivity(a);

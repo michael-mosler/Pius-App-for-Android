@@ -49,17 +49,8 @@ public class AppDefaults {
     }
 
     /*
-     * Show intro flag.
+     * Version Code
      */
-    public static boolean hasShowIntro() {
-        return sharedPreferences.getBoolean("showIntro", true);
-    }
-
-    public static void setShowIntro(boolean showIntro) {
-        edit.putBoolean("showIntro", showIntro);
-        edit.commit();
-    }
-
     public static int getSavedVersionCode() {
         return sharedPreferences.getInt("savedVersionCode", 0);
     }

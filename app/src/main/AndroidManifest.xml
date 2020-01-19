@@ -17,7 +17,7 @@
         <activity
             android:name=".WhatsNewActivity"
             android:label="@string/title_activity_whats_new"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name="com.rmkrings.widgets.DashboardWidget">
             <intent-filter>
@@ -46,6 +46,9 @@
         <meta-data
             android:name="apiKey"
             android:value="${apiKey}" />
+        <meta-data
+            android:name="alwaysShowWelcome"
+            android:value="${alwaysShowWelcome}" />
 
         <activity android:name=".WebViewActivity" />
         <activity android:name=".SettingsActivity" />
