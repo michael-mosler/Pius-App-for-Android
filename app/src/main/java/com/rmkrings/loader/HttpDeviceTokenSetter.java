@@ -19,11 +19,13 @@ public class HttpDeviceTokenSetter extends HttpPost {
     private final String token;
     private final String grade;
     private final ArrayList<String> courseList;
+    private final String version;
 
-    public HttpDeviceTokenSetter(String token, String grade, ArrayList<String> courseList) {
+    public HttpDeviceTokenSetter(String token, String grade, ArrayList<String> courseList, String version) {
         this.token = token;
         this.grade = grade;
         this.courseList = courseList;
+        this.version = version;
     }
 
     @Override
@@ -42,7 +44,8 @@ public class HttpDeviceTokenSetter extends HttpPost {
                     .put("deviceToken", token)
                     .put("grade", grade)
                     .put("courseList", new JSONArray(courseList))
-                    .put("messagingProvider", messagingProvider);
+                    .put("messagingProvider", messagingProvider)
+                    .put("version", version);
 
             return jsonData.toString();
         }

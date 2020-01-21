@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
@@ -122,12 +123,26 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
     }
 
     private void sendToken(String token) {
-        String grade = AppDefaults.getGradeSetting();
+        final String grade = AppDefaults.getGradeSetting();
 
         // Send token only if grade is set and authenticated.
         if (grade.length() > 0 && AppDefaults.isAuthenticated()) {
+            String versionName;
+
+            // Get version name. If this throws simply use empty string. An error here should
+            // not break app.
+            try {
+                final Context context = pius_app_for_android.getAppContext();
+                final PackageManager pm = context.getPackageManager();
+
+                versionName = pm.getPackageInfo(pius_app_for_android.getAppPackageName(), 0).versionName;
+            }
+            catch (Exception e) {
+                versionName = "";
+            }
+
             ArrayList<String> courseList = AppDefaults.getCourseList();
-            HttpDeviceTokenSetter httpDeviceTokenSetter = new HttpDeviceTokenSetter(token, grade, courseList);
+            HttpDeviceTokenSetter httpDeviceTokenSetter = new HttpDeviceTokenSetter(token, grade, courseList, versionName);
             httpDeviceTokenSetter.load(this);
         }
     }

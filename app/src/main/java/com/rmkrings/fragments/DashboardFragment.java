@@ -41,7 +41,6 @@ import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.activities.R;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
-import com.rmkrings.widgets.DashboardWidget;
 import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;

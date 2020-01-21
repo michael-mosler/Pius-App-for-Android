@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.content.Intent;
@@ -25,6 +24,7 @@ import com.rmkrings.fragments.TodayFragment;
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {
 
+    @SuppressWarnings("SameReturnValue")
     public static String getTargetDashboard() {
         return "dashboard";
     }

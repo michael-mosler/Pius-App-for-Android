@@ -26,4 +26,6 @@ public class pius_app_for_android extends Application {
     public static Context getAppContext() {
         return self;
     }
+
+    public static String getAppPackageName() { return self.getPackageName(); }
 }
