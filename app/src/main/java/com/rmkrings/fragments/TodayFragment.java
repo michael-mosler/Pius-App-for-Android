@@ -154,38 +154,43 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         String data;
         JSONObject jsonData;
 
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
-                logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
-                mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
-                return;
-            }
-
-            if (responseData.getData() != null) {
-                data = responseData.getData();
-                cache.store(cacheFileName(), data);
-            } else {
-                data = cache.read(cacheFileName());
-            }
-
-            // Update widget when new data has been loaded.
-            Context context = pius_app_for_android.getAppContext();
-            Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
-            context.startService(intent);
-
-            try {
-                jsonData = new JSONObject(data);
-                Vertretungsplan vertretungsplan = new Vertretungsplan(jsonData);
-
-                if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
-                    cache.store(digestFileName(), vertretungsplan.getDigest());
+        try {
+            if (getActivity() != null && !getActivity().isFinishing()) {
+                if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+                    logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
+                    mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
+                    return;
                 }
 
-                mTodayVertetungsplanFragment.show(vertretungsplan, this);
-            } catch (Exception e) {
-                mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
-                e.printStackTrace();
+                if (responseData.getData() != null) {
+                    data = responseData.getData();
+                    cache.store(cacheFileName(), data);
+                } else {
+                    data = cache.read(cacheFileName());
+                }
+
+                // Update widget when new data has been loaded.
+                Context context = pius_app_for_android.getAppContext();
+                Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
+                context.startService(intent);
+
+                try {
+                    jsonData = new JSONObject(data);
+                    Vertretungsplan vertretungsplan = new Vertretungsplan(jsonData);
+
+                    if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+                        cache.store(digestFileName(), vertretungsplan.getDigest());
+                    }
+
+                    mTodayVertetungsplanFragment.show(vertretungsplan, this);
+                } catch (Exception e) {
+                    mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
+                    e.printStackTrace();
+                }
             }
+        }
+        catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 

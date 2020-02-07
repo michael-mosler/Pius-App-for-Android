@@ -279,62 +279,67 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mFragment.setRefreshing(false);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
-                logger.severe(String.format("Failed to load data for Dashboard. HTTP Status code %d.", responseData.getHttpStatusCode()));
-                new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
-                        .setTitle(getResources().getString(R.string.title_dashboard))
-                        .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
+        try {
+            if (getActivity() != null && !getActivity().isFinishing()) {
+                if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+                    logger.severe(String.format("Failed to load data for Dashboard. HTTP Status code %d.", responseData.getHttpStatusCode()));
+                    new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                            .setTitle(getResources().getString(R.string.title_dashboard))
+                            .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (getFragmentManager() != null) {
+                                        getFragmentManager().popBackStack();
+                                    }
                                 }
-                            }
-                        })
-                        .show();
-                return;
-            }
-
-            if (responseData.getData() != null) {
-                data = responseData.getData();
-                cache.store(cacheFileName(), data);
-            } else {
-                data = cache.read(cacheFileName());
-            }
-
-            // Update widget when new data has been loaded.
-            Context context = pius_app_for_android.getAppContext();
-            Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
-            context.startService(intent);
-
-            try {
-                jsonData = new JSONObject(data);
-                vertretungsplan = new Vertretungsplan(jsonData);
-
-                if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
-                    cache.store(digestFileName(), vertretungsplan.getDigest());
+                            })
+                            .show();
+                    return;
                 }
 
-                setMetaData();
-                setLastUpdate();
-                setVertretungsplanList();
-            } catch (Exception e) {
-                e.printStackTrace();
-                new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
-                        .setTitle(getResources().getString(R.string.title_dashboard))
-                        .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
+                if (responseData.getData() != null) {
+                    data = responseData.getData();
+                    cache.store(cacheFileName(), data);
+                } else {
+                    data = cache.read(cacheFileName());
+                }
+
+                // Update widget when new data has been loaded.
+                Context context = pius_app_for_android.getAppContext();
+                Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
+                context.startService(intent);
+
+                try {
+                    jsonData = new JSONObject(data);
+                    vertretungsplan = new Vertretungsplan(jsonData);
+
+                    if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+                        cache.store(digestFileName(), vertretungsplan.getDigest());
+                    }
+
+                    setMetaData();
+                    setLastUpdate();
+                    setVertretungsplanList();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                            .setTitle(getResources().getString(R.string.title_dashboard))
+                            .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (getFragmentManager() != null) {
+                                        getFragmentManager().popBackStack();
+                                    }
                                 }
-                            }
-                        })
-                        .show();
+                            })
+                            .show();
+                }
             }
+        }
+        catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 
