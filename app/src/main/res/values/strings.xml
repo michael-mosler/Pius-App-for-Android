@@ -77,7 +77,7 @@
     <string name="error_cannot_use_dashboard_widget">Melde Dich in den Einstellungen an und lege Deine Klasse/Jahrgangsstufe fest, um das Widget zu verwenden. Wenn Du in der Oberstufe bist, musst Du auch Deine Kursliste hinzufügen, um ein personalisiertes Dashboard zu erhalten.
     </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
-    <string name="error_no_data">Es gibt noch keine Daten, die das Widget anzeigen kann. Es kann einen Moment dauern, bis diese zur Verfügung stehen.</string>
+    <string name="error_no_data">Es gibt noch keine Daten, die das Widget anzeigen kann. Warte auf eine Push-Benachrichtigung oder öffne das Dashboard, um Deinen Vetretungsplan zu laden.</string>
     <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
     <string name="title_activity_whats_new">What\'s New</string>
 </resources>
