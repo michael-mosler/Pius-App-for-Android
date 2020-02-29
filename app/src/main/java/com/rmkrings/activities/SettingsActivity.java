@@ -377,6 +377,12 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
         context.startService(intent);
 
+        // When still not authenticated then clear username and password.
+        if (!AppDefaults.isAuthenticated()) {
+            AppDefaults.setUsername("");
+            AppDefaults.setPassword("");
+        }
+
         PiusAppMessageService piusAppMessageService = new PiusAppMessageService();
         piusAppMessageService.updateDeviceToken();
     }

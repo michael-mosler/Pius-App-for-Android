@@ -150,12 +150,18 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
      * @return - SHA1 of login credentials.
      */
     private String credential() {
+        // Guard: When not authenticated return null.
+        if (!AppDefaults.isAuthenticated()) {
+            return null;
+        }
+
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
 
-            // Hash input is concatenation of username and password.
             String hashInput = AppDefaults.getUsername();
             hashInput = hashInput.concat(AppDefaults.getPassword());
+
+            // Hash input is concatenation of username and password.
             final byte[] b = hashInput.getBytes();
 
             // Compute digest as byte array. This is signed and cannot be converted into hex
@@ -179,28 +185,25 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
     private void sendToken(String token) {
         final String grade = AppDefaults.getGradeSetting();
 
-        // Send token only if grade is set and authenticated.
-        if (grade.length() > 0 && AppDefaults.isAuthenticated()) {
-            String versionName;
+        String versionName;
 
-            // Get version name. If this throws simply use empty string. An error here should
-            // not break app.
-            try {
-                final Context context = pius_app_for_android.getAppContext();
-                final PackageManager pm = context.getPackageManager();
+        // Get version name. If this throws simply use empty string. An error here should
+        // not break app.
+        try {
+            final Context context = pius_app_for_android.getAppContext();
+            final PackageManager pm = context.getPackageManager();
 
-                versionName = pm.getPackageInfo(pius_app_for_android.getAppPackageName(), 0).versionName;
-            }
-            catch (Exception e) {
-                versionName = "";
-            }
-
-            final ArrayList<String> courseList = AppDefaults.getCourseList();
-            final String credential = this.credential();
-
-            HttpDeviceTokenSetter httpDeviceTokenSetter = new HttpDeviceTokenSetter(token, grade, courseList, versionName, credential);
-            httpDeviceTokenSetter.load(this);
+            versionName = pm.getPackageInfo(pius_app_for_android.getAppPackageName(), 0).versionName;
         }
+        catch (Exception e) {
+            versionName = "";
+        }
+
+        final ArrayList<String> courseList = AppDefaults.getCourseList();
+        final String credential = this.credential();
+
+        final HttpDeviceTokenSetter httpDeviceTokenSetter = new HttpDeviceTokenSetter(token, grade, courseList, versionName, credential);
+        httpDeviceTokenSetter.load(this);
     }
 
     /**
