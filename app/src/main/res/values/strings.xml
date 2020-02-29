@@ -26,8 +26,11 @@
     <string name="title_eva">EVA</string>
     <string name="title_add_courses">Kurse hinzufügen</string>
     <string name="title_my_subst_schedule_changes">Deine Änderungen am Vertretungsplan</string>
-    <string name="title_logon">Anmeldung</string>
+    <string name="title_logon">Anmelden</string>
+    <string name="title_logout">Abmelden</string>
     <string name="title_delete_course_list_all">Kursliste löschen</string>
+    <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
+    <string name="title_activity_whats_new">What\'s New</string>
 
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zur Verwendung des Dashboards Deine Klasse bzw. Jahrgangsstufe ein.</string>
     <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>
@@ -63,6 +66,7 @@
     <string name="text_empty_schedule">Heute hast Du keinen Vertretungsunterricht.</string>
     <string name="text_empty_future_schedule">In den nächsten Tagen hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
+    <string name="text_confirm_logout">Möchtest Du dich wirklich abmelden?</string>
 
     <string name="text_intro">
         Melde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.
@@ -78,6 +82,4 @@
     </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
     <string name="error_no_data">Es gibt noch keine Daten, die das Widget anzeigen kann. Warte auf eine Push-Benachrichtigung oder öffne das Dashboard, um Deinen Vetretungsplan zu laden.</string>
-    <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
-    <string name="title_activity_whats_new">What\'s New</string>
 </resources>

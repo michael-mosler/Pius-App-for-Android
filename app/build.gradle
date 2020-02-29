@@ -6,8 +6,8 @@ android {
         applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.4.1"
+        versionCode 8
+        versionName "1.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

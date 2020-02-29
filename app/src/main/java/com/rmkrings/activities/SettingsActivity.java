@@ -2,6 +2,7 @@ package com.rmkrings.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
@@ -31,7 +32,6 @@ import cdflynn.android.library.checkview.CheckView;
 
 public class SettingsActivity extends AppCompatActivity implements HttpResponseCallback
 {
-
     // Outlets
     private EditText mUserName;
     private EditText mPassword;
@@ -161,7 +161,6 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         } else {
             AppDefaults.setSelectedClassRow(val);
         }
-
     }
 
     /**
@@ -174,7 +173,10 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
 
     }
 
-    // Update Login button text depending on authentication state.
+    /**
+     * Update Login button text depending on authentication state.
+     * @param authenticated - Indicates if user authenticated or not.
+     */
     private void updateLoginButtonText(boolean authenticated) {
         if (authenticated) {
             mLoginButton.setText(getResources().getString(R.string.button_logout));
@@ -207,19 +209,29 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
             // of the app.
             VertretungsplanLoader.validateLogin(AppDefaults.getUsername(), AppDefaults.getPassword(), this);
         } else {
-            // User is authenticated and wants to logout.
-            mUserName.setText("");
-            mPassword.setText("");
+            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                    .setTitle(getResources().getString(R.string.title_logout))
+                    .setMessage(getResources().getString(R.string.text_confirm_logout))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // User is authenticated and wants to logout.
+                            mUserName.setText("");
+                            mPassword.setText("");
 
-            // Delete credential from from user settings and clear text of username
-            // and password field.
-            AppDefaults.setUsername("");
-            AppDefaults.setPassword("");
-            AppDefaults.setAuthenticated(false);
-            updateLoginButtonText(false);
+                            // Delete credential from from user settings and clear text of username
+                            // and password field.
+                            AppDefaults.setUsername("");
+                            AppDefaults.setPassword("");
+                            AppDefaults.setAuthenticated(false);
+                            updateLoginButtonText(false);
 
-            mUserName.setEnabled(true);
-            mPassword.setEnabled(true);
+                            mUserName.setEnabled(true);
+                            mPassword.setEnabled(true);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
         }
     }
 
@@ -233,7 +245,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     }
 
     /**
-     * The iOS viewDidLoad equivalent. Do all the initialisation stuff.
+     * The iOS viewDidLoad equivalent. Do all the initialization stuff.
      * @param savedInstanceState - Saved instance state to return to.
      */
     @SuppressLint("SetTextI18n")
@@ -342,6 +354,9 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         }
     }
 
+    /**
+     * Resumes activity after it has been suspended whenever user returns.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -349,6 +364,10 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
         setLoginButtonState();
     }
 
+    /**
+     * Back button callback: Saves configuration and re-registers device token
+     * information in backend.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -370,49 +389,58 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
      */
     @Override
     public void execute(HttpResponseData data) {
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        mProgressBar.setVisibility(View.GONE);
-        mLoginButton.setEnabled(true);
+        try {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            mProgressBar.setVisibility(View.GONE);
+            mLoginButton.setEnabled(true);
 
-        // Store current authentication state in user settings and update text of
-        // login button.
-        if (data.getHttpStatusCode() == 200) {
-            AppDefaults.setAuthenticated(true);
-            mUserName.setEnabled(false);
-            mPassword.setEnabled(false);
-            updateLoginButtonText(true);
+            // Store current authentication state in user settings and update text of
+            // login button.
+            if (data.getHttpStatusCode() == 200) {
+                AppDefaults.setAuthenticated(true);
+                mUserName.setEnabled(false);
+                mPassword.setEnabled(false);
+                updateLoginButtonText(true);
 
-            mSuccessCheckMark.setVisibility(View.VISIBLE);
-            mSuccessCheckMark.check();
-            mSuccessCheckMark.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mSuccessCheckMark.setVisibility(View.GONE);
-                }
-            }, 2000);
-        } else {
-            AppDefaults.setAuthenticated(false);
-            updateLoginButtonText(false);
-        }
-
-        // Show popup with info outcome.
-        // Check if app is finishing. Only if not we may show popup.
-        // Otherwise app is likely to crash as context is getting lost.
-        String message;
-        if (!isFinishing() && data.getHttpStatusCode() != 200) {
-            if (data.isError()) {
-                message = getResources().getString(R.string.text_logon_error);
-            } else if (data.getHttpStatusCode() != 401) {
-                message = getResources().getString(R.string.text_logon_error);
+                mSuccessCheckMark.setVisibility(View.VISIBLE);
+                mSuccessCheckMark.check();
+                mSuccessCheckMark.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSuccessCheckMark.setVisibility(View.GONE);
+                    }
+                }, 2000);
             } else {
-                message = getResources().getString(R.string.text_invalid_credentials);
+                AppDefaults.setAuthenticated(false);
+                updateLoginButtonText(false);
             }
 
-            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                    .setTitle(getResources().getString(R.string.title_logon))
-                    .setMessage(message)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
+            // Show popup with info outcome.
+            // Check if app is finishing. Only if not we may show popup.
+            // Otherwise app is likely to crash as context is getting lost.
+            String message;
+            if (!isFinishing() && data.getHttpStatusCode() != 200) {
+                if (data.isError()) {
+                    message = getResources().getString(R.string.text_logon_error);
+                } else if (data.getHttpStatusCode() != 401) {
+                    message = getResources().getString(R.string.text_logon_error);
+                } else {
+                    message = getResources().getString(R.string.text_invalid_credentials);
+                }
+
+                new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                        .setTitle(getResources().getString(R.string.title_logon))
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            }
+        } catch (Exception e) {
+            // There is not much we can do when an exception occus. Most likely user
+            // has dismissed activity while we were waiting for REST request reply.
+            // In this case no UI operations are permitted and can easily cause
+            // invalid state exceptions. Compared to iOS this one of the biggest
+            // design flaws in Android. I would expect OS to handle this transparently.
+            e.printStackTrace();
         }
-     }
+    }
 }
