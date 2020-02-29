@@ -20,17 +20,19 @@ public class HttpDeviceTokenSetter extends HttpPost {
     private final String grade;
     private final ArrayList<String> courseList;
     private final String version;
+    private final String credential;
 
-    public HttpDeviceTokenSetter(String token, String grade, ArrayList<String> courseList, String version) {
+    public HttpDeviceTokenSetter(String token, String grade, ArrayList<String> courseList, String version, String credential) {
         this.token = token;
         this.grade = grade;
         this.courseList = courseList;
         this.version = version;
+        this.credential = credential;
     }
 
     @Override
     protected URL getURL() throws MalformedURLException {
-        return new URL(String.format("%s/deviceToken", AppDefaults.getBaseUrl()));
+        return new URL(String.format("%s/v2/deviceToken", AppDefaults.getBaseUrl()));
     }
 
     @Override
@@ -45,7 +47,8 @@ public class HttpDeviceTokenSetter extends HttpPost {
                     .put("grade", grade)
                     .put("courseList", new JSONArray(courseList))
                     .put("messagingProvider", messagingProvider)
-                    .put("version", version);
+                    .put("version", version)
+                    .put("credential", credential);
 
             return jsonData.toString();
         }
