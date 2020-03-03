@@ -47,7 +47,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0"
                     android:contentDescription="@string/title_dashboard"
-                    app:srcCompat="@drawable/ic_star_blue" />
+                    app:srcCompat="@drawable/ic_pius_app" />
 
                 <TextView
                     android:id="@+id/textView3"

@@ -65,6 +65,11 @@ public class DashboardWidget extends AppWidgetProvider {
             final String grade = AppDefaults.getGradeSetting();
             final String cacheFileName = Config.cacheFilename(grade);
 
+            final Intent a = new Intent(context, MainActivity.class);
+            a.putExtra("target", MainActivity.getTargetDashboard());
+            final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, a, 0);
+            remoteViews.setOnClickPendingIntent(R.id.dashboardWidgetLayout, pendingIntent);
+
             if (!Config.canUseDashboard()) {
                 showMessage(remoteViews, context.getResources().getString(R.string.error_cannot_use_dashboard_widget));
             } else if (!cache.fileExists(cacheFileName)) {
@@ -155,15 +160,9 @@ public class DashboardWidget extends AppWidgetProvider {
 
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, pendingIntent);
 
-        // There may be multiple widgets active, so update all of them
+        // There may be multiple widgets active, so update all of them.
         for (int appWidgetId : appWidgetIds) {
-            final Intent a = new Intent(context, MainActivity.class);
-            a.putExtra("target", MainActivity.getTargetDashboard());
-            final PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 0, a, 0);
-
-            remoteViews.setOnClickPendingIntent(R.id.dashboardWidgetLayout, pendingIntent1);
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }

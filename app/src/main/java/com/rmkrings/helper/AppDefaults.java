@@ -64,7 +64,18 @@ public class AppDefaults {
      * Grade and Class
      */
     public static int getSelectedGradeRow() {
-        return sharedPreferences.getInt("selectedGradeRow", 0);
+        final Config config = new Config();
+        int selectedGradeRow = sharedPreferences.getInt("selectedGradeRow", 0);
+
+        // With app version 1.5 IKD and IKE has been removed. If anybody should still be using
+        // one of these reset grade to none.
+        if (selectedGradeRow >= config.getShortGrades().length) {
+            selectedGradeRow = 0;
+            AppDefaults.setSelectedGradeRow(0);
+            AppDefaults.setSelectedClassRow(0);
+        }
+
+        return selectedGradeRow;
     }
 
     public static void setSelectedGradeRow(int gradeRow) {

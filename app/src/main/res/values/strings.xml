@@ -7,7 +7,7 @@
     <string name="button_welcome_start">Jetzt loslegen</string>
 
     <string name="welcome_new_in_version">Neu in der Version 1.5:</string>
-    <string name="welcome_new_1">Tippe auf das Widget, um direkt das Dashboard in der App zu öffnen.</string>
+    <string name="welcome_new_1">Verbesserungen und Fehlerbehebungen. Beachte auch unsere aktualisierte Datenschutzrichtlinie.</string>
     <string name="welcome_title_overview">Funktionen im Überblick:</string>
     <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
     <string name="welcome_function_vertretungsplan">Greife mit der App ganz einfach auf den gesamten aktuellen Vertretungsplan zu.</string>
@@ -62,7 +62,6 @@
     <string name="text_last_changed">Letzte Änderung</string>
     <string name="text_confirm_delete_course_list">Bist Du sicher, dass Du die gesamte Kursliste löschen möchtest?</string>
     <string name="text_course_list_info">Hier legst Du fest, welche Kurse im Dashboard und bei Push-Benachrichtigungen berücksichtigt werden.</string>
-    <string name="text_empty_calendar">Für heute steht nichts im Kalender.</string>
     <string name="text_empty_schedule">Heute hast Du keinen Vertretungsunterricht.</string>
     <string name="text_empty_future_schedule">In den nächsten Tagen hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>

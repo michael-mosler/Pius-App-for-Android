@@ -8,11 +8,11 @@ import com.rmkrings.pius_app_for_android;
 import java.util.Arrays;
 
 public class Config {
-    private final String[] grades = { "keine", "Klasse 5", "Klasse 6", "Klasse 7", "Klasse 8", "Klasse 9", "EF", "Q1", "Q2", "IKD", "IKE" };
+    private final String[] grades = { "keine", "Klasse 5", "Klasse 6", "Klasse 7", "Klasse 8", "Klasse 9", "EF", "Q1", "Q2" };
 
     private final String[] upperGrades = { "EF", "Q1", "Q2" };
     private final String[] lowerGrades = { "Klasse 5", "Klasse 6", "Klasse 7", "Klasse 8", "Klasse 9" };
-    private final String[] shortGrades = { "", "5", "6", "7", "8", "9", "EF", "Q1", "Q2", "IKD", "IKE" };
+    private final String[] shortGrades = { "", "5", "6", "7", "8", "9", "EF", "Q1", "Q2" };
 
     private final String[] courses = { "Mathematik", "Deutsch", "Englisch", "Französisch", "Latein", "Spanisch", "Hebräisch", "Erdkunde", "Biologie", "Physik", "Chemie", "Informatik", "Geschichte", "Religion", "Philosophie", "Musik", "Kunst", "Sport", "Literatur", "SOWI", "IV" };
     private final String[] coursesShortNames = { "M", "D", "E", "F", "L", "S", "H", "EK", "BI", "PH", "CH", "IF", "GE", "KR", "PL", "MU", "KU", "SP", "LI", "SW", "IV" };
