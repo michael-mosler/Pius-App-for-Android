@@ -3,6 +3,7 @@ package com.rmkrings.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,10 +35,12 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.activities.R;
+import com.rmkrings.notifications.DashboardWidgetUpdateService;
 import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
@@ -63,8 +66,8 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     // Local state.
     private String grade;
     private Boolean reloadOnResume = true;
-    private String digestFileName() { return String.format("%s.md5", grade); }
-    private String cacheFileName() { return String.format("%s.json", grade); }
+    private String digestFileName() { return Config.digestFilename(grade); }
+    private String cacheFileName() { return Config.cacheFilename(grade); }
 
     private final Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;
@@ -276,59 +279,67 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mFragment.setRefreshing(false);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
-            logger.severe(String.format("Failed to load data for Dashboard. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            if (!getActivity().isFinishing()) {
-                new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
-                        .setTitle(getResources().getString(R.string.title_dashboard))
-                        .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
-                                }
-                            }
-                        })
-                        .show();
-            }
-            return;
-        }
-
-        if (responseData.getData() != null) {
-            data = responseData.getData();
-            cache.store(cacheFileName(), data);
-        } else {
-            data = cache.read(cacheFileName());
-        }
-
         try {
-            jsonData = new JSONObject(data);
-            vertretungsplan = new Vertretungsplan(jsonData);
-
-            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
-                cache.store(digestFileName(), vertretungsplan.getDigest());
-            }
-
-            setMetaData();
-            setLastUpdate();
-            setVertretungsplanList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (!getActivity().isFinishing()) {
-                new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
-                        .setTitle(getResources().getString(R.string.title_dashboard))
-                        .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
+            if (getActivity() != null && !getActivity().isFinishing()) {
+                if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+                    logger.severe(String.format("Failed to load data for Dashboard. HTTP Status code %d.", responseData.getHttpStatusCode()));
+                    new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                            .setTitle(getResources().getString(R.string.title_dashboard))
+                            .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (getFragmentManager() != null) {
+                                        getFragmentManager().popBackStack();
+                                    }
                                 }
-                            }
-                        })
-                        .show();
+                            })
+                            .show();
+                    return;
+                }
+
+                if (responseData.getData() != null) {
+                    data = responseData.getData();
+                    cache.store(cacheFileName(), data);
+                } else {
+                    data = cache.read(cacheFileName());
+                }
+
+                // Update widget when new data has been loaded.
+                Context context = pius_app_for_android.getAppContext();
+                Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
+                context.startService(intent);
+
+                try {
+                    jsonData = new JSONObject(data);
+                    vertretungsplan = new Vertretungsplan(jsonData);
+
+                    if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+                        cache.store(digestFileName(), vertretungsplan.getDigest());
+                    }
+
+                    setMetaData();
+                    setLastUpdate();
+                    setVertretungsplanList();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                            .setTitle(getResources().getString(R.string.title_dashboard))
+                            .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (getFragmentManager() != null) {
+                                        getFragmentManager().popBackStack();
+                                    }
+                                }
+                            })
+                            .show();
+                }
             }
+        }
+        catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 

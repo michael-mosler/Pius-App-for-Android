@@ -121,14 +121,14 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
                 LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.veretretungsplan_detail_item, null);
 
-                tv = convertView.findViewById(R.id.substitutionType);
+                tv = convertView.findViewById(R.id.widgetSubstitutionTypeItem);
                 tv.setText(detailItem.getSubstitutionType());
 
-                tv = convertView.findViewById(R.id.room);
+                tv = convertView.findViewById(R.id.widgetRoomItem);
                 tv.setText(detailItem.getRoom(), TextView.BufferType.SPANNABLE);
                 FormatHelper.roomText(tv);
 
-                tv = convertView.findViewById(R.id.teacher);
+                tv = convertView.findViewById(R.id.widgetTeacherItem);
                 tv.setText(detailItem.getTeacher());
                 break;
             }

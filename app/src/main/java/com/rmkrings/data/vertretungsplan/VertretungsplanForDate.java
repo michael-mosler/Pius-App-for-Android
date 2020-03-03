@@ -33,6 +33,12 @@ public class VertretungsplanForDate {
         }
     }
 
+    VertretungsplanForDate(VertretungsplanForDate from, GradeItem gradeItem) {
+        date = from.getDate();
+        gradeItems = new ArrayList<>();
+        gradeItems.add(gradeItem);
+    }
+
     public String getDate() {
         return date;
     }

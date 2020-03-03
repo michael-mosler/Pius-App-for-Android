@@ -7,12 +7,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.content.Intent;
 
 import com.rmkrings.helper.AppDefaults;
+import com.rmkrings.helper.Config;
 import com.rmkrings.helper.Reachability;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.fragments.CalendarFragment;
@@ -24,7 +24,10 @@ import com.rmkrings.fragments.TodayFragment;
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {
 
-    static public final String targetDashboard = "dashboard";
+    @SuppressWarnings("SameReturnValue")
+    public static String getTargetDashboard() {
+        return "dashboard";
+    }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -114,13 +117,18 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         // If App is used for the very first time show information
         // that user should log in to Pius website in Settings.
-        if (AppDefaults.hasShowIntro()) {
-            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                    .setTitle(getResources().getString(R.string.title_welcome))
-                    .setMessage(getResources().getString(R.string.text_intro))
-                    .setPositiveButton(getResources().getString(R.string.label_start_now), null)
-                    .show();
-            AppDefaults.setShowIntro(false);
+        int versionCode;
+        try {
+            versionCode = getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode;
+        }
+        catch(PackageManager.NameNotFoundException e) {
+            versionCode = 0;
+        }
+
+        if (versionCode > AppDefaults.getSavedVersionCode() || Config.getAlwaysShowWelcome()) {
+            AppDefaults.setSavedVersionCode(versionCode);
+            Intent a = new Intent(this, WhatsNewActivity.class);
+            startActivity(a);
         }
     }
 
@@ -142,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         // Start alternate fragment on request.
         String target = getIntent().getStringExtra("target");
-        if (target != null && target.equals(targetDashboard)) {
+        if (target != null && target.equals(getTargetDashboard())) {
             startFragment(new DashboardFragment(), false);
         }
     }

@@ -10,7 +10,7 @@
     android:paddingBottom="2dp">
 
     <TextView
-        android:id="@+id/substitutionType"
+        android:id="@+id/widgetSubstitutionTypeItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -19,7 +19,7 @@
         tools:text="Art der Vertretung" />
 
     <TextView
-        android:id="@+id/room"
+        android:id="@+id/widgetRoomItem"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
@@ -28,7 +28,7 @@
         tools:text="Raum" />
 
     <TextView
-        android:id="@+id/teacher"
+        android:id="@+id/widgetTeacherItem"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"

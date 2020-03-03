@@ -49,14 +49,14 @@ public class AppDefaults {
     }
 
     /*
-     * Show intro flag.
+     * Version Code
      */
-    public static boolean hasShowIntro() {
-        return sharedPreferences.getBoolean("showIntro", true);
+    public static int getSavedVersionCode() {
+        return sharedPreferences.getInt("savedVersionCode", 0);
     }
 
-    public static void setShowIntro(boolean showIntro) {
-        edit.putBoolean("showIntro", showIntro);
+    public static void setSavedVersionCode(int versionCode) {
+        edit.putInt("savedVersionCode", versionCode);
         edit.commit();
     }
 
@@ -64,7 +64,18 @@ public class AppDefaults {
      * Grade and Class
      */
     public static int getSelectedGradeRow() {
-        return sharedPreferences.getInt("selectedGradeRow", 0);
+        final Config config = new Config();
+        int selectedGradeRow = sharedPreferences.getInt("selectedGradeRow", 0);
+
+        // With app version 1.5 IKD and IKE has been removed. If anybody should still be using
+        // one of these reset grade to none.
+        if (selectedGradeRow >= config.getShortGrades().length) {
+            selectedGradeRow = 0;
+            AppDefaults.setSelectedGradeRow(0);
+            AppDefaults.setSelectedClassRow(0);
+        }
+
+        return selectedGradeRow;
     }
 
     public static void setSelectedGradeRow(int gradeRow) {
@@ -76,7 +87,7 @@ public class AppDefaults {
         return AppDefaults.getSelectedGradeRow() != 0;
     }
 
-    public static boolean hasLowerGrade() {
+    static boolean hasLowerGrade() {
         Config config = new Config();
         int selectedGradeRow = getSelectedGradeRow();
         return config.isLowerGrade(config.getGrades()[selectedGradeRow]);

@@ -24,6 +24,7 @@ import com.rmkrings.data.eva.EvaDateItem;
 import com.rmkrings.data.eva.EvaItem;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.CalendarLoader;
@@ -47,8 +48,8 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
     private EvaListAdapter mEvaListAdapter;
 
     // Local State
-    private final String digestFileName = "eva.md5";
-    private final String cacheFileName = "eva.json";
+    private final String digestFileName = Config.digestFilename("eva");
+    private final String cacheFileName = Config.cacheFilename("eva");
 
     private final Cache cache = new Cache();
     private Eva eva;
@@ -130,7 +131,7 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
 
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            if (!getActivity().isFinishing()) {
+            if (getActivity() != null && !getActivity().isFinishing()) {
                 new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
                         .setTitle(getResources().getString(R.string.title_calendar))
                         .setMessage(getResources().getString(R.string.error_failed_to_load_data))

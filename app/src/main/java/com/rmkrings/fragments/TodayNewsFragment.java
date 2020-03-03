@@ -22,6 +22,7 @@ import com.rmkrings.data.news.NewsItem;
 import com.rmkrings.data.news.NewsItems;
 import com.rmkrings.data.news.NewsListItem;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.ParentFragment;
@@ -43,8 +44,8 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
     private NewsListAdapter mNewsListAdapter;
 
     // Local State
-    private final String digestFileName = "news.md5";
-    private final String cacheFileName = "news.json";
+    private final String digestFileName = Config.digestFilename("news");
+    private final String cacheFileName = Config.cacheFilename("news");
 
     private final Cache cache = new Cache();
     private NewsItems newsItems;

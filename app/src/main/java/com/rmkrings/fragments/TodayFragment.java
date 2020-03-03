@@ -2,6 +2,7 @@ package com.rmkrings.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
+import com.rmkrings.helper.Config;
 import com.rmkrings.helper.DateHelper;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
@@ -24,6 +26,8 @@ import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.activities.R;
+import com.rmkrings.notifications.DashboardWidgetUpdateService;
+import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
@@ -49,8 +53,8 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
 
     // Local State
     private int pendingRefreshs;
-    private String digestFileName() { return String.format("%s.md5", AppDefaults.getGradeSetting()); }
-    private String cacheFileName() { return String.format("%s.json", AppDefaults.getGradeSetting()); }
+    private String digestFileName() { return Config.digestFilename(AppDefaults.getGradeSetting()); }
+    private String cacheFileName() { return Config.cacheFilename(AppDefaults.getGradeSetting()); }
 
     private final Cache cache = new Cache();
 
@@ -133,7 +137,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         // We load Vertretungsplan from here as data might be needed in several child fragments.
         // If fragment tells us that dashboard cannot be used we do not load data but
         // call show with a null Vertretunsgplan. This will hide according box.
-        if (mTodayVertetungsplanFragment.canUseDashboard()) {
+        if (Config.canUseDashboard()) {
             VertretungsplanLoader vertretungsplanLoader = new VertretungsplanLoader(AppDefaults.getGradeSetting());
             vertretungsplanLoader.load(this, digest);
         } else {
@@ -150,31 +154,42 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         String data;
         JSONObject jsonData;
 
-        if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
-            logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
-            return;
-        }
-
-        if (responseData.getData() != null) {
-            data = responseData.getData();
-            cache.store(cacheFileName(), data);
-        } else {
-            data = cache.read(cacheFileName());
-        }
-
         try {
-            jsonData = new JSONObject(data);
-            Vertretungsplan vertretungsplan = new Vertretungsplan(jsonData);
+            if (getActivity() != null && !getActivity().isFinishing()) {
+                if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
+                    logger.severe(String.format("Failed to load data for news. HTTP Status code %d.", responseData.getHttpStatusCode()));
+                    mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
+                    return;
+                }
 
-            if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
-                cache.store(digestFileName(), vertretungsplan.getDigest());
+                if (responseData.getData() != null) {
+                    data = responseData.getData();
+                    cache.store(cacheFileName(), data);
+                } else {
+                    data = cache.read(cacheFileName());
+                }
+
+                // Update widget when new data has been loaded.
+                Context context = pius_app_for_android.getAppContext();
+                Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
+                context.startService(intent);
+
+                try {
+                    jsonData = new JSONObject(data);
+                    Vertretungsplan vertretungsplan = new Vertretungsplan(jsonData);
+
+                    if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && vertretungsplan.getDigest() != null) {
+                        cache.store(digestFileName(), vertretungsplan.getDigest());
+                    }
+
+                    mTodayVertetungsplanFragment.show(vertretungsplan, this);
+                } catch (Exception e) {
+                    mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
+                    e.printStackTrace();
+                }
             }
-
-            mTodayVertetungsplanFragment.show(vertretungsplan, this);
         }
-        catch (Exception e) {
-            mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
+        catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }

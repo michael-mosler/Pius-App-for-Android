@@ -109,7 +109,7 @@ public class VertretungsplanDetailFragment extends Fragment {
     /**
      * Convert vetretungsplan items from grade item into linear list that represents
      * table content.
-     * eturn - Populated list
+     * @param list - Converts substitution elements from gradeItem property into a list of base list items.
      */
     private void prepareVertretungsplanItems(ArrayList<BaseListItem> list) {
         list.clear();

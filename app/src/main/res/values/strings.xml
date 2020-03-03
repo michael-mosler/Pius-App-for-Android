@@ -4,8 +4,18 @@
     <string name="button_mycourses">Meine Kurse</string>
     <string name="button_login">Anmelden</string>
     <string name="button_logout">Abmelden</string>
+    <string name="button_welcome_start">Jetzt loslegen</string>
 
-    <string name="title_welcome">Willkommen!</string>
+    <string name="welcome_new_in_version">Neu in der Version 1.5:</string>
+    <string name="welcome_new_1">Verbesserungen und Fehlerbehebungen. Beachte auch unsere aktualisierte Datenschutzrichtlinie.</string>
+    <string name="welcome_title_overview">Funktionen im Überblick:</string>
+    <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
+    <string name="welcome_function_vertretungsplan">Greife mit der App ganz einfach auf den gesamten aktuellen Vertretungsplan zu.</string>
+    <string name="welcome_function_dashboard">Wähle Klasse oder Jahrgangsstufe aus und personalisiere Deinen Vetretungsplan. Verwende das Widget und werde bei Änderungen benachrichtigt.</string>
+    <string name="welcome_function_calendar">Dursuche ganz einfach mit dem Kalender die Termine der Schule.</string>
+
+
+    <string name="title_widget">Pius App Vertretungsplan</string>
     <string name="title_home">Heute</string>
     <string name="title_substitution_schedule">Vertretungsplan</string>
     <string name="title_dashboard">Dashboard</string>
@@ -16,8 +26,11 @@
     <string name="title_eva">EVA</string>
     <string name="title_add_courses">Kurse hinzufügen</string>
     <string name="title_my_subst_schedule_changes">Deine Änderungen am Vertretungsplan</string>
-    <string name="title_logon">Anmeldung</string>
+    <string name="title_logon">Anmelden</string>
+    <string name="title_logout">Abmelden</string>
     <string name="title_delete_course_list_all">Kursliste löschen</string>
+    <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
+    <string name="title_activity_whats_new">What\'s New</string>
 
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zur Verwendung des Dashboards Deine Klasse bzw. Jahrgangsstufe ein.</string>
     <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>
@@ -38,7 +51,6 @@
     <string name="label_search">Suchen</string>
     <string name="label_eva">EVA</string>
     <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
-    <string name="label_start_now">Jetzt loslegen!</string>
 
     <string name="label_deleted">Gelöscht</string>
     <string name="label_changed">Geändert</string>
@@ -50,13 +62,13 @@
     <string name="text_last_changed">Letzte Änderung</string>
     <string name="text_confirm_delete_course_list">Bist Du sicher, dass Du die gesamte Kursliste löschen möchtest?</string>
     <string name="text_course_list_info">Hier legst Du fest, welche Kurse im Dashboard und bei Push-Benachrichtigungen berücksichtigt werden.</string>
-    <string name="text_empty_calendar">Für heute steht nichts im Kalender.</string>
     <string name="text_empty_schedule">Heute hast Du keinen Vertretungsunterricht.</string>
+    <string name="text_empty_future_schedule">In den nächsten Tagen hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
+    <string name="text_confirm_logout">Möchtest Du dich wirklich abmelden?</string>
 
     <string name="text_intro">
-        Schön, dass Du die Pius-App für Android verwendest!\n
-        \nMelde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.
+        Melde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.
     </string>
 
     <string name="error_cannot_use_vertretungsplan">Melde Dich in den Einstellungen an, um den Vertretungsplan zu verwenden.\n
@@ -65,6 +77,8 @@
     <string name="error_cannot_use_dashboard">Melde Dich in den Einstellungen an und lege Deine Klasse/Jahrgangsstufe fest, um das Dashboard zu verwenden. Wenn Du in der Oberstufe bist, musst Du auch Deine Kursliste hinzufügen, um ein personalisiertes Dashboard zu erhalten.\n
         \nTippe unten auf Einstellungen, um mit der Konfiguration zu beginnen.
     </string>
+    <string name="error_cannot_use_dashboard_widget">Melde Dich in den Einstellungen an und lege Deine Klasse/Jahrgangsstufe fest, um das Widget zu verwenden. Wenn Du in der Oberstufe bist, musst Du auch Deine Kursliste hinzufügen, um ein personalisiertes Dashboard zu erhalten.
+    </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
-    <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
+    <string name="error_no_data">Es gibt noch keine Daten, die das Widget anzeigen kann. Warte auf eine Push-Benachrichtigung oder öffne das Dashboard, um Deinen Vetretungsplan zu laden.</string>
 </resources>

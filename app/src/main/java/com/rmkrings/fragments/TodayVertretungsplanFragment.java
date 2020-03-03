@@ -22,7 +22,6 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
-import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.activities.R;
 import com.rmkrings.pius_app_for_android;
@@ -63,10 +62,6 @@ public class TodayVertretungsplanFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    public boolean canUseDashboard(){
-        return (AppDefaults.isAuthenticated() && (AppDefaults.hasLowerGrade() || (AppDefaults.hasUpperGrade() && AppDefaults.getCourseList().size() > 0)));
     }
 
     public void show(String message, ParentFragment parentFragment) {
