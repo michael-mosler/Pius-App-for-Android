@@ -1,6 +1,5 @@
 package com.rmkrings.fragments;
 
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -38,9 +37,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * EVA Fragment shows list of EVA tasks with respect to configured
+ * course list.
  */
 public class EvaFragment extends Fragment implements HttpResponseCallback {
     // Outlets
@@ -60,7 +59,6 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
     public EvaFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -88,6 +86,9 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
         reload();
     }
 
+    /**
+     * Update EVA list in EVA list adapter by recreating private evaList property.
+     */
     private void setEvaList() {
         evaList.clear();
 
@@ -106,6 +107,9 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
         mEvaListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Load EVA list from backend. Once done this.execute will be called.
+     */
     private void reload() {
         String digest;
 
@@ -121,6 +125,15 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
 
     }
 
+    /**
+     * Callback for EVA load. This method stops any load animation and eveluates data received.
+     * On error an error message is shown. If loading was ok then interal cache is updated
+     * and EVA list view is updated by calling this.setEvaList().
+     * Any exception is ignored as we can't do much about this. In most situations it will
+     * even not be possible to show another popup, most likely because no context is available
+     * any longer.
+     * @param responseData - Data received from backend.
+     */
     @SuppressLint("DefaultLocale")
     @Override
     public void execute(HttpResponseData responseData) {
@@ -129,11 +142,15 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
 
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        /*
+         * Non 200 HTTP status code received. Show error message and return as nothing
+         * can be shown.
+         */
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
             if (getActivity() != null && !getActivity().isFinishing()) {
                 new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
-                        .setTitle(getResources().getString(R.string.title_calendar))
+                        .setTitle(getResources().getString(R.string.title_eva))
                         .setMessage(getResources().getString(R.string.error_failed_to_load_data))
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
@@ -148,6 +165,9 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
             return;
         }
 
+        /*
+         * Loading was ok. Update interal cache and hash value and refresh EVA list view.
+         */
         if (responseData.getData() != null) {
             data = responseData.getData();
             cache.store(cacheFileName, data);

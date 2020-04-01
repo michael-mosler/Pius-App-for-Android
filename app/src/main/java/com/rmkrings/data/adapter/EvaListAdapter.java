@@ -16,14 +16,22 @@ import com.rmkrings.activities.R;
 
 import java.util.ArrayList;
 
+/**
+ * Shows history of EVA tasks. The class simply implements standard list view interface
+ * messages. Constructor expects the list of EVA items that shall be displayed.
+ */
 public class EvaListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<BaseListItem> list;
 
+    /**
+     * View holder for a single EVA task. TextView is set selectable.
+     */
     static class TextViewHolder extends RecyclerView.ViewHolder {
         final TextView textView;
         TextViewHolder(@NonNull TextView v) {
             super(v);
+            v.setTextIsSelectable(true);
             textView = v;
         }
     }
@@ -42,7 +50,8 @@ public class EvaListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         RecyclerView.ViewHolder vh;
         LayoutInflater mLayoutInflater = LayoutInflater.from(parent.getContext());
 
-
+        // Depending on viewType received one of DateItem, CourseItem of text view holder is
+        // created.
         switch (viewType) {
             case EvaListItem.evaDateItem:
             case EvaListItem.evaCourseItem: {
@@ -70,7 +79,7 @@ public class EvaListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 EvaDateItem evaDateItem = (EvaDateItem)list.get(position);
                 ((TextViewHolder)holder).textView.setText(evaDateItem.getDate());
 
-                RecyclerView.LayoutParams parameter = (RecyclerView.LayoutParams) ((TextViewHolder)holder).textView.getLayoutParams();
+                RecyclerView.LayoutParams parameter = (RecyclerView.LayoutParams)((TextViewHolder)holder).textView.getLayoutParams();
                 parameter.setMargins(parameter.leftMargin, parameter.topMargin, parameter.rightMargin, 4);
                 ((TextViewHolder)holder).textView.setLayoutParams(parameter);
                 break;

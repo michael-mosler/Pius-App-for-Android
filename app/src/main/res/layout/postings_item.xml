@@ -15,6 +15,8 @@
             android:id="@+id/postingmessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:linksClickable="true"
+            android:textColorLink="@color/colorPiusBlue"
             tools:text="Am Wochenende stellt die Schule den Vertretungsplan um. Daher kann es zu Einschränkungen beim Verwenden der Pius-App kommen. Ab Aschermittwoch sollte alles wieder wie gewohnt funktionieren. Schöne Karnevalstage wünscht euch das Pius-App für iOS Team.🤡" />
 
         <Space
