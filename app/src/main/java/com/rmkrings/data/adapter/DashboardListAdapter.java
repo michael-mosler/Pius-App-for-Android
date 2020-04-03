@@ -104,7 +104,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
             case VertretungsplanListItem.courseHeader: {
                 VertretungsplanHeaderItem headerItem = (VertretungsplanHeaderItem)vertretungsplanListItem;
                 LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.vertretungsplan_header_item, null);
+                convertView = infalInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
 
                 TextView tv = (TextView)convertView;
                 tv.setText(
@@ -119,7 +119,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
                 TextView tv;
                 VertretungsplanDetailItem detailItem = (VertretungsplanDetailItem)vertretungsplanListItem;
                 LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.veretretungsplan_detail_item, null);
+                convertView = infalInflater.inflate(R.layout.veretretungsplan_detail_item, parent, false);
 
                 tv = convertView.findViewById(R.id.widgetSubstitutionTypeItem);
                 tv.setText(detailItem.getSubstitutionType());
@@ -136,7 +136,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
             case VertretungsplanListItem.remarkItem: {
                 VertretungsplanRemarkItem remarkItem = (VertretungsplanRemarkItem)vertretungsplanListItem;
                 LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.vertretungsplan_remark_item, null);
+                convertView = infalInflater.inflate(R.layout.vertretungsplan_remark_item, parent, false);
 
                 TextView tv = (TextView)convertView;
                 tv.setText(remarkItem.getRemarkText());
@@ -145,8 +145,8 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
 
             case VertretungsplanListItem.evaItem: {
                 VertretungsplanEvaItem evaItem = (VertretungsplanEvaItem)vertretungsplanListItem;
-                LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.vertretungsplan_eva_item, null);
+                LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = layoutInflater.inflate(R.layout.vertretungsplan_eva_item, parent, false);
 
                 TextView tv = (TextView)convertView;
                 tv.setText(evaItem.getEvaText());

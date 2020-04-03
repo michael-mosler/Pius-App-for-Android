@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class PostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         PostingsViewHolder(ConstraintLayout itemView) {
             super(itemView);
             messageView = itemView.findViewById(R.id.postingmessage);
+            messageView.setMovementMethod(LinkMovementMethod.getInstance());
             timestampView = itemView.findViewById(R.id.postingtimestamp);
         }
     }

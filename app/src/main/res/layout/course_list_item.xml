@@ -20,7 +20,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_weight="0"
-        android:background="@android:drawable/screen_background_light_transparent"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/label_delete"
         app:srcCompat="@drawable/ic_trash_bin" />
 </LinearLayout>

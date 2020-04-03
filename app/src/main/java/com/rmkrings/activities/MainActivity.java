@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
                 case R.id.navigation_dashboard: {
                     startFragment(new DashboardFragment());
-                    /*
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frameLayout, new DashboardFragment());
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    */
                     return true;
                 }
 
@@ -157,13 +151,18 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
     @Override
     public void execute(boolean isReachable) {
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        ColorStateList tint = (isReachable)
-                ? pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_colors)
-                : pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_offline_colors);
-        navigation.setItemIconTintList(tint);
-        navigation.setItemTextColor(tint);
+        try {
+            BottomNavigationView navigation = findViewById(R.id.navigation);
+            ColorStateList tint = (isReachable)
+                    ? pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_colors)
+                    : pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_offline_colors);
+            navigation.setItemIconTintList(tint);
+            navigation.setItemTextColor(tint);
 
-        navigation.refreshDrawableState();
+            navigation.refreshDrawableState();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
