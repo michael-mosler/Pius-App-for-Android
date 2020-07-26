@@ -17,6 +17,7 @@ import com.rmkrings.helper.Reachability;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.fragments.CalendarFragment;
 import com.rmkrings.fragments.DashboardFragment;
+import com.rmkrings.loader.StaffLoader;
 import com.rmkrings.pius_app_for_android;
 import com.rmkrings.fragments.VertretungsplanFragment;
 import com.rmkrings.fragments.TodayFragment;
@@ -124,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
             Intent a = new Intent(this, WhatsNewActivity.class);
             startActivity(a);
         }
+
+        final StaffLoader staffLoader = new StaffLoader();
+        staffLoader.load();
     }
 
     @Override

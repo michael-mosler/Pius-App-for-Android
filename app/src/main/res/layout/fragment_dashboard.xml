@@ -65,7 +65,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:focusable="true">
 
                     <TextView
                         android:id="@+id/lastupdate"
@@ -102,13 +104,17 @@
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ExpandableListView
                     android:id="@+id/vertretungsplanListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:groupIndicator="@null"
                     android:paddingTop="8dp" />
 

@@ -31,6 +31,9 @@
         android:id="@+id/widgetTeacherItem"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:longClickable="true"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
         tools:text="Lehrer" />

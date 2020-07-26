@@ -1,8 +1,10 @@
 package com.rmkrings.data.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.FormatHelper;
 import com.rmkrings.helper.StringHelper;
 import com.rmkrings.activities.R;
+import com.rmkrings.layouts.StaffPopover;
 
 /**
  * Adapter for Vertretungsplan detailed list. It expects a list of VertretungsplanItems for
@@ -45,11 +48,28 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
         final TextView substitutionType;
         final TextView room;
         final TextView teacher;
-        DetailItemViewHolder(LinearLayout l) {
+
+        private String teacherShortcutName;
+
+        DetailItemViewHolder(final Context context, LinearLayout l) {
             super(l);
             substitutionType = l.findViewById(R.id.widgetSubstitutionTypeItem);
             room = l.findViewById(R.id.widgetRoomItem);
             teacher = l.findViewById(R.id.widgetTeacherItem);
+            teacher.setOnLongClickListener(
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        StaffPopover staffPopover = new StaffPopover(context, teacher, teacherShortcutName);
+                        staffPopover.show();
+                        return false;
+                    }
+                });
+        }
+
+        public void setTeacherShortcutName(String teacherShortcutName) {
+            this.teacherShortcutName = teacherShortcutName;
+            teacher.setText(teacherShortcutName);
         }
     }
 
@@ -82,7 +102,7 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
 
             case VertretungsplanListItem.detailItem: {
                 LinearLayout itemView = (LinearLayout)mLayoutInflater.inflate(R.layout.veretretungsplan_detail_item, parent, false);
-                vh = new DetailItemViewHolder(itemView);
+                vh = new DetailItemViewHolder(parent.getContext(), itemView);
                 break;
             }
 
@@ -124,7 +144,8 @@ public class VertetungsplanDetailListAdapter extends RecyclerView.Adapter<Recycl
                 detailItemViewHolder.substitutionType.setText(detailItem.getSubstitutionType());
                 detailItemViewHolder.room.setText(detailItem.getRoom(), TextView.BufferType.SPANNABLE);
                 FormatHelper.roomText(detailItemViewHolder.room);
-                detailItemViewHolder.teacher.setText(detailItem.getTeacher());
+                // detailItemViewHolder.teacher.setText(detailItem.getTeacher());
+                detailItemViewHolder.setTeacherShortcutName(detailItem.getTeacher());
                 break;
             }
 

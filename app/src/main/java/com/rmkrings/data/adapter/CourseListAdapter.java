@@ -57,8 +57,12 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         courseListItemViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                courseList.remove(vh.getAdapterPosition());
-                notifyItemRemoved(vh.getAdapterPosition());
+                // If remove should throw we safely may ignore this.
+                try {
+                    courseList.remove(vh.getAdapterPosition());
+                    notifyItemRemoved(vh.getAdapterPosition());
+                }
+                catch (ArrayIndexOutOfBoundsException ignore) { }
             }
         });
     }

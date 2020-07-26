@@ -15,6 +15,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.helper.FormatHelper;
 import com.rmkrings.helper.StringHelper;
+import com.rmkrings.layouts.StaffPopover;
 import com.rmkrings.pius_app_for_android;
 import com.rmkrings.activities.R;
 
@@ -116,20 +117,30 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
             }
 
             case VertretungsplanListItem.detailItem: {
-                TextView tv;
-                VertretungsplanDetailItem detailItem = (VertretungsplanDetailItem)vertretungsplanListItem;
-                LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final VertretungsplanDetailItem detailItem = (VertretungsplanDetailItem)vertretungsplanListItem;
+                final LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.veretretungsplan_detail_item, parent, false);
 
-                tv = convertView.findViewById(R.id.widgetSubstitutionTypeItem);
-                tv.setText(detailItem.getSubstitutionType());
+                final TextView substitutionType = convertView.findViewById(R.id.widgetSubstitutionTypeItem);
+                substitutionType.setText(detailItem.getSubstitutionType());
 
-                tv = convertView.findViewById(R.id.widgetRoomItem);
-                tv.setText(detailItem.getRoom(), TextView.BufferType.SPANNABLE);
-                FormatHelper.roomText(tv);
+                final TextView room = convertView.findViewById(R.id.widgetRoomItem);
+                room.setText(detailItem.getRoom(), TextView.BufferType.SPANNABLE);
+                FormatHelper.roomText(room);
 
-                tv = convertView.findViewById(R.id.widgetTeacherItem);
-                tv.setText(detailItem.getTeacher());
+                final TextView teacher = convertView.findViewById(R.id.widgetTeacherItem);
+                teacher.setText(detailItem.getTeacher());
+
+                teacher.setOnLongClickListener(
+                        new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                StaffPopover staffPopover = new StaffPopover(context, teacher, detailItem.getTeacher());
+                                staffPopover.show();
+                                return false;
+                            }
+                        }
+                );
                 break;
             }
 
