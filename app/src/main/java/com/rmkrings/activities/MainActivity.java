@@ -35,42 +35,48 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home: {
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frameLayout, new TodayFragment());
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
+            try {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home: {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frameLayout, new TodayFragment());
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
 
-                case R.id.navigation_substitution_schedule: {
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frameLayout, new VertretungsplanFragment());
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
+                    case R.id.navigation_substitution_schedule: {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frameLayout, new VertretungsplanFragment());
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
 
-                case R.id.navigation_dashboard: {
-                    startFragment(new DashboardFragment());
-                    return true;
-                }
+                    case R.id.navigation_dashboard: {
+                        startFragment(new DashboardFragment());
+                        return true;
+                    }
 
-                case R.id.navigation_calendar: {
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frameLayout, new CalendarFragment());
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
+                    case R.id.navigation_calendar: {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frameLayout, new CalendarFragment());
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
 
-                case R.id.navigation_settings:
-                    Intent a = new Intent(MainActivity.this, SettingsActivity.class);
-                    startActivity(a);
-                    return false;
+                    case R.id.navigation_settings:
+                        Intent a = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(a);
+                        return false;
+                }
+                return false;
             }
-            return false;
+            catch(IllegalStateException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
     };
 

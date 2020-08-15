@@ -59,10 +59,15 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             public void onClick(View v) {
                 // If remove should throw we safely may ignore this.
                 try {
-                    courseList.remove(vh.getAdapterPosition());
-                    notifyItemRemoved(vh.getAdapterPosition());
+                    int adapterPosition = vh.getAdapterPosition();
+                    if (adapterPosition < courseList.size()) {
+                        courseList.remove(adapterPosition);
+                        notifyItemRemoved(adapterPosition);
+                    }
                 }
-                catch (ArrayIndexOutOfBoundsException ignore) { }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
