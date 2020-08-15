@@ -23,6 +23,7 @@ import com.rmkrings.helper.DateHelper;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.ParentFragment;
+import com.rmkrings.layouts.StaffHelperPopover;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.activities.R;
@@ -62,11 +63,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
 
     public TodayFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        // AppDefaults.setHasConfirmedStaffHelper(false);
     }
 
     @Override
@@ -103,6 +100,11 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
@@ -114,6 +116,13 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         mNavigationView.getMenu().getItem(0).setChecked(true);
 
         reload(false);
+
+        //If explanation staff popover has not been show then create it.
+
+        if (Config.getAlwaysShowStaffPopoverHelper() || !AppDefaults.getHasConfirmedStaffHelper()) {
+            StaffHelperPopover staffHelperPopover = new StaffHelperPopover(pius_app_for_android.getAppContext(), this.getView());
+            staffHelperPopover.show();
+        }
     }
 
     private void reload(boolean refreshing) {

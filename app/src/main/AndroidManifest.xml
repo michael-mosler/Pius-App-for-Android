@@ -49,6 +49,9 @@
         <meta-data
             android:name="alwaysShowWelcome"
             android:value="${alwaysShowWelcome}" />
+        <meta-data
+            android:name="alwaysShowStaffHelperPopover"
+            android:value="${alwaysShowStaffHelperPopover}" />
 
         <activity android:name=".WebViewActivity" />
         <activity android:name=".SettingsActivity" />

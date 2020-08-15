@@ -5,6 +5,7 @@
     <string name="button_login">Anmelden</string>
     <string name="button_logout">Abmelden</string>
     <string name="button_welcome_start">Jetzt loslegen</string>
+    <string name="button_confirm">Verstanden</string>
 
     <string name="welcome_new_in_version">Neu in der Version 1.5:</string>
     <string name="welcome_new_1">Verbesserungen und Fehlerbehebungen. Beachte auch unsere aktualisierte Datenschutzrichtlinie.</string>
@@ -31,6 +32,7 @@
     <string name="title_delete_course_list_all">Kursliste löschen</string>
     <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
     <string name="title_activity_whats_new">What\'s New</string>
+    <string name="title_tip">Tipp</string>
 
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zur Verwendung des Dashboards Deine Klasse bzw. Jahrgangsstufe ein.</string>
     <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>
@@ -66,6 +68,7 @@
     <string name="text_empty_future_schedule">In den nächsten Tagen hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
     <string name="text_confirm_logout">Möchtest Du dich wirklich abmelden?</string>
+    <string name="text_long_push_teacher_help">Drücke im Dashboard, Vertretungs- und Stundenplan lange auf ein Lehrerkürzel, um Dir den Namen des Lehrers anzeigen zu lassen.</string>
 
     <string name="text_intro">
         Melde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.

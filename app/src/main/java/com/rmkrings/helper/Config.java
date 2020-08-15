@@ -43,6 +43,25 @@ public class Config {
     }
 
     /**
+     * Get aleays show staff helper popover information. This should return true in debug
+     * mode only.
+     * @return "true" if popover is to be shown.
+     */
+    public static Boolean getAlwaysShowStaffPopoverHelper() {
+        try {
+            ApplicationInfo ai = pius_app_for_android.getAppContext().getPackageManager().getApplicationInfo(pius_app_for_android.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
+            return (Boolean)ai.metaData.get("alwaysShowStaffHelperPopover");
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * This is a shortcut for String.format("%s.md5", pattern)
      * @param pattern - Variable part of filename
      * @return - Filename

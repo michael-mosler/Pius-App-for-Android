@@ -15,13 +15,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false]
+            manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: false]
         }
         debug {
-            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: true]
+            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: true, alwaysShowStaffHelperPopover: true]
         }
         localhost {
-            manifestPlaceholders = [host: 'http://localhost:3000', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false]
+            manifestPlaceholders = [host: 'http://localhost:3000', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: true]
             signingConfig signingConfigs.debug
             debuggable = true
         }

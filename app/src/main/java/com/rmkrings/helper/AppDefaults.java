@@ -185,4 +185,21 @@ public class AppDefaults {
     public static int getVersionCode() {
         return sharedPreferences.getInt("versionCode", -1);
     }
+
+    /**
+     * Tracks if user has been presented staff helper popover. This popover is shown only once.
+     * @param hasConfirmedStaffHelper New value for this flag.
+     */
+    public static void setHasConfirmedStaffHelper(Boolean hasConfirmedStaffHelper) {
+        edit.putBoolean("hasConfirmedStaffHelper", hasConfirmedStaffHelper);
+        edit.commit();
+    }
+
+    /**
+     * Gets info on user having confirmed staff popover.
+     * @return Boolean flag: true = popover has been presented.
+     */
+    public static Boolean getHasConfirmedStaffHelper() {
+        return sharedPreferences.getBoolean("hasConfirmedStaffHelper", false);
+    }
 }
