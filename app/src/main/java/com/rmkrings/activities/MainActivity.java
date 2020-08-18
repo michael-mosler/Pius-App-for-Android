@@ -2,12 +2,14 @@ package com.rmkrings.activities;
 
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.content.Intent;
 
@@ -38,18 +40,12 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
             try {
                 switch (item.getItemId()) {
                     case R.id.navigation_home: {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frameLayout, new TodayFragment());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        startFragment(new TodayFragment());
                         return true;
                     }
 
                     case R.id.navigation_substitution_schedule: {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frameLayout, new VertretungsplanFragment());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        startFragment(new VertretungsplanFragment());
                         return true;
                     }
 
@@ -59,10 +55,7 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
                     }
 
                     case R.id.navigation_calendar: {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frameLayout, new CalendarFragment());
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                        startFragment(new CalendarFragment());
                         return true;
                     }
 
@@ -102,9 +95,16 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         // Add navigation bar.
         BottomNavigationView navigation = findViewById(R.id.navigation);
-        ColorStateList tint = (Reachability.isReachable())
-                ? pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_colors)
-                : pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_offline_colors);
+        ColorStateList tint;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            tint = (Reachability.isReachable())
+                    ? pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_colors, null)
+                    : pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_offline_colors, null);
+        } else {
+            tint = (Reachability.isReachable())
+                    ? AppCompatResources.getColorStateList(pius_app_for_android.getAppContext(), R.color.nav_bar_colors)
+                    : AppCompatResources.getColorStateList(pius_app_for_android.getAppContext(), R.color.nav_bar_offline_colors);
+        }
         navigation.setItemIconTintList(tint);
         navigation.setItemTextColor(tint);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -163,9 +163,16 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
     public void execute(boolean isReachable) {
         try {
             BottomNavigationView navigation = findViewById(R.id.navigation);
-            ColorStateList tint = (isReachable)
-                    ? pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_colors)
-                    : pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_offline_colors);
+            ColorStateList tint;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                tint = (isReachable)
+                        ? pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_colors, null)
+                        : pius_app_for_android.getAppContext().getResources().getColorStateList(R.color.nav_bar_offline_colors, null);
+            } else {
+                tint = (isReachable)
+                        ? AppCompatResources.getColorStateList(pius_app_for_android.getAppContext(), R.color.nav_bar_colors)
+                        : AppCompatResources.getColorStateList(pius_app_for_android.getAppContext(), R.color.nav_bar_offline_colors);
+            }
             navigation.setItemIconTintList(tint);
             navigation.setItemTextColor(tint);
 

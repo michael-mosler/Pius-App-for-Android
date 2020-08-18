@@ -1,6 +1,6 @@
 package com.rmkrings.data.vertretungsplan;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.rmkrings.helper.Config;
 
@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -153,7 +154,7 @@ public class Vertretungsplan {
                                 final String lessonStartTime = config.getLessonStartTimes()[startLesson - 1];
                                 final Date lessonStartDateAndTime = dateFormat.parse(forDate.concat(lessonStartTime));
 
-                                if (lessonStartDateAndTime.after(currentDate)) {
+                                if (Objects.requireNonNull(lessonStartDateAndTime).after(currentDate)) {
                                     GradeItem filteredGradeItem = new GradeItem(gradeItem, vertretungsplanItem);
                                     return new VertretungsplanForDate(vertretungsplanForDate, filteredGradeItem);
                                 }

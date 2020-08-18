@@ -7,8 +7,8 @@
     <string name="button_welcome_start">Jetzt loslegen</string>
     <string name="button_confirm">Verstanden</string>
 
-    <string name="welcome_new_in_version">Neu in der Version 1.5:</string>
-    <string name="welcome_new_1">Verbesserungen und Fehlerbehebungen. Beachte auch unsere aktualisierte Datenschutzrichtlinie.</string>
+    <string name="welcome_new_in_version">Neu in der Version 1.6.0:</string>
+    <string name="welcome_new_1">Drücke auf der Heute-Seite, im Dashboard oder Vertretungsplan lange auf ein Lehrerkürzel, um Dir den Namen des Lehrers anzeigen zu lassen.</string>
     <string name="welcome_title_overview">Funktionen im Überblick:</string>
     <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
     <string name="welcome_function_vertretungsplan">Greife mit der App ganz einfach auf den gesamten aktuellen Vertretungsplan zu.</string>

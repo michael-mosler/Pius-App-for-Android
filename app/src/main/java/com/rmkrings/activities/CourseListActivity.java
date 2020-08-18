@@ -3,10 +3,12 @@ package com.rmkrings.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,6 +22,8 @@ import com.rmkrings.pius_app_for_android;
 
 import java.util.ArrayList;
 
+import static androidx.recyclerview.widget.RecyclerView.*;
+
 public class CourseListActivity extends AppCompatActivity {
 
     private EditText mEditText;
@@ -27,7 +31,7 @@ public class CourseListActivity extends AppCompatActivity {
     private NumberPicker mCourseTypePicker;
     private NumberPicker mCourseNumberPicker;
     private RecyclerView mCourseList;
-    private RecyclerView.Adapter mAdapter;
+    private Adapter<?> mAdapter;
 
     // Internal state.
     private final Config config = new Config();
@@ -112,7 +116,7 @@ public class CourseListActivity extends AppCompatActivity {
         mCourseNumberPicker = findViewById(R.id.courseNumberPicker);
         mCourseList = findViewById(R.id.courseList);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
         mCourseList.setLayoutManager(mLayoutManager);
         mAdapter = new CourseListAdapter(courseList);
         mCourseList.setAdapter(mAdapter);
@@ -156,7 +160,7 @@ public class CourseListActivity extends AppCompatActivity {
         AppDefaults.setCourseList(courseList);
     }
 
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         AppDefaults.setCourseList(courseList);
     }

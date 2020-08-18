@@ -2,11 +2,11 @@ package com.rmkrings.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +60,7 @@ public class TodayVertretungsplanFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
@@ -86,7 +86,6 @@ public class TodayVertretungsplanFragment extends Fragment {
                         .beginTransaction()
                         .hide(this)
                         .commit();
-                parentFragment.notifyDoneRefreshing();
             } else {
                 Objects.requireNonNull(getFragmentManager())
                         .beginTransaction()
@@ -136,8 +135,8 @@ public class TodayVertretungsplanFragment extends Fragment {
                 }
 
                 mVertetungsplanDetailListAdapter.notifyDataSetChanged();
-                parentFragment.notifyDoneRefreshing();
             }
+            parentFragment.notifyDoneRefreshing();
         }
     }
 }

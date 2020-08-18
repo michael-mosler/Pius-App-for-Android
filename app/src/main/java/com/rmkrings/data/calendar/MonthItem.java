@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MonthItem implements Serializable {
 
@@ -38,7 +39,7 @@ public class MonthItem implements Serializable {
         try {
             dayItems = new ArrayList<>();
             JSONArray jsonDayItems = data.optJSONArray("dayItems");
-            for (int i = 0; i < jsonDayItems.length();i++) {
+            for (int i = 0; i < Objects.requireNonNull(jsonDayItems).length(); i++) {
                 JSONObject jsonDayItem = jsonDayItems.getJSONObject(i);
                 DayItem dayItem = new DayItem(jsonDayItem);
                 dayItems.add(dayItem);

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public final class GradeItem implements Serializable {
     // @serial
@@ -25,7 +26,7 @@ public final class GradeItem implements Serializable {
         try {
             vertretungsplanItems = new ArrayList<>();
             JSONArray jsonVertretungsplanItems = data.optJSONArray("vertretungsplanItems");
-            for (int i = 0; i < jsonVertretungsplanItems.length(); i++) {
+            for (int i = 0; i < Objects.requireNonNull(jsonVertretungsplanItems).length(); i++) {
                 JSONObject jsonVertretungsplanItem = jsonVertretungsplanItems.getJSONObject(i);
                 JSONArray jsonDetailItems = jsonVertretungsplanItem.getJSONArray("detailItems");
 

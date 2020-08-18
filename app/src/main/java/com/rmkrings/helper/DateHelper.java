@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class DateHelper {
     public static String week() {
@@ -20,7 +21,7 @@ public class DateHelper {
 
         try {
             Date d = dateFormatFrom.parse(date);
-            return dateFormatTo.format(d);
+            return dateFormatTo.format(Objects.requireNonNull(d));
         }
         catch (ParseException e) {
             e.printStackTrace();

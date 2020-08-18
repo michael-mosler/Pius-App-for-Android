@@ -48,6 +48,7 @@ public class StaffHelperPopover {
         // will also close but this might not be obvious.
         final PopupWindow popupWindow = new PopupWindow(inflatedView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -69,7 +70,7 @@ public class StaffHelperPopover {
         view.post(new Runnable() {
             @Override
             public void run() {
-                popupWindow.showAtLocation(view, Gravity.TOP, 0, 0);
+                popupWindow.showAtLocation(view, Gravity.TOP, 0, 100);
 
             }
         });

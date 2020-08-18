@@ -9,9 +9,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -103,7 +103,7 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
         if (remoteMessage.getData().containsKey("substitutionSchedule")) {
             try {
                 final String data = remoteMessage.getData().get("substitutionSchedule");
-                final Vertretungsplan vertretungsplan = new Vertretungsplan(new JSONObject(data));
+                final Vertretungsplan vertretungsplan = new Vertretungsplan(new JSONObject(Objects.requireNonNull(data)));
                 final String grade = AppDefaults.getGradeSetting();
                 final Cache cache = new Cache();
                 cache.store(Config.digestFilename(grade), vertretungsplan.getDigest());

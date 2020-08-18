@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -131,7 +132,7 @@ public class VertretungsplanHeaderItem extends VertretungsplanListItem {
                 String[] lessonStartTimes = config.getLessonStartTimes();
 
                 try {
-                    lessonsDate += lessonStartTimes[Integer.parseInt(firstNumberMatcher.group(1))];
+                    lessonsDate += lessonStartTimes[Integer.parseInt(Objects.requireNonNull(firstNumberMatcher.group(1)))];
                 }
                 catch (Exception e) {
                     e.printStackTrace();

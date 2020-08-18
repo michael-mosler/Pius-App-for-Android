@@ -2,12 +2,12 @@ package com.rmkrings.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,6 +28,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 public class ScheduleChangedActivity extends AppCompatActivity {
     // Outlets
@@ -67,7 +68,7 @@ public class ScheduleChangedActivity extends AppCompatActivity {
                 String data = getIntent().getStringExtra("deltaList");
                 String timestamp = getIntent().getStringExtra("timestamp");
                 VertretungsplanChangeList vertretungsplanChangeList = new VertretungsplanChangeList(new JSONArray(data));
-                showChanges(vertretungsplanChangeList, timestamp);
+                showChanges(vertretungsplanChangeList, Objects.requireNonNull(timestamp));
 
             } catch (JSONException e) {
                 e.printStackTrace();

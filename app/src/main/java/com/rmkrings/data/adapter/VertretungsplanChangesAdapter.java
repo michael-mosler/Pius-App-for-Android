@@ -1,7 +1,9 @@
 package com.rmkrings.data.adapter;
 
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -56,6 +58,7 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
         this.list = list;
     }
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
@@ -92,7 +95,7 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final int type = getItemViewType(position);
 
         switch(type) {

@@ -23,6 +23,14 @@ public class StaffPopover {
     private final View view;
     private final String staffMemberShortcutName;
 
+    /**
+     * Creates a new staff helper popover which displays information on
+     * a teacher who is identified by shortname in substitution schedule. Opens
+     * on long touch gesture.
+     * @param context - Context to open popover in.
+     * @param onView - View on which popover shall be shown.
+     * @param staffMemberShortcutName - Shortname to decode in popover.
+     */
     public StaffPopover(Context context, View onView, String staffMemberShortcutName) {
         this.context = context;
         this.view = onView;

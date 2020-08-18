@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -14,17 +14,16 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_tip"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:id="@+id/staff_popover_helper_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -53,6 +52,7 @@
                 android:paddingEnd="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/text_long_push_teacher_help"
+                android:textColor="@color/colorPrimaryDark"
                 tools:text="@string/text_long_push_teacher_help" />
 
         </LinearLayout>
@@ -70,4 +70,4 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

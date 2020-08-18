@@ -1,6 +1,6 @@
 package com.rmkrings.data.postings;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Postings implements Serializable {
 
@@ -21,7 +22,7 @@ public class Postings implements Serializable {
         try {
             postings = new ArrayList<>();
             JSONArray jsonPostings = data.optJSONArray("messages");
-            for (int i = 0; i < jsonPostings.length(); i++) {
+            for (int i = 0; i < Objects.requireNonNull(jsonPostings).length(); i++) {
                 JSONObject jsonPosting = jsonPostings.getJSONObject(i);
                 Posting posting = new Posting(jsonPosting);
                 postings.add(posting);

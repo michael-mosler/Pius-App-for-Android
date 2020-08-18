@@ -2,12 +2,12 @@ package com.rmkrings.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +26,15 @@ import com.rmkrings.pius_app_for_android;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static androidx.recyclerview.widget.RecyclerView.*;
+
 public class VertretungsplanDetailFragment extends Fragment {
     private static final String ARG_PARAM1 = "gradeItem";
     private static final String ARG_PARAM2 = "date";
 
     // Outlets
     private TextView mDate;
-    private RecyclerView.Adapter mAdapter;
+    private Adapter<?> mAdapter;
 
     // Local State
     private GradeItem gradeItem;
@@ -74,7 +76,7 @@ public class VertretungsplanDetailFragment extends Fragment {
         RecyclerView mList = view.findViewById(R.id.detaillist);
         mDate = view.findViewById(R.id.date);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
         mList.setLayoutManager(mLayoutManager);
         mAdapter = new VertetungsplanDetailListAdapter(list);
         mList.setAdapter(mAdapter);
@@ -89,7 +91,7 @@ public class VertretungsplanDetailFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

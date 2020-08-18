@@ -1,6 +1,6 @@
 package com.rmkrings.data.calendar;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Calendar implements Serializable {
 
@@ -26,7 +27,7 @@ public class Calendar implements Serializable {
         try {
             monthItems = new ArrayList<>();
             JSONArray jsonMonthItems = data.optJSONArray("monthItems");
-            for (int i = 0; i < jsonMonthItems.length(); i++) {
+            for (int i = 0; i < Objects.requireNonNull(jsonMonthItems).length(); i++) {
                 JSONObject jsonMonthItem = jsonMonthItems.getJSONObject(i);
                 MonthItem monthItem = new MonthItem(jsonMonthItem);
                 monthItems.add(monthItem);

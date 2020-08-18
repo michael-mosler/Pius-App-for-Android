@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.rmkrings.fragments.TodayPostingsFragment">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_corners">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
                     android:textStyle="bold"
                     tools:text="Benachrichtigungen" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/postinglist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,6 +49,6 @@
                     tools:listitem="@layout/postings_item" />
             </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
