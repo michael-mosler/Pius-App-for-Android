@@ -41,7 +41,7 @@
         © Felix Krings und Michael Mosler-Krings\n
         \nUnter https://github.com/michael-mosler/Pius-App-for-Android findest Du weitere Infos zur App.
         Informationen zu unserer Datenschutzrichtlinie findest Du unter https://github.com/michael-mosler/Pius-App-for-Android/wiki/Datenschutzrichtlinie.
-        \n\nWir verwenden Picasso (https://https://square.github.io/picasso/) für das Laden, Caching und Anzeigen von Bildern.
+        \n\nWir verwenden Picasso (https://square.github.io/picasso/) für das Laden, Caching und Anzeigen von Bildern.
     </string>
 
     <string name="label_grade">Jahrgangsstufe</string>
