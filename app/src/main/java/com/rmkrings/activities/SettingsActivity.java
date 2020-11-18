@@ -5,24 +5,25 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.NumberPicker;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rmkrings.helper.Config;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.rmkrings.helper.AppDefaults;
-import com.rmkrings.interfaces.HttpResponseCallback;
+import com.rmkrings.helper.Config;
 import com.rmkrings.http.HttpResponseData;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
 import com.rmkrings.notifications.PiusAppMessageService;
@@ -180,7 +181,7 @@ public class SettingsActivity extends AppCompatActivity implements HttpResponseC
     private void updateLoginButtonText(boolean authenticated) {
         if (authenticated) {
             mLoginButton.setText(getResources().getString(R.string.button_logout));
-            mLoginButton.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+            mLoginButton.setBackground(getResources().getDrawable(R.drawable.button_default_red));
         } else {
             mLoginButton.setText(getResources().getString(R.string.button_login));
             mLoginButton.setBackgroundColor(getResources().getColor(R.color.colorPiusBlue));

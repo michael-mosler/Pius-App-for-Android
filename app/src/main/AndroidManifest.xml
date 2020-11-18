@@ -14,10 +14,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".WhatsNewActivity"
-            android:label="@string/title_activity_whats_new"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name="com.rmkrings.widgets.DashboardWidget">
             <intent-filter>

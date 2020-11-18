@@ -16,7 +16,10 @@ import com.rmkrings.helper.AppDefaults;
 
 /**
  * Popover which shows information on substiting teacher.
+ *
+ * @deprecated TODO remove StaffHelperPopover
  */
+@Deprecated
 public class StaffHelperPopover {
     private final Context context;
     private final View view;

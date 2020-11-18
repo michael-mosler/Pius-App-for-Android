@@ -1,31 +1,37 @@
 package com.rmkrings.activities;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.content.Intent;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.rmkrings.fragments.CalendarFragment;
+import com.rmkrings.fragments.DashboardFragment;
+import com.rmkrings.fragments.TodayFragment;
+import com.rmkrings.fragments.VertretungsplanFragment;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Config;
 import com.rmkrings.helper.Reachability;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
-import com.rmkrings.fragments.CalendarFragment;
-import com.rmkrings.fragments.DashboardFragment;
 import com.rmkrings.loader.StaffLoader;
 import com.rmkrings.pius_app_for_android;
-import com.rmkrings.fragments.VertretungsplanFragment;
-import com.rmkrings.fragments.TodayFragment;
 
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {
+    Dialog myDialog;
 
     @SuppressWarnings("SameReturnValue")
     public static String getTargetDashboard() {
@@ -92,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDialog = new Dialog(this);
 
         // Add navigation bar.
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -128,8 +135,18 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         if (versionCode > AppDefaults.getSavedVersionCode() || Config.getAlwaysShowWelcome()) {
             AppDefaults.setSavedVersionCode(versionCode);
-            Intent a = new Intent(this, WhatsNewActivity.class);
-            startActivity(a);
+
+            Button btnFollow;
+            myDialog.setContentView(R.layout.popup_changelog);
+            btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
         }
 
         final StaffLoader staffLoader = new StaffLoader();
