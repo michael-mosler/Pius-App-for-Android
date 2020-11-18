@@ -68,7 +68,6 @@
     <string name="text_empty_future_schedule">In den nächsten Tagen hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
     <string name="text_confirm_logout">Möchtest Du dich wirklich abmelden?</string>
-    <string name="text_long_push_teacher_help">Drücke im Dashboard, Vertretungs- und Stundenplan lange auf ein Lehrerkürzel, um Dir den Namen des Lehrers anzeigen zu lassen.</string>
 
     <string name="text_intro">
         Melde Dich in den Einstellungen an, um Zugriff auf den Vertretungsplan zu haben. Du kannst auch Deine Klasse/Jahrgangsstufe und in der Oberstufe Deine Kursliste einstellen, und so Deinen "persönlichen" Vertretungsplan im Dashboard anzeigen lassen.
