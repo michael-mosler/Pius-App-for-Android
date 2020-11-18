@@ -25,7 +25,6 @@ import com.rmkrings.helper.DateHelper;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.interfaces.ParentFragment;
-import com.rmkrings.layouts.StaffHelperPopover;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
@@ -112,13 +111,6 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         mNavigationView.getMenu().getItem(0).setChecked(true);
 
         reload(false);
-
-        //If explanation staff popover has not been show then create it.
-        //TODO remove StaffHelper
-        if (Config.getAlwaysShowStaffPopoverHelper() || !AppDefaults.getHasConfirmedStaffHelper()) {
-            StaffHelperPopover staffHelperPopover = new StaffHelperPopover(pius_app_for_android.getAppContext(), this.getView());
-            staffHelperPopover.show();
-        }
     }
 
     private void reload(boolean refreshing) {
