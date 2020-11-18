@@ -4,29 +4,30 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.rmkrings.activities.R;
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.helper.Config;
 import com.rmkrings.helper.DateHelper;
-import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
+import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.layouts.StaffHelperPopover;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
-import com.rmkrings.activities.R;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
 import com.rmkrings.pius_app_for_android;
 
@@ -113,7 +114,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         reload(false);
 
         //If explanation staff popover has not been show then create it.
-
+        //TODO remove StaffHelper
         if (Config.getAlwaysShowStaffPopoverHelper() || !AppDefaults.getHasConfirmedStaffHelper()) {
             StaffHelperPopover staffHelperPopover = new StaffHelperPopover(pius_app_for_android.getAppContext(), this.getView());
             staffHelperPopover.show();

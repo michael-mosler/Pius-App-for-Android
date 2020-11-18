@@ -8,7 +8,7 @@
     <string name="button_confirm">Verstanden</string>
 
     <string name="welcome_new_in_version">Neu in der Version 1.6.0:</string>
-    <string name="welcome_new_1">Drücke auf der Heute-Seite, im Dashboard oder Vertretungsplan lange auf ein Lehrerkürzel, um Dir den Namen des Lehrers anzeigen zu lassen.</string>
+    <string name="welcome_new_1">Drücke auf der Heute-Seite, im Dashboard oder Vertretungsplan <b>lange auf ein Lehrerkürzel</b>, um Dir den Namen des Lehrers anzeigen zu lassen.</string>
     <string name="welcome_title_overview">Funktionen im Überblick:</string>
     <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
     <string name="welcome_function_vertretungsplan">Greife mit der App ganz einfach auf den gesamten aktuellen Vertretungsplan zu.</string>
@@ -31,7 +31,7 @@
     <string name="title_logout">Abmelden</string>
     <string name="title_delete_course_list_all">Kursliste löschen</string>
     <string name="title_activity_schedule_changed">ScheduleChangedActivity</string>
-    <string name="title_activity_whats_new">What\'s New</string>
+    <string name="title_whats_new">What\'s New</string>
     <string name="title_tip">Tipp</string>
 
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zur Verwendung des Dashboards Deine Klasse bzw. Jahrgangsstufe ein.</string>

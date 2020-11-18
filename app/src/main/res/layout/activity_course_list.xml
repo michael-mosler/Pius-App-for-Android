@@ -155,7 +155,7 @@
             android:layout_height="25dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0"
-            android:background="@android:color/holo_red_dark"
+            android:background="@drawable/button_default_red"
             android:text="@string/label_delete_all"
             android:textColor="@android:color/white"
             tools:text="Alles löschen" />
