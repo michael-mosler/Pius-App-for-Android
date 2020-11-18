@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@drawable/button_default">
+    android:background="@drawable/button_vplan">
 
     <TextView
         android:id="@+id/vertretungsplan_list_group"
