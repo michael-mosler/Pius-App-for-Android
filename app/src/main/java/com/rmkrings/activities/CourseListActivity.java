@@ -170,6 +170,7 @@ public class CourseListActivity extends AppCompatActivity {
         super.onResume();
         setTitle(R.string.title_add_courses);
 
+        courseList.clear();
         courseList.addAll(AppDefaults.getCourseList());
         mAdapter.notifyDataSetChanged();
     }
