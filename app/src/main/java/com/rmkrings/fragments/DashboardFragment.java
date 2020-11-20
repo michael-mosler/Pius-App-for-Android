@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.rmkrings.activities.SettingsActivity;
 import com.rmkrings.data.adapter.DashboardListAdapter;
 import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
@@ -68,8 +73,14 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     // Local state.
     private String grade;
     private Boolean reloadOnResume = true;
-    private String digestFileName() { return Config.digestFilename(grade); }
-    private String cacheFileName() { return Config.cacheFilename(grade); }
+
+    private String digestFileName() {
+        return Config.digestFilename(grade);
+    }
+
+    private String cacheFileName() {
+        return Config.cacheFilename(grade);
+    }
 
     private final Cache cache = new Cache();
     private Vertretungsplan vertretungsplan;
@@ -136,7 +147,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        fragmentActivity = (FragmentActivity)context;
+        fragmentActivity = (FragmentActivity) context;
         reloadOnResume = true;
     }
 
@@ -159,7 +170,14 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                             }
                         }
                     })
+                    .setNegativeButton(R.string.title_settings, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            fragmentActivity.startActivity(new Intent(fragmentActivity, SettingsActivity.class));
+                        }
+                    })
                     .show();
+
             return;
         }
 
@@ -217,15 +235,15 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
 
         listDataHeader.clear();
         listDataChild.clear();
-        for (VertretungsplanForDate vertretungsplanForDate: vertretungsplan.getVertretungsplaene()) {
+        for (VertretungsplanForDate vertretungsplanForDate : vertretungsplan.getVertretungsplaene()) {
             listDataHeader.add(vertretungsplanForDate.getDate());
             expanded[i] = false;
 
             ArrayList<VertretungsplanListItem> vertretungsplanListItems = new ArrayList<>(0);
 
             // There is only one grade item when in dashboard mode.
-            for (GradeItem g: vertretungsplanForDate.getGradeItems()) {
-                for (String[] a: g.getVertretungsplanItems()) {
+            for (GradeItem g : vertretungsplanForDate.getGradeItems()) {
+                for (String[] a : g.getVertretungsplanItems()) {
                     // Check if the current item can be accepted, i.e. must be displayed.
                     VertretungsplanHeaderItem headerItem = new VertretungsplanHeaderItem(a[2], a[0]);
                     if (headerItem.accept()) {
@@ -339,8 +357,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                             .show();
                 }
             }
-        }
-        catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }

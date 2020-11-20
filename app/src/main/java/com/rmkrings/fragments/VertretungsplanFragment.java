@@ -3,6 +3,7 @@ package com.rmkrings.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.rmkrings.activities.SettingsActivity;
 import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.adapter.VertretungsplanListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
@@ -147,6 +149,12 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
                             if (getFragmentManager() != null) {
                                 getFragmentManager().popBackStack();
                             }
+                        }
+                    })
+                    .setNegativeButton(R.string.title_settings, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            fragmentActivity.startActivity(new Intent(fragmentActivity, SettingsActivity.class));
                         }
                     })
                     .show();
