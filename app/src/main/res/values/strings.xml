@@ -83,4 +83,7 @@
     </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
     <string name="error_no_data">Es gibt noch keine Daten, die das Widget anzeigen kann. Warte auf eine Push-Benachrichtigung oder öffne das Dashboard, um Deinen Vetretungsplan zu laden.</string>
+    <string name="general">Allgemein</string>
+    <string name="advanced">Erweitert</string>
+    <string name="about">About</string>
 </resources>

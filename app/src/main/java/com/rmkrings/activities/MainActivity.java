@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
                     }
 
                     case R.id.navigation_settings:
-                        Intent a = new Intent(MainActivity.this, SettingsActivity.class);
+                        Intent a = new Intent(MainActivity.this, PreferencesActivity.class);
                         startActivity(a);
                         return false;
                 }
