@@ -19,9 +19,9 @@ You can find our privacy policy [here](https://github.com/michael-mosler/Pius-Ap
 
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/michael-mosler/Pius-App-for-Android.svg?style=for-the-badge
 [contributors-url]: https://github.com/michael-mosler/Pius-App-for-Android/graphs/contributors
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/michael-mosler/Pius-App-for-Android.svg?style=for-the-badge
 [issues-url]: https://github.com/michael-mosler/Pius-App-for-Android/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/michael-mosler/Pius-App-for-Android.svg?style=for-the-badge
 [license-url]: https://github.com/michael-mosler/Pius-App-for-Android/blob/master/LICENSE.txt
