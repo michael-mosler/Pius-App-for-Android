@@ -22,7 +22,7 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rmkrings.activities.SettingsActivity;
+import com.rmkrings.activities.PreferencesActivity;
 import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.adapter.VertretungsplanListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
@@ -154,7 +154,7 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
                     .setNegativeButton(R.string.title_settings, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            fragmentActivity.startActivity(new Intent(fragmentActivity, SettingsActivity.class));
+                            fragmentActivity.startActivity(new Intent(fragmentActivity, PreferencesActivity.class));
                         }
                     })
                     .show();

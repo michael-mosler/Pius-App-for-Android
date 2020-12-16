@@ -21,6 +21,7 @@ public class AboutFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setContentView(R.layout.activity_preferences);
         return inflater.inflate(R.layout.fragment_preferences_about, container, false);
     }
 
