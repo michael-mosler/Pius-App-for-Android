@@ -50,7 +50,6 @@
             android:value="${alwaysShowStaffHelperPopover}" />
 
         <activity android:name=".WebViewActivity" />
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".PreferencesActivity" />
         <activity android:name=".CourseListActivity" />
         <activity
