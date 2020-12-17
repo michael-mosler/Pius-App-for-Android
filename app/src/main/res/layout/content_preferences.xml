@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.rmkrings.activities.PreferencesActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_preferences">
 
     <androidx.viewpager.widget.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
