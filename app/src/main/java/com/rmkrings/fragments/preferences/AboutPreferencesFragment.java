@@ -9,24 +9,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.rmkrings.activities.R;
+import com.rmkrings.pius_app_for_android;
 
-public class AboutFragment extends Fragment {
-
-    public static AboutFragment newInstance() {
-
-        return new AboutFragment();
-    }
-
-
+public class AboutPreferencesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        getActivity().setContentView(R.layout.activity_preferences);
         return inflater.inflate(R.layout.fragment_preferences_about, container, false);
     }
 
-    public static String getTitle() {
-        //TODO get title from strings.xml
-        return "About";
+    public String getTitle() {
+        return pius_app_for_android.getAppContext().getResources().getString(R.string.title_peferences_about);
     }
 }
