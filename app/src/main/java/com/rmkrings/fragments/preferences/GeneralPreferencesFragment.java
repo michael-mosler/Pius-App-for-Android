@@ -3,7 +3,6 @@ package com.rmkrings.fragments.preferences;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,16 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.rmkrings.activities.CourseListActivity;
 import com.rmkrings.activities.R;
 import com.rmkrings.helper.AppDefaults;
@@ -39,8 +34,8 @@ import com.rmkrings.pius_app_for_android;
 
 import cdflynn.android.library.checkview.CheckView;
 
-public class GeneralFragment extends Fragment implements HttpResponseCallback, IOnBackPressed {
-
+@SuppressWarnings("Convert2Lambda")
+public class GeneralPreferencesFragment extends Fragment implements HttpResponseCallback, IOnBackPressed {
     // Outlets
     private EditText mUserName;
     private EditText mPassword;
@@ -50,21 +45,14 @@ public class GeneralFragment extends Fragment implements HttpResponseCallback, I
     private NumberPicker mClassPicker;
     private ProgressBar mProgressBar;
     private CheckView mSuccessCheckMark;
-    private FragmentActivity fragmentActivity;
-    private TextView mVersionInfo;
 
     // Internal state
     private final Config config = new Config();
     private String sUserName = "";
     private String sPassword = "";
 
-    public GeneralFragment () {
-    }
-
-
-    public static GeneralFragment newInstance() {
-
-        return new GeneralFragment();
+    public GeneralPreferencesFragment() {
+        // Required empty public constructor
     }
 
     @Nullable
@@ -78,12 +66,8 @@ public class GeneralFragment extends Fragment implements HttpResponseCallback, I
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-//        getActivity().setContentView(R.layout.activity_preferences);
-
         mGradePicker = view.findViewById(R.id.gradePicker);
         mClassPicker = view.findViewById(R.id.classPicker);
         mCoursesButton = view.findViewById(R.id.mycourses);
@@ -174,22 +158,7 @@ public class GeneralFragment extends Fragment implements HttpResponseCallback, I
                 startActivity(a);
             }
         });
-
-        try {
-            String versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-//            mVersionInfo.setText(versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-//            mVersionInfo.setText("Dev");
-        }
-
     }
-
-/*    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        fragmentActivity = (FragmentActivity) context;
-    }*/
 
     /**
      * Check if grade picker index value identifies an upper grade row.
@@ -396,9 +365,8 @@ public class GeneralFragment extends Fragment implements HttpResponseCallback, I
     }
 
 
-    public static String getTitle() {
-        //TODO get title from strings.xml
-        return "Allgemein";
+    public String getTitle() {
+        return pius_app_for_android.getAppContext().getResources().getString(R.string.title_peferences_general);
     }
 
     /**

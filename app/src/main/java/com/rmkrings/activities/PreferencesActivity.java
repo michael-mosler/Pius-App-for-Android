@@ -3,7 +3,6 @@ package com.rmkrings.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
@@ -13,10 +12,6 @@ import com.rmkrings.data.adapter.ViewPagerAdapter;
 import com.rmkrings.fragments.preferences.IOnBackPressed;
 
 public class PreferencesActivity extends AppCompatActivity {
-
-    private ViewPager mViewPager;
-    private ViewPagerAdapter mViewPagerAdapter;
-    private TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +29,11 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     private void setViewPager() {
-
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPager mViewPager = findViewById(R.id.pager);
+        ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mViewPagerAdapter);
 
-        mTabLayout = (TabLayout) findViewById(R.id.tab);
+        TabLayout mTabLayout = findViewById(R.id.tab);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
