@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Pius-App-for-Android.iml" filepath="$PROJECT_DIR$/.idea/Pius-App-for-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Pius-App-for-Android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Pius-App-for-Android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java.Pius-App-for-Android.iml" filepath="$PROJECT_DIR$/.idea/modules/java.Pius-App-for-Android.iml" />
     </modules>
   </component>
 </project>
