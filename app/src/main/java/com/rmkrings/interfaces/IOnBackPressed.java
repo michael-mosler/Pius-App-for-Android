@@ -1,4 +1,4 @@
-package com.rmkrings.fragments.preferences;
+package com.rmkrings.interfaces;
 
 public interface IOnBackPressed {
 
