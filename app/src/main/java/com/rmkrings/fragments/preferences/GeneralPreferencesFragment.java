@@ -27,6 +27,7 @@ import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Config;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
+import com.rmkrings.interfaces.IOnBackPressed;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
 import com.rmkrings.notifications.PiusAppMessageService;

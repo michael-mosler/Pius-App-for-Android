@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.rmkrings.data.adapter.ViewPagerAdapter;
-import com.rmkrings.fragments.preferences.IOnBackPressed;
+import com.rmkrings.interfaces.IOnBackPressed;
 
 public class PreferencesActivity extends AppCompatActivity {
 
