@@ -34,11 +34,11 @@
     <string name="title_whats_new">What\'s New</string>
     <string name="title_tip">Tipp</string>
     <string name="title_peferences_general">Allgemein</string>
-    <string name="title_peferences_about">Über Pius-App</string>
+    <string name="title_peferences_about">Über die App</string>
 
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zur Verwendung des Dashboards Deine Klasse bzw. Jahrgangsstufe ein.</string>
     <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>
-    <string name="label_app_name">Pius-App für Android Version</string>
+    <string name="label_app_name">Pius-App für Android Version %v</string>
     <string name="label_copyright">
         © Felix Krings und Michael Mosler-Krings\n
         \nUnter https://github.com/michael-mosler/Pius-App-for-Android findest Du weitere Infos zur App.
