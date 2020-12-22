@@ -15,8 +15,6 @@ import com.rmkrings.activities.R;
 import com.rmkrings.pius_app_for_android;
 
 public class AboutPreferencesFragment extends Fragment {
-    //Outlets
-    private TextView mVersion;
 
     @Nullable
     @Override
@@ -26,7 +24,8 @@ public class AboutPreferencesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mVersion = view.findViewById(R.id.version);
+        //Outlets
+        TextView mVersion = view.findViewById(R.id.version);
 
         try{
             String version = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
