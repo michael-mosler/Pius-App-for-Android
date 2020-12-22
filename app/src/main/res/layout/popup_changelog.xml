@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_description_white_36dp" />
+            android:src="@drawable/ic_description_white_36dp"
+            android:contentDescription="@string/title_whats_new" />
 
         <TextView
             android:layout_width="wrap_content"

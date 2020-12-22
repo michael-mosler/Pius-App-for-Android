@@ -36,15 +36,4 @@ public class PreferencesActivity extends AppCompatActivity {
         TabLayout mTabLayout = findViewById(R.id.tab);
         mTabLayout.setupWithViewPager(mViewPager);
     }
-
-    private void startFragment(Fragment f, Boolean withBackStack) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayout, f);
-
-        if (withBackStack) {
-            transaction.addToBackStack(null);
-        }
-
-        transaction.commit();
-    }
 }
