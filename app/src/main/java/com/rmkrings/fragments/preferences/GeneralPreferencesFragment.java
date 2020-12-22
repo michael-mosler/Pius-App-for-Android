@@ -204,8 +204,12 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             AppDefaults.setSelectedClassRow(0);
 
             mClassPicker.setEnabled(false);
-            mCoursesButton.setEnabled(true);
-            mCoursesButton.setBackgroundResource(R.drawable.button_default);
+            mCoursesButton.setEnabled(AppDefaults.isAuthenticated());
+            if (AppDefaults.isAuthenticated()){
+                mCoursesButton.setBackgroundResource(R.drawable.button_default);
+            }else {
+                mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
+            }
         }
 
         // When a lower grade is selected disable "Meine Kurse" button and make sure
