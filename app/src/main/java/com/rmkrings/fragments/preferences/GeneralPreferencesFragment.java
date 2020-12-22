@@ -205,6 +205,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
 
             mClassPicker.setEnabled(false);
             mCoursesButton.setEnabled(true);
+            mCoursesButton.setBackgroundResource(R.drawable.button_default);
         }
 
         // When a lower grade is selected disable "Meine Kurse" button and make sure
@@ -217,6 +218,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
 
             mClassPicker.setEnabled(true);
             mCoursesButton.setEnabled(false);
+            mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
         }
 
         // Neither
