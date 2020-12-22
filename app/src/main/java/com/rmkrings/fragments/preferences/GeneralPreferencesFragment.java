@@ -46,6 +46,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
     private NumberPicker mClassPicker;
     private ProgressBar mProgressBar;
     private CheckView mSuccessCheckMark;
+    private boolean isAuthenticated = AppDefaults.isAuthenticated();
 
     // Internal state
     private final Config config = new Config();
@@ -82,7 +83,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
         titlesForGradePicker();
         titlesForClassPicker();
 
-        boolean isAuthenticated = AppDefaults.isAuthenticated();
+        isAuthenticated = AppDefaults.isAuthenticated();
         mUserName.setEnabled(!isAuthenticated);
         mPassword.setEnabled(!isAuthenticated);
 
@@ -149,6 +150,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
                 imm.hideSoftInputFromWindow(mLoginButton.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(mPassword.getWindowToken(), 0);
                 saveCredentials();
+                setElementStates(AppDefaults.getSelectedGradeRow());
             }
         });
 
@@ -204,8 +206,8 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             AppDefaults.setSelectedClassRow(0);
 
             mClassPicker.setEnabled(false);
-            mCoursesButton.setEnabled(AppDefaults.isAuthenticated());
-            if (AppDefaults.isAuthenticated()){
+            mCoursesButton.setEnabled(isAuthenticated);
+            if (isAuthenticated){
                 mCoursesButton.setBackgroundResource(R.drawable.button_default);
             }else {
                 mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
@@ -331,6 +333,8 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             mLoginButton.setEnabled(false);
             mProgressBar.setVisibility(View.VISIBLE);
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            isAuthenticated = true;
+            setElementStates(AppDefaults.getSelectedGradeRow());
 
             // Validate credentials; this will also update authenticated state
             // of the app.
@@ -351,6 +355,8 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
                             AppDefaults.setUsername("");
                             AppDefaults.setPassword("");
                             AppDefaults.setAuthenticated(false);
+                            isAuthenticated = false;
+                            setElementStates(AppDefaults.getSelectedGradeRow());
                             updateLoginButtonText(false);
 
                             mUserName.setEnabled(true);
