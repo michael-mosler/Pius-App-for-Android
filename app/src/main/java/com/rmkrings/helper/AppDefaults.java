@@ -171,7 +171,7 @@ public class AppDefaults {
 
     public static ArrayList<String> getCourseList() {
         Set<String> s = sharedPreferences.getStringSet("courseList", null);
-        return (s != null) ? new ArrayList<>(s) : new ArrayList<String>();
+        return (s != null) ? new ArrayList<>(s) : new ArrayList<>();
     }
 
     /*

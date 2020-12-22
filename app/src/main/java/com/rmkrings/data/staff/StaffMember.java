@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * staff information.
  */
 public class StaffMember {
-    private String name;
-    private ArrayList<String> subjects;
+    private final String name;
+    private final ArrayList<String> subjects;
 
     StaffMember(JSONObject fromJSON) throws JSONException {
         name = fromJSON.getString("name");

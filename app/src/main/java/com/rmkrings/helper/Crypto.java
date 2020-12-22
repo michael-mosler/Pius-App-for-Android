@@ -32,7 +32,7 @@ class Crypto {
     private static final String KEY_ALIAS = "com.rmkrings.pius_app";
     private static final String AndroidKeyStore = "AndroidKeyStore";
 
-    private KeyStore keyStore;
+    private final KeyStore keyStore;
 
     Crypto() throws Exception
     {

@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class VertretungsplanForDate {
-    private String date;
-    private ArrayList<GradeItem> gradeItems;
+    private final String date;
+    private final ArrayList<GradeItem> gradeItems;
 
     VertretungsplanForDate(JSONObject data) throws RuntimeException {
         try {

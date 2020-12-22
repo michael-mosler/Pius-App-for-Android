@@ -12,9 +12,9 @@ import java.util.Objects;
 public class Eva implements Serializable {
 
     // @serial
-    private ArrayList<String> dates;
+    private final ArrayList<String> dates;
     // @serial
-    private HashMap<String, ArrayList<EvaItem>> evaData;
+    private final HashMap<String, ArrayList<EvaItem>> evaData;
 
     // @serial
     private String digest;

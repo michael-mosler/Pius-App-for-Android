@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class NewsItems {
-    private ArrayList<NewsItem> newsItems;
+    private final ArrayList<NewsItem> newsItems;
     private String digest;
 
     public NewsItems(JSONObject data) throws RuntimeException{

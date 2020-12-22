@@ -19,10 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Vertretungsplan {
-    private String tickerText;
+    private final String tickerText;
     private String additionalText;
-    private String lastUpdate;
-    private ArrayList<VertretungsplanForDate> vertretungsplaene;
+    private final String lastUpdate;
+    private final ArrayList<VertretungsplanForDate> vertretungsplaene;
     private String digest;
 
     public Vertretungsplan(JSONObject data) throws RuntimeException {

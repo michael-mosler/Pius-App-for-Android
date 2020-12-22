@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.rmkrings.activities.R;
 import com.rmkrings.pius_app_for_android;
 
+import java.util.Objects;
+
 public class AboutPreferencesFragment extends Fragment {
 
     @Nullable
@@ -28,7 +30,7 @@ public class AboutPreferencesFragment extends Fragment {
         TextView mVersion = view.findViewById(R.id.version);
 
         try{
-            String version = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+            String version = Objects.requireNonNull(getActivity()).getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
             mVersion.setText(getResources().getText(R.string.label_app_name).toString().replaceAll("%v", version));
         } catch (PackageManager.NameNotFoundException ex){
             ex.printStackTrace();

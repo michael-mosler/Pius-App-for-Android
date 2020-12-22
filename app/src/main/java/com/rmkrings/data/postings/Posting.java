@@ -11,8 +11,8 @@ public class Posting extends MessageItem implements Serializable {
     public static final int postingItem = 0;
 
     // @serial
-    private String postingMessage;
-    private String timestamp;
+    private final String postingMessage;
+    private final String timestamp;
 
     Posting(JSONObject data) throws Exception {
         postingMessage = data.getString("message");

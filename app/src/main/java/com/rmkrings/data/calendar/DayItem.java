@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 public class DayItem extends CalendarListItem {
     // @serial
-    private String day;
+    private final String day;
 
     // @serial
-    private String event;
+    private final String event;
 
-    private ArrayList<Point> searchMatches;
+    private final ArrayList<Point> searchMatches;
 
     DayItem(JSONObject data) throws Exception {
         JSONArray jsonDetailItems = data.getJSONArray("detailItems");

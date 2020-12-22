@@ -33,6 +33,8 @@ import com.rmkrings.notifications.DashboardWidgetUpdateService;
 import com.rmkrings.notifications.PiusAppMessageService;
 import com.rmkrings.pius_app_for_android;
 
+import java.util.Objects;
+
 import cdflynn.android.library.checkview.CheckView;
 
 @SuppressWarnings("Convert2Lambda")
@@ -145,7 +147,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mLoginButton.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(mPassword.getWindowToken(), 0);
                 saveCredentials();
@@ -326,13 +328,13 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             // Show activity indicator and disable user interaction.
             mLoginButton.setEnabled(false);
             mProgressBar.setVisibility(View.VISIBLE);
-            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            Objects.requireNonNull(getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
             // Validate credentials; this will also update authenticated state
             // of the app.
             VertretungsplanLoader.validateLogin(AppDefaults.getUsername(), AppDefaults.getPassword(), this);
         } else {
-            new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme)
+            new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_logout))
                     .setMessage(getResources().getString(R.string.text_confirm_logout))
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -378,7 +380,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(getResources().getString(R.string.title_settings));
+        Objects.requireNonNull(getActivity()).setTitle(getResources().getString(R.string.title_settings));
         setLoginButtonState();
     }
 
@@ -407,7 +409,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
     @Override
     public void execute(HttpResponseData data) {
         try {
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             mProgressBar.setVisibility(View.GONE);
             mLoginButton.setEnabled(true);
 
@@ -436,7 +438,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             // Check if app is finishing. Only if not we may show popup.
             // Otherwise app is likely to crash as context is getting lost.
             String message;
-            if (!getActivity().isFinishing() && data.getHttpStatusCode() != 200) {
+            if (!Objects.requireNonNull(getActivity()).isFinishing() && data.getHttpStatusCode() != 200) {
                 if (data.isError()) {
                     message = getResources().getString(R.string.text_logon_error);
                 } else if (data.getHttpStatusCode() != 401) {

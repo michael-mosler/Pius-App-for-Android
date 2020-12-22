@@ -3,10 +3,10 @@ package com.rmkrings.data.news;
 import org.json.JSONObject;
 
 public class NewsItem {
-    private String img;
-    private String href;
-    private String heading;
-    private String text;
+    private final String img;
+    private final String href;
+    private final String heading;
+    private final String text;
 
     NewsItem(JSONObject data) throws RuntimeException {
         try {

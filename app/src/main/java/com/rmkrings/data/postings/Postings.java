@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Postings implements Serializable {
 
     // @serial
-    private ArrayList<Posting> postings;
+    private final ArrayList<Posting> postings;
 
     // @serial
     private String digest;

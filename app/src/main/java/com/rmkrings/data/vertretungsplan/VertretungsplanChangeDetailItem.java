@@ -5,13 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class VertretungsplanChangeDetailItem {
-    private String changeType;
-    private String course;
-    private String lesson;
+    private final String changeType;
+    private final String course;
+    private final String lesson;
     private VertretungsplanDetailItem newDetail;
     private VertretungsplanDetailItem oldDetail;
-    private String remark;
-    private String evaText;
+    private final String remark;
+    private final String evaText;
 
     VertretungsplanChangeDetailItem(JSONObject jsonData) throws RuntimeException {
         try {

@@ -5,9 +5,9 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 public class EvaItem implements Serializable {
-    private String uuid;
-    private String course;
-    private String evaText;
+    private final String uuid;
+    private final String course;
+    private final String evaText;
 
     EvaItem(JSONObject data) throws RuntimeException {
         try {
@@ -21,7 +21,6 @@ public class EvaItem implements Serializable {
         }
     }
 
-    @SuppressWarnings("unused")
     public String getUuid() {
         return uuid;
     }

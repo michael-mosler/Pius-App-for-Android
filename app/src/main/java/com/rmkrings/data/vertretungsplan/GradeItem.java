@@ -9,10 +9,10 @@ import java.util.Objects;
 
 public final class GradeItem implements Serializable {
     // @serial
-    private String grade;
+    private final String grade;
 
     // @serial
-    private ArrayList<String[]> vertretungsplanItems;
+    private final ArrayList<String[]> vertretungsplanItems;
 
     GradeItem(JSONObject data) throws RuntimeException {
         try {

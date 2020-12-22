@@ -51,7 +51,7 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
      * @param token - The token that Android has created.
      */
     @Override
-    public void onNewToken(String token) {
+    public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
         sendToken(token);
     }
@@ -61,7 +61,7 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
      * @param remoteMessage - The push message that has been received.
      */
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
         Intent intent = new Intent(this, ScheduleChangedActivity.class);

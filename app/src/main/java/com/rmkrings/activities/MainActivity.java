@@ -29,6 +29,8 @@ import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.loader.StaffLoader;
 import com.rmkrings.pius_app_for_android;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {
     Dialog myDialog;
@@ -138,14 +140,14 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
             Button btnFollow;
             myDialog.setContentView(R.layout.popup_changelog);
-            btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+            btnFollow = myDialog.findViewById(R.id.btnfollow);
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     myDialog.dismiss();
                 }
             });
-            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            Objects.requireNonNull(myDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             myDialog.show();
         }
 

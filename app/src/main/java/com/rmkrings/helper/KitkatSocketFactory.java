@@ -15,7 +15,7 @@ import javax.net.ssl.SSLSocketFactory;
  */
 public class KitkatSocketFactory extends SSLSocketFactory {
 
-    private SSLSocketFactory internalSSLSocketFactory;
+    private final SSLSocketFactory internalSSLSocketFactory;
 
     public KitkatSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
         SSLContext context = SSLContext.getInstance("TLS");

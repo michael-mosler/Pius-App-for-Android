@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Calendar implements Serializable {
 
     // @serial
-    private ArrayList<MonthItem> monthItems;
+    private final ArrayList<MonthItem> monthItems;
 
     // @serial
     private String digest;

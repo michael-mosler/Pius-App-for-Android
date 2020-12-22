@@ -1,6 +1,5 @@
 package com.rmkrings.interfaces;
 
-@SuppressWarnings("unused")
 public interface IOnBackPressed {
 
     /**

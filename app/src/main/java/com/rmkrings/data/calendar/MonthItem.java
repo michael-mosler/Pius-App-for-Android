@@ -16,10 +16,10 @@ import java.util.Objects;
 public class MonthItem implements Serializable {
 
     // @serial
-    private String name;
+    private final String name;
 
     // @serial
-    private ArrayList<DayItem> dayItems;
+    private final ArrayList<DayItem> dayItems;
 
     private  MonthItem(MonthItem monthItem) {
         name = monthItem.getName();
