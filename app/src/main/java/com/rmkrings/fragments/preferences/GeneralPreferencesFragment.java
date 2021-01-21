@@ -93,7 +93,6 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
         mGradePicker.setValue(AppDefaults.getSelectedGradeRow());
 
         setElementStates(AppDefaults.getSelectedGradeRow());
-        System.out.println(isAuthenticated + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         showCredentials();
 
         // Register listeners for all interactive components.
@@ -192,7 +191,6 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
      * @param forSelectedGradeVal - Currently selected grade index value.
      */
     private void setElementStates(int forSelectedGradeVal) {
-        System.out.println("?????????????????????????????????????????????" + forSelectedGradeVal);
         // If grade "None" is selected class picker also is set to None.
         if (forSelectedGradeVal == 0) {
             mClassPicker.setValue(0);
