@@ -53,6 +53,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
     private final Config config = new Config();
     private String sUserName = "";
     private String sPassword = "";
+    private boolean isAuthenticated = false;
 
     public GeneralPreferencesFragment() {
         // Required empty public constructor
@@ -84,7 +85,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
         titlesForGradePicker();
         titlesForClassPicker();
 
-        boolean isAuthenticated = AppDefaults.isAuthenticated();
+        isAuthenticated = AppDefaults.isAuthenticated();
         mUserName.setEnabled(!isAuthenticated);
         mPassword.setEnabled(!isAuthenticated);
 
@@ -92,6 +93,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
         mGradePicker.setValue(AppDefaults.getSelectedGradeRow());
 
         setElementStates(AppDefaults.getSelectedGradeRow());
+        System.out.println(isAuthenticated + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         showCredentials();
 
         // Register listeners for all interactive components.
@@ -190,6 +192,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
      * @param forSelectedGradeVal - Currently selected grade index value.
      */
     private void setElementStates(int forSelectedGradeVal) {
+        System.out.println("?????????????????????????????????????????????" + forSelectedGradeVal);
         // If grade "None" is selected class picker also is set to None.
         if (forSelectedGradeVal == 0) {
             mClassPicker.setValue(0);
@@ -197,6 +200,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
 
             mClassPicker.setEnabled(false);
             mCoursesButton.setEnabled(false);
+            mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
         }
 
         // When user has selected EF, Q1 or Q2 set class picker view to "None" and disable.
@@ -206,8 +210,13 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             AppDefaults.setSelectedClassRow(0);
 
             mClassPicker.setEnabled(false);
-            mCoursesButton.setEnabled(true);
-            mCoursesButton.setBackgroundResource(R.drawable.button_default);
+            mCoursesButton.setEnabled(isAuthenticated);
+            if (isAuthenticated){
+                mCoursesButton.setBackgroundResource(R.drawable.button_default);
+            }else {
+                mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
+            }
+
         }
 
         // When a lower grade is selected disable "Meine Kurse" button and make sure
@@ -228,6 +237,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             mClassPicker.setValue(0);
             AppDefaults.setSelectedClassRow(0);
             mCoursesButton.setEnabled(false);
+            mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
         }
     }
 
@@ -306,9 +316,15 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             mLoginButton.setText(getResources().getString(R.string.button_logout));
 //            mLoginButton.setBackground(getResources().getDrawable(R.drawable.button_default_red));
             mLoginButton.setBackgroundResource(R.drawable.button_default_red);
+            AppDefaults.setAuthenticated(true);
+            isAuthenticated = true;
+            setElementStates(AppDefaults.getSelectedGradeRow());
         } else {
             mLoginButton.setText(getResources().getString(R.string.button_login));
             mLoginButton.setBackgroundResource(R.drawable.button_default);
+            AppDefaults.setAuthenticated(false);
+            isAuthenticated = false;
+            setElementStates(AppDefaults.getSelectedGradeRow());
         }
     }
 
