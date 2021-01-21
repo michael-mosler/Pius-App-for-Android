@@ -197,6 +197,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
 
             mClassPicker.setEnabled(false);
             mCoursesButton.setEnabled(false);
+            mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
         }
 
         // When user has selected EF, Q1 or Q2 set class picker view to "None" and disable.
@@ -205,7 +206,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             mClassPicker.setValue(0);
             AppDefaults.setSelectedClassRow(0);
 
-            mClassPicker.setEnabled(false);
+            mCoursesButton.setEnabled(false);
             mCoursesButton.setEnabled(isAuthenticated);
             if (isAuthenticated){
                 mCoursesButton.setBackgroundResource(R.drawable.button_default);
@@ -232,6 +233,7 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
             mClassPicker.setValue(0);
             AppDefaults.setSelectedClassRow(0);
             mCoursesButton.setEnabled(false);
+            mCoursesButton.setBackgroundResource(R.drawable.button_disabled);
         }
     }
 
