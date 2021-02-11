@@ -15,9 +15,11 @@ import java.util.ArrayList;
 public class StaffMember {
     private final String name;
     private final ArrayList<String> subjects;
+    private final String email;
 
     StaffMember(JSONObject fromJSON) throws JSONException {
         name = fromJSON.getString("name");
+        email = fromJSON.getString("email");
         subjects = new ArrayList<>();
         JSONArray jsonSubjects = fromJSON.getJSONArray("subjects");
         for (int i = 0; i < jsonSubjects.length(); i++) {
@@ -32,5 +34,9 @@ public class StaffMember {
 
     public ArrayList<String> getSubjects() {
         return subjects;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

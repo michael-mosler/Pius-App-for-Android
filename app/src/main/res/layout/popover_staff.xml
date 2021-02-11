@@ -40,5 +40,20 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             tools:text="Mathematik, Deutsch" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="0dp"
+            android:background="#969696" />
+
+        <TextView
+            android:id="@+id/popoverEmail"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            tools:text="x.name@example.com" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

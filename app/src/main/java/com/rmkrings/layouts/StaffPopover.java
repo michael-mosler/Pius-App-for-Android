@@ -70,6 +70,10 @@ public class StaffPopover {
         v1.setText(staffMember.getName());
         TextView v2 = inflatedView.findViewById(R.id.popoverSubjects);
         v2.setText(subjects);
+        TextView v3 = inflatedView.findViewById(R.id.popoverEmail);
+        String mail = "<a href=\"mailto:" + staffMember.getEmail() + "\">" + staffMember.getEmail() + "</a>";
+        v3.setText(mail);
+
 
         PopupWindow popupWindow = new PopupWindow(inflatedView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setFocusable(true);
