@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Pius-App-for-Android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Pius-App-for-Android.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java.Pius-App-for-Android.iml" filepath="$PROJECT_DIR$/.idea/modules/java.Pius-App-for-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Pius-App.iml" filepath="$PROJECT_DIR$/.idea/modules/Pius-App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Pius-App.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Pius-App.app.iml" />
     </modules>
   </component>
 </project>
