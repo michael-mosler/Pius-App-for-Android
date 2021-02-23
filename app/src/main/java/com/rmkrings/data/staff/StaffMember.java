@@ -21,12 +21,7 @@ public class StaffMember {
     StaffMember(JSONObject fromJSON) throws JSONException {
         name = fromJSON.getString("name");
         isTeacher = fromJSON.getBoolean(String.valueOf(isTeacher));
-        if (isTeacher){
-            email = fromJSON.getString("email");
-        }else{
-            //move to strings.xml
-            email = "Es ist keine Email vorhanden";
-        }
+        email = fromJSON.getString("email");
         subjects = new ArrayList<>();
         JSONArray jsonSubjects = fromJSON.getJSONArray("subjects");
         for (int i = 0; i < jsonSubjects.length(); i++) {
