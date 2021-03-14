@@ -20,9 +20,9 @@ public class StaffMember {
     StaffMember(JSONObject fromJSON) throws JSONException {
         name = fromJSON.getString("name");
         boolean isTeacher = fromJSON.optBoolean("isTeacher");
-        if(isTeacher){
+        if (isTeacher) {
             email = fromJSON.getString("email");
-        }else{
+        } else {
             email = null;
         }
         subjects = new ArrayList<>();
@@ -31,7 +31,7 @@ public class StaffMember {
             String subject = jsonSubjects.getString(i);
             subjects.add(subject);
         }
-     }
+    }
 
     public String getName() {
         return name;
