@@ -16,20 +16,22 @@ public class StaffMember {
     private final String name;
     private final ArrayList<String> subjects;
     private final String email;
-    private boolean isTeacher;
 
     StaffMember(JSONObject fromJSON) throws JSONException {
         name = fromJSON.getString("name");
-        isTeacher = fromJSON.getBoolean(String.valueOf(isTeacher));
-        email = fromJSON.getString("email");
+        boolean isTeacher = fromJSON.optBoolean("isTeacher");
+        if(isTeacher){
+            email = fromJSON.getString("email");
+        }else{
+            email = null;
+        }
         subjects = new ArrayList<>();
         JSONArray jsonSubjects = fromJSON.getJSONArray("subjects");
         for (int i = 0; i < jsonSubjects.length(); i++) {
             String subject = jsonSubjects.getString(i);
             subjects.add(subject);
         }
-        System.out.println(email + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    }
+     }
 
     public String getName() {
         return name;

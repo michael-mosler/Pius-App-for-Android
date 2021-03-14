@@ -21,19 +21,15 @@ public class StaffDictionary extends HashMap<String, StaffMember> {
         JSONObject jsonObject = new JSONObject(data);
         JSONObject jsonStaffDictionary = jsonObject.getJSONObject("staffDictionary");
 
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         Iterator<String> shortcutNamesIterator = jsonStaffDictionary.keys();
         while (shortcutNamesIterator.hasNext()) {
-            System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
             String shortcutName = shortcutNamesIterator.next();
             if (jsonStaffDictionary.get(shortcutName) instanceof JSONObject) {
                 JSONObject jsonStaffMember = jsonStaffDictionary.getJSONObject(shortcutName);
                 StaffMember staffMember = new StaffMember(jsonStaffMember);
                 this.put(shortcutName, staffMember);
-                System.out.println("cccccccccccccccccccccccccccccccccccccccc");
             }
-            System.out.println("dddddddddddddddddddddddddddddddddd");
         }
     }
 }
