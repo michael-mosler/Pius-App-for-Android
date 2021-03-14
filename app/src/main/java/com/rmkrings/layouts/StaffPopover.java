@@ -71,7 +71,7 @@ public class StaffPopover {
         TextView v2 = inflatedView.findViewById(R.id.popoverSubjects);
         v2.setText(subjects);
         TextView v3 = inflatedView.findViewById(R.id.popoverEmail);
-        String mail = staffMember.getEmail() != null ?  staffMember.getEmail() + "" : null;
+        String mail = staffMember.getEmail()                ;
         if (mail != null){
             v3.setText(mail);
         }else {
