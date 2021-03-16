@@ -33,7 +33,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/metadata"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:scrollbars="horizontal"
