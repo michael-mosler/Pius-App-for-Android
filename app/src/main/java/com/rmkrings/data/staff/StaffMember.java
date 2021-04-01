@@ -19,7 +19,7 @@ public class StaffMember {
 
     StaffMember(JSONObject fromJSON) throws JSONException {
         name = fromJSON.getString("name");
-email = fromJSON.optBoolean("isTeacher") ? fromJSON.getString("email") : null;
+        email = fromJSON.optBoolean("isTeacher") ? fromJSON.getString("email") : null;
         subjects = new ArrayList<>();
         JSONArray jsonSubjects = fromJSON.getJSONArray("subjects");
         for (int i = 0; i < jsonSubjects.length(); i++) {

@@ -21,7 +21,6 @@ public class StaffDictionary extends HashMap<String, StaffMember> {
         JSONObject jsonObject = new JSONObject(data);
         JSONObject jsonStaffDictionary = jsonObject.getJSONObject("staffDictionary");
 
-
         Iterator<String> shortcutNamesIterator = jsonStaffDictionary.keys();
         while (shortcutNamesIterator.hasNext()) {
             String shortcutName = shortcutNamesIterator.next();
