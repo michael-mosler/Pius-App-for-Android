@@ -30,6 +30,10 @@
 
             android:orientation="vertical">
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="4dp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/metadata"
                 android:layout_width="match_parent"
@@ -43,7 +47,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="8dp" />
+                android:layout_height="4dp" />
 
             <View
                 android:layout_width="match_parent"
