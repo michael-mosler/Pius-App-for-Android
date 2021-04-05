@@ -14,7 +14,6 @@ import com.rmkrings.data.staff.StaffDictionary;
 import com.rmkrings.data.staff.StaffMember;
 import com.rmkrings.loader.StaffLoader;
 
-
 /**
  * Popover which shows information on substiting teacher.
  */
