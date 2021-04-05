@@ -79,7 +79,6 @@ public class StaffPopover {
             v3.setVisibility(View.GONE);
         }
 
-
         PopupWindow popupWindow = new PopupWindow(inflatedView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
