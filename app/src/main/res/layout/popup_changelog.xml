@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_description_white_36dp"
-            android:contentDescription="@string/title_whats_new" />
+            android:contentDescription="@string/title_whats_new"
+            android:src="@drawable/ic_description_white_36dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,16 +42,17 @@
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_weight="0"
             android:contentDescription="@string/title_dashboard"
-            android:src="@drawable/ic_touch_app_black_36dp" />
+            android:src="@drawable/ic_pencil_blue" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,6 +63,78 @@
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:text="@string/welcome_new_1"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:contentDescription="@string/title_dashboard"
+            android:src="@drawable/ic_envelope_fill" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:text="@string/welcome_new_2"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:contentDescription="@string/title_dashboard"
+            android:src="@drawable/ic_palette_fill" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:text="@string/welcome_new_3"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:contentDescription="@string/title_dashboard"
+            android:src="@drawable/ic_bug_fill" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:text="@string/welcome_new_4"
             android:textSize="16sp" />
     </LinearLayout>
 

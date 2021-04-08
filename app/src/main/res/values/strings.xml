@@ -7,8 +7,11 @@
     <string name="button_welcome_start">Jetzt loslegen</string>
     <string name="button_confirm">Verstanden</string>
 
-    <string name="welcome_new_in_version">Neu in der Version 1.6.0:</string>
-    <string name="welcome_new_1">Drücke auf der Heute-Seite, im Dashboard oder Vertretungsplan <b>lange auf ein Lehrerkürzel</b>, um Dir den Namen des Lehrers anzeigen zu lassen.</string>
+    <string name="welcome_new_in_version">Neu in der Version 1.7.0:</string>
+    <string name="welcome_new_1">Beim Login wird nun Autofill unterstützt.</string>
+    <string name="welcome_new_2">Im Lehrer-Popup wird nun die E-Mail-Adresse angezeigt.</string>
+    <string name="welcome_new_3">Teile der App haben ein neues, moderneres Design bekommen.</string>
+    <string name="welcome_new_4">Wir haben behoben, dass Einträge in der Kursliste nicht mehr doppelt angezeigt werden.</string>
     <string name="welcome_title_overview">Funktionen im Überblick:</string>
     <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
     <string name="welcome_function_vertretungsplan">Greife mit der App ganz einfach auf den gesamten aktuellen Vertretungsplan zu.</string>
@@ -44,6 +47,7 @@
         \nUnter https://github.com/michael-mosler/Pius-App-for-Android findest Du weitere Infos zur App.
         Informationen zu unserer Datenschutzrichtlinie findest Du unter https://github.com/michael-mosler/Pius-App-for-Android/wiki/Datenschutzrichtlinie.
         \n\nWir verwenden Picasso (https://square.github.io/picasso/) für das Laden, Caching und Anzeigen von Bildern.
+        \n\nManche Icons in der App sind von Bootstrap (https://icons.getbootstrap.com)
     </string>
 
     <string name="label_grade">Jahrgangsstufe</string>
