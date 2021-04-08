@@ -69,6 +69,7 @@
     <string name="text_empty_schedule">Heute hast Du keinen Vertretungsunterricht.</string>
     <string name="text_empty_future_schedule">In den nächsten Tagen hast Du keinen Vertretungsunterricht.</string>
     <string name="text_no_eva">Du hast im Moment keine EVA-Aufträge.</string>
+    <string name="text_empty_ticker">Gerade ist keine Nachricht auf dem Ticker vorhanden.</string>
     <string name="text_confirm_logout">Möchtest Du dich wirklich abmelden?</string>
 
     <string name="text_intro">
