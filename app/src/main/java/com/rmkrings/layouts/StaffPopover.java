@@ -14,7 +14,6 @@ import com.rmkrings.data.staff.StaffDictionary;
 import com.rmkrings.data.staff.StaffMember;
 import com.rmkrings.loader.StaffLoader;
 
-
 /**
  * Popover which shows information on substiting teacher.
  */
@@ -27,8 +26,9 @@ public class StaffPopover {
      * Creates a new staff helper popover which displays information on
      * a teacher who is identified by shortname in substitution schedule. Opens
      * on long touch gesture.
-     * @param context - Context to open popover in.
-     * @param onView - View on which popover shall be shown.
+     *
+     * @param context                 - Context to open popover in.
+     * @param onView                  - View on which popover shall be shown.
      * @param staffMemberShortcutName - Shortname to decode in popover.
      */
     public StaffPopover(Context context, View onView, String staffMemberShortcutName) {
@@ -56,20 +56,27 @@ public class StaffPopover {
         } else {
             String delimiter = "";
             subjects = "";
-            for (String s: staffMember.getSubjects()) {
-               subjects = subjects.concat(delimiter).concat(s);
-               delimiter = ", ";
+            for (String s : staffMember.getSubjects()) {
+                subjects = subjects.concat(delimiter).concat(s);
+                delimiter = ", ";
             }
         }
 
-        LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View inflatedView = layoutInflater.inflate(R.layout.popover_staff, (ViewGroup)view.getParent(),false);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View inflatedView = layoutInflater.inflate(R.layout.popover_staff, (ViewGroup) view.getParent(), false);
         // setContentView(inflatedView);
 
         TextView v1 = inflatedView.findViewById(R.id.popoverShortcutName);
         v1.setText(staffMember.getName());
         TextView v2 = inflatedView.findViewById(R.id.popoverSubjects);
         v2.setText(subjects);
+        TextView v3 = inflatedView.findViewById(R.id.popoverEmail);
+        String mail = staffMember.getEmail();
+        if (mail != null) {
+            v3.setText(mail);
+        } else {
+            v3.setVisibility(View.GONE);
+        }
 
         PopupWindow popupWindow = new PopupWindow(inflatedView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setFocusable(true);
