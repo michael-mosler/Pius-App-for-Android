@@ -49,4 +49,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
         return super.getPageTitle(position);
     }
+
+    /**
+     * Gets all managed fragments.
+     * @return Array of embedded fragments.
+     */
+    public Fragment[] getFragments() {
+        return new Fragment[]{ mGeneralPreferencesFragment, mAboutPreferencesFragment };
+    }
 }
