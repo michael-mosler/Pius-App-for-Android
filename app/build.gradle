@@ -11,7 +11,7 @@ android {
         applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 12
+        versionCode 13
         versionName "1.7.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
