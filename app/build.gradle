@@ -9,7 +9,7 @@ android {
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.rmkrings.pius_app_for_android"
-        minSdkVersion 27
+        minSdkVersion 25
         targetSdkVersion 30
         versionCode 12
         versionName "1.7.0"
