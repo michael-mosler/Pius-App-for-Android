@@ -76,6 +76,7 @@ public class StaffPopover {
             v3.setText(mail);
         } else {
             v3.setVisibility(View.GONE);
+            inflatedView.findViewById(R.id.popoverEmailLine).setVisibility(View.GONE);
         }
 
         PopupWindow popupWindow = new PopupWindow(inflatedView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
