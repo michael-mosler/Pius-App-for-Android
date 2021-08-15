@@ -215,8 +215,12 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
 
     private void setMetaData() {
         if (vertretungsplan != null) {
-            this.metaData[0] = vertretungsplan.getTickerText();
-            this.metaData[1] = vertretungsplan.getAdditionalText();
+            if ((vertretungsplan.getAdditionalText().length() + vertretungsplan.getTickerText().length()) < 200){
+                this.metaData[0] = vertretungsplan.getTickerText() + "\n" + vertretungsplan.getAdditionalText();
+            }else {
+                this.metaData[0] = vertretungsplan.getTickerText();
+                this.metaData[1] = vertretungsplan.getAdditionalText();
+            }
             mMetaDataAdapter.notifyDataSetChanged();
         }
     }
