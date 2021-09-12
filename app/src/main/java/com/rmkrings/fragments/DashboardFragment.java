@@ -116,7 +116,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mMetaData.setAdapter(mMetaDataAdapter);
 
         // Prepare list data
-        mDashboardListAdapter = new DashboardListAdapter(pius_app_for_android.getAppContext(), listDataHeader, listDataChild);
+        mDashboardListAdapter = new DashboardListAdapter(getActivity(), listDataHeader, listDataChild);
         mDashboardListView.setAdapter(mDashboardListAdapter);
 
         mEvaButton = view.findViewById(R.id.evaButton);
