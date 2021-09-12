@@ -116,7 +116,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mMetaData.setAdapter(mMetaDataAdapter);
 
         // Prepare list data
-        mDashboardListAdapter = new DashboardListAdapter(pius_app_for_android.getAppContext(), listDataHeader, listDataChild);
+        mDashboardListAdapter = new DashboardListAdapter(getActivity(), listDataHeader, listDataChild);
         mDashboardListView.setAdapter(mDashboardListAdapter);
 
         mEvaButton = view.findViewById(R.id.evaButton);
@@ -215,8 +215,12 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
 
     private void setMetaData() {
         if (vertretungsplan != null) {
-            this.metaData[0] = vertretungsplan.getTickerText();
-            this.metaData[1] = vertretungsplan.getAdditionalText();
+            if ((vertretungsplan.getAdditionalText().length() + vertretungsplan.getTickerText().length()) < 200){
+                this.metaData[0] = vertretungsplan.getTickerText() + "\n" + vertretungsplan.getAdditionalText();
+            }else {
+                this.metaData[0] = vertretungsplan.getTickerText();
+                this.metaData[1] = vertretungsplan.getAdditionalText();
+            }
             mMetaDataAdapter.notifyDataSetChanged();
         }
     }
