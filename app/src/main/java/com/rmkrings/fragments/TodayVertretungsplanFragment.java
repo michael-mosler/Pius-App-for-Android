@@ -24,10 +24,8 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.activities.R;
-import com.rmkrings.pius_app_for_android;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class TodayVertretungsplanFragment extends Fragment {
@@ -46,7 +44,7 @@ public class TodayVertretungsplanFragment extends Fragment {
         // Outlets
         RecyclerView mItemList = view.findViewById(R.id.itemlist);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mItemList.setLayoutManager(mLayoutManager);
         mVertetungsplanDetailListAdapter = new VertetungsplanDetailListAdapter(listItems);
         mItemList.setAdapter(mVertetungsplanDetailListAdapter);
@@ -65,29 +63,32 @@ public class TodayVertretungsplanFragment extends Fragment {
     }
 
     public void show(String message, ParentFragment parentFragment) {
-        if (getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
-            Objects.requireNonNull(getFragmentManager())
+        if (getParentFragmentManager() != null && !getParentFragmentManager().isStateSaved()) {
+            getParentFragmentManager()
                     .beginTransaction()
                     .show(this)
                     .commit();
 
+            mVertetungsplanDetailListAdapter.notifyItemRangeRemoved(0, listItems.size());
             listItems.clear();
             listItems.add(new MessageItem(message, Gravity.CENTER));
-            mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+            mVertetungsplanDetailListAdapter.notifyItemInserted(0);
 
             parentFragment.notifyDoneRefreshing();
         }
     }
 
     public void show(@Nullable Vertretungsplan vertretungsplan, ParentFragment parentFragment) {
-        if (getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
+        mVertetungsplanDetailListAdapter.notifyItemRangeRemoved(0, listItems.size());
+
+        if (getParentFragmentManager() != null && !getParentFragmentManager().isStateSaved()) {
             if (vertretungsplan == null) {
-                Objects.requireNonNull(getFragmentManager())
+                getParentFragmentManager()
                         .beginTransaction()
                         .hide(this)
                         .commit();
             } else {
-                Objects.requireNonNull(getFragmentManager())
+                getParentFragmentManager()
                         .beginTransaction()
                         .show(this)
                         .commit();
@@ -134,7 +135,7 @@ public class TodayVertretungsplanFragment extends Fragment {
                     return;
                 }
 
-                mVertetungsplanDetailListAdapter.notifyDataSetChanged();
+                mVertetungsplanDetailListAdapter.notifyItemRangeInserted(0, listItems.size());
             }
             parentFragment.notifyDoneRefreshing();
         }

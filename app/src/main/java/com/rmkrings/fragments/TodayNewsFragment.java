@@ -62,7 +62,7 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView mNewsList = view.findViewById(R.id.newslist);
-        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         mNewsList.setLayoutManager(mVerticalLayoutManager);
         mNewsList.setClickable(false);
@@ -89,19 +89,21 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
     }
 
     private void setNewsList() {
+        mNewsListAdapter.notifyItemRangeRemoved(0, newsItemList.size());
         newsItemList.clear();
         for (NewsItem newsItem : newsItems.getNewsItems()) {
             newsItemList.add(new NewsListItem(newsItem));
         }
 
-        mNewsListAdapter.notifyDataSetChanged();
+        mNewsListAdapter.notifyItemRangeInserted(0, newsItemList.size());
         parentFragment.notifyDoneRefreshing();
     }
 
     private void setMessage(String message) {
+        mNewsListAdapter.notifyItemRangeRemoved(0, newsItemList.size());
         newsItemList.clear();
         newsItemList.add(new MessageItem(message, Gravity.CENTER));
-        mNewsListAdapter.notifyDataSetChanged();
+        mNewsListAdapter.notifyItemInserted(0);
         parentFragment.notifyDoneRefreshing();
     }
 

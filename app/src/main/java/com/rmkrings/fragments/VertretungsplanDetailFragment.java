@@ -21,10 +21,8 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
 import com.rmkrings.activities.R;
-import com.rmkrings.pius_app_for_android;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static androidx.recyclerview.widget.RecyclerView.*;
 
@@ -76,7 +74,7 @@ public class VertretungsplanDetailFragment extends Fragment {
         RecyclerView mList = view.findViewById(R.id.detaillist);
         mDate = view.findViewById(R.id.date);
 
-        LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mList.setLayoutManager(mLayoutManager);
         mAdapter = new VertetungsplanDetailListAdapter(list);
         mList.setAdapter(mAdapter);
@@ -98,14 +96,15 @@ public class VertretungsplanDetailFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Objects.requireNonNull(getActivity()).setTitle(gradeItem.getGrade());
+        requireActivity().setTitle(gradeItem.getGrade());
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(1).setChecked(true);
 
+        mAdapter.notifyItemRangeRemoved(0, list.size());
         prepareVertretungsplanItems(list);
 
         mDate.setText(date);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemRangeInserted(0, list.size());
     }
 
     /**

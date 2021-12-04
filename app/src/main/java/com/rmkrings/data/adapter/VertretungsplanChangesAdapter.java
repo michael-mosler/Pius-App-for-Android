@@ -3,6 +3,7 @@ package com.rmkrings.data.adapter;
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -111,7 +112,7 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
                         (headerItem.getCourse().length() > 0)
                                 ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
                                 : String.format("%s. Stunde", headerItem.getLesson()));
-                ((VertretungsplanChangesAdapter.TextViewHolder)holder).textView.setBackgroundColor(pius_app_for_android.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
+                ((VertretungsplanChangesAdapter.TextViewHolder)holder).textView.setBackgroundColor(ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorPiusLightBlue));
                 break;
             }
 
@@ -123,21 +124,21 @@ public class VertretungsplanChangesAdapter extends RecyclerView.Adapter<Recycler
                 int fgndColor;
                 switch(changeTypeItem.getChangeType()) {
                     case "CHANGED": {
-                        bgndColor = pius_app_for_android.getAppContext().getResources().getColor(R.color.colorChanged);
+                        bgndColor = ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorChanged);
                         fgndColor = Color.BLACK;
                         readableChangeType = pius_app_for_android.getAppContext().getResources().getString(R.string.label_changed);
                         break;
                     }
 
                     case "DELETED": {
-                        bgndColor = pius_app_for_android.getAppContext().getResources().getColor(R.color.colorDeleted);
+                        bgndColor = ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorDeleted);
                         fgndColor = Color.WHITE;
                         readableChangeType = pius_app_for_android.getAppContext().getResources().getString(R.string.label_deleted);
                         break;
                     }
 
                     default: {
-                        bgndColor = pius_app_for_android.getAppContext().getResources().getColor(R.color.colorAdded);
+                        bgndColor = ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorAdded);
                         fgndColor = Color.BLACK;
                         readableChangeType = pius_app_for_android.getAppContext().getResources().getString(R.string.label_added);
                     }

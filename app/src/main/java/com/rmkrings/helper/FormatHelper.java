@@ -1,13 +1,15 @@
 package com.rmkrings.helper;
 
 import android.graphics.Point;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 
 import com.rmkrings.pius_app_for_android;
 import com.rmkrings.activities.R;
@@ -51,7 +53,7 @@ public class FormatHelper {
             s = String.format("<strike>%s</strike>%s", s.substring(0, pos - 1), s.substring(pos));
         }
 
-        return Html.fromHtml(s);
+        return HtmlCompat.fromHtml(s, HtmlCompat.FROM_HTML_MODE_LEGACY);
     }
 
     /**
@@ -68,7 +70,7 @@ public class FormatHelper {
         Spannable spannable = (Spannable)text;
         for (Point span: spans) {
             spannable.setSpan(
-                    new BackgroundColorSpan(pius_app_for_android.getAppContext().getResources().getColor(R.color.colorHighlight)),
+                    new BackgroundColorSpan(ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorHighlight)),
                     span.x, span.y, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }

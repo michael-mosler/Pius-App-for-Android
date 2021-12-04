@@ -1,7 +1,6 @@
 package com.rmkrings.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,7 +30,6 @@ import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.EvaLoader;
 import com.rmkrings.activities.R;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
@@ -68,7 +66,7 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
 
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mEvaList = view.findViewById(R.id.evaList);
-        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mEvaList.setLayoutManager(mVerticalLayoutManager);
         mEvaListAdapter = new EvaListAdapter(evaList);
         mEvaList.setAdapter(mEvaListAdapter);
@@ -84,7 +82,7 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
     @Override
     public void onResume() {
         super.onResume();
-        Objects.requireNonNull(getActivity()).setTitle(getResources().getString(R.string.title_eva));
+        requireActivity().setTitle(getResources().getString(R.string.title_eva));
         reload();
     }
 
@@ -92,10 +90,12 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
      * Update EVA list in EVA list adapter by recreating private evaList property.
      */
     private void setEvaList() {
+        mEvaListAdapter.notifyItemRangeRemoved(0, evaList.size());
         evaList.clear();
 
         if (eva.getDates().size() == 0) {
             evaList.add(new MessageItem(getResources().getString(R.string.text_no_eva), Gravity.CENTER));
+            mEvaListAdapter.notifyItemInserted(0);
         } else {
             for (String date : eva.getDates()) {
                 evaList.add(new EvaDateItem(date));
@@ -104,9 +104,9 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
                     evaList.add(new MessageItem(evaItem.getEvaText()));
                 }
             }
-        }
 
-        mEvaListAdapter.notifyDataSetChanged();
+            mEvaListAdapter.notifyItemRangeInserted(0, evaList.size());
+        }
     }
 
     /**
@@ -151,15 +151,12 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
             if (getActivity() != null && !getActivity().isFinishing()) {
-                new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                         .setTitle(getResources().getString(R.string.title_eva))
                         .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
-                                }
+                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                            if (getParentFragmentManager() != null) {
+                                getParentFragmentManager().popBackStack();
                             }
                         })
                         .show();

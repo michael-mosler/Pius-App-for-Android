@@ -9,23 +9,21 @@ import com.rmkrings.helper.Reachability;
 import com.rmkrings.notifications.PiusAppMessageService;
 
 public class pius_app_for_android extends Application {
-    private static pius_app_for_android self;
-
-    public pius_app_for_android() {
-        self = this;
-    }
+    private static pius_app_for_android instance;
 
     public void onCreate() {
-        super.onCreate();
-        registerReceiver(Reachability.getInstance(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        instance = this;
 
+        super.onCreate();
+
+        registerReceiver(Reachability.getInstance(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         PiusAppMessageService piusAppMessageService = new PiusAppMessageService();
         piusAppMessageService.updateDeviceToken();
     }
 
     public static Context getAppContext() {
-        return self;
+        return instance;
     }
 
-    public static String getAppPackageName() { return self.getPackageName(); }
+    public static String getAppPackageName() { return instance.getPackageName(); }
 }

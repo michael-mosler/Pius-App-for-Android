@@ -1,6 +1,7 @@
 package com.rmkrings.data.adapter;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public class EvaListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case EvaListItem.evaCourseItem: {
                 EvaCourseItem evaCourseItem = (EvaCourseItem)list.get(position);
                 ((TextViewHolder)holder).textView.setText(evaCourseItem.getCourse());
-                ((TextViewHolder)holder).textView.setBackgroundColor(pius_app_for_android.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
+                ((TextViewHolder)holder).textView.setBackgroundColor(ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorPiusLightBlue));
                 break;
             }
 

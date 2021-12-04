@@ -25,12 +25,10 @@ import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.activities.R;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -65,14 +63,14 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView mDateList = view.findViewById(R.id.datelist);
-        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         mDateList.setLayoutManager(mVerticalLayoutManager);
         mDateList.addItemDecoration(new DividerItemDecoration(mDateList.getContext(), DividerItemDecoration.VERTICAL));
         mCalendarSearchListAdapter = new CalendarSearchListAdapter(dateList);
         mDateList.setAdapter(mCalendarSearchListAdapter);
 
-        Objects.requireNonNull(getFragmentManager())
+        getParentFragmentManager()
                 .beginTransaction()
                 .hide(this)
                 .commit();
@@ -105,18 +103,19 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
      * hidden. Otherwise it is shown and date list is refreshed.
      */
     private void setDateList() {
-        if (isAdded() && getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
+        if (isAdded() && getParentFragmentManager() != null && !getParentFragmentManager().isStateSaved()) {
             ArrayList<DayItem> list = calendar.getTodayEvents();
 
             // Nothing in calendar for today. Hide calendar fragment.
             if (list.size() == 0) {
-                Objects.requireNonNull(getFragmentManager())
+                getParentFragmentManager()
                         .beginTransaction()
                         .hide(this)
                         .commit();
             } else {
+                mCalendarSearchListAdapter.notifyItemRangeRemoved(0, dateList.size());
                 // Show calendar fragment and add content.
-                Objects.requireNonNull(getFragmentManager())
+                getParentFragmentManager()
                         .beginTransaction()
                         .show(this)
                         .commit();
@@ -125,7 +124,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
                 for (DayItem dayItem : calendar.getTodayEvents()) {
                     dateList.add(new CalendarMessage(dayItem.getEvent()));
                 }
-                mCalendarSearchListAdapter.notifyDataSetChanged();
+                mCalendarSearchListAdapter.notifyItemRangeInserted(0, dateList.size());
             }
 
             parentFragment.notifyDoneRefreshing();
@@ -137,14 +136,15 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
      * @param message - The message to display.
      */
     private void setMessage(String message) {
-        Objects.requireNonNull(getFragmentManager())
+        mCalendarSearchListAdapter.notifyItemRangeRemoved(0, dateList.size());
+        getParentFragmentManager()
                 .beginTransaction()
                 .show(this)
                 .commit();
 
         dateList.clear();
         dateList.add(new CalendarMessage(message, Gravity.CENTER));
-        mCalendarSearchListAdapter.notifyDataSetChanged();
+        mCalendarSearchListAdapter.notifyItemInserted(0);
         parentFragment.notifyDoneRefreshing();
     }
 

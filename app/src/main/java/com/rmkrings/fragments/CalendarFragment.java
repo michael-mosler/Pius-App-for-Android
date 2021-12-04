@@ -2,7 +2,6 @@ package com.rmkrings.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +37,6 @@ import com.rmkrings.pius_app_for_android;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -78,7 +76,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         mProgressBar = view.findViewById(R.id.progressBar);
         RecyclerView mMonthList = view.findViewById(R.id.monthlist);
         RecyclerView mDateList = view.findViewById(R.id.datelist);
-        RecyclerView.LayoutManager mHorizontalLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mHorizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
 
         mMonthList.setHasFixedSize(true);
@@ -92,14 +90,11 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         mDateList.setAdapter(mCalendarDateListAdapter);
 
         ImageButton mSearchButton = view.findViewById(R.id.searchbutton);
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayout, CalendarSearchFragment.newInstance(calendar));
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        mSearchButton.setOnClickListener(v -> {
+            FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayout, CalendarSearchFragment.newInstance(calendar));
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
     }
 
@@ -119,13 +114,14 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     @Override
     public void onResume() {
         super.onResume();
-        Objects.requireNonNull(getActivity()).setTitle(R.string.title_calendar);
+        requireActivity().setTitle(R.string.title_calendar);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(3).setChecked(true);
 
         reload();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void setMonthList() {
         monthList.clear();
         for (MonthItem monthItem: calendar.getMonthItems()) {
@@ -136,13 +132,15 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     }
 
     private void setDateList(String monthName) {
+        mCalendarDateListAdapter.notifyItemRangeRemoved(0, dateList.size());
+
         dateList.clear();
         MonthItem monthItem = calendar.getMonthItem(monthName);
         if (monthItem != null) {
             dateList.addAll(monthItem.getDayItems());
         }
 
-        mCalendarDateListAdapter.notifyDataSetChanged();
+        mCalendarDateListAdapter.notifyItemRangeInserted(0, dateList.size());
     }
 
     private void reload() {
@@ -169,15 +167,12 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
 
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+            new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_calendar))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (getFragmentManager() != null) {
-                                getFragmentManager().popBackStack();
-                            }
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        if (getParentFragmentManager() != null) {
+                            getParentFragmentManager().popBackStack();
                         }
                     })
                     .show();
@@ -202,15 +197,12 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             setMonthList();
         } catch (Exception e) {
             e.printStackTrace();
-            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+            new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_calendar))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (getFragmentManager() != null) {
-                                getFragmentManager().popBackStack();
-                            }
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        if (getParentFragmentManager() != null) {
+                            getParentFragmentManager().popBackStack();
                         }
                     })
                     .show();

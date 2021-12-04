@@ -26,7 +26,6 @@ import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.PostingsLoader;
 import com.rmkrings.activities.R;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
@@ -59,14 +58,14 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView mPostings = view.findViewById(R.id.postinglist);
-        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         mPostings.setLayoutManager(mVerticalLayoutManager);
         mPostings.addItemDecoration(new DividerItemDecoration(mPostings.getContext(), DividerItemDecoration.VERTICAL));
         mPostingsAdapter = new PostingsAdapter(itemlist);
         mPostings.setAdapter(mPostingsAdapter);
 
-        Objects.requireNonNull(getFragmentManager())
+        getParentFragmentManager()
                 .beginTransaction()
                 .hide(this)
                 .commit();
@@ -99,9 +98,10 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     }
 
     private void show(String message, ParentFragment parentFragment) {
+        mPostingsAdapter.notifyItemRangeRemoved(0, itemlist.size());
         itemlist.clear();
         itemlist.add(new MessageItem(message, Gravity.CENTER));
-        mPostingsAdapter.notifyDataSetChanged();
+        mPostingsAdapter.notifyItemInserted(0);
         parentFragment.notifyDoneRefreshing();
     }
 
@@ -111,20 +111,21 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     }
 
     private void setPostings() {
-        if (isAdded() && getFragmentManager() != null && !getFragmentManager().isStateSaved()) {
+        if (isAdded() && getParentFragmentManager() != null && !getParentFragmentManager().isStateSaved()) {
             if (postings.getPostings() != null && postings.getPostings().size() == 0) {
-                Objects.requireNonNull(getFragmentManager())
+                getParentFragmentManager()
                         .beginTransaction()
                         .hide(this)
                         .commit();
             } else {
-                Objects.requireNonNull(getFragmentManager())
+                getParentFragmentManager()
                         .beginTransaction()
                         .show(this)
                         .commit();
+                mPostingsAdapter.notifyItemRangeRemoved(0, itemlist.size());
                 itemlist.clear();
                 itemlist.addAll(Objects.requireNonNull(postings.getPostings()));
-                mPostingsAdapter.notifyDataSetChanged();
+                mPostingsAdapter.notifyItemRangeInserted(0, itemlist.size());
             }
             parentFragment.notifyDoneRefreshing();
         }

@@ -6,11 +6,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 25
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 14
         versionName "1.7.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

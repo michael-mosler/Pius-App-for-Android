@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.rmkrings.data.vertretungsplan.VertretungsplanDetailItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanEvaItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
@@ -112,7 +114,7 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
                         (headerItem.getCourse().length() > 0)
                                 ? String.format("Fach/Kurs: %s, %s. Stunde", StringHelper.replaceHtmlEntities(headerItem.getCourse()), headerItem.getLesson())
                                 : String.format("%s. Stunde", headerItem.getLesson()));
-                tv.setBackgroundColor(pius_app_for_android.getAppContext().getResources().getColor(R.color.colorPiusLightBlue));
+                tv.setBackgroundColor(ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorPiusLightBlue));
                 break;
             }
 
@@ -132,13 +134,10 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
                 teacher.setText(detailItem.getTeacher());
 
                 teacher.setOnLongClickListener(
-                        new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
-                                StaffPopover staffPopover = new StaffPopover(context, teacher, detailItem.getTeacher());
-                                staffPopover.show();
-                                return false;
-                            }
+                        v -> {
+                            StaffPopover staffPopover = new StaffPopover(context, teacher, detailItem.getTeacher());
+                            staffPopover.show();
+                            return false;
                         }
                 );
                 break;
