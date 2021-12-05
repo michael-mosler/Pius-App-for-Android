@@ -1,10 +1,8 @@
 package com.rmkrings.loader;
 
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.rmkrings.helper.AppDefaults;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONArray;
 import org.json.JSONException;

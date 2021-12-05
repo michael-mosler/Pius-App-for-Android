@@ -1,9 +1,6 @@
 package com.rmkrings.helper;
 
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-
-import com.rmkrings.pius_app_for_android;
 
 import java.util.Arrays;
 

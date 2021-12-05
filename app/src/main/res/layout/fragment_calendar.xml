@@ -7,8 +7,65 @@
     tools:context="com.rmkrings.fragments.CalendarFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/searchbutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="end"
+                android:background="@android:color/white"
+                android:contentDescription="@string/label_search"
+                android:paddingStart="4dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="4dp"
+                android:src="@drawable/ic_search"
+                app:tint="@color/colorPiusBlue" />
+
+            <com.kizitonwose.calendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cv_dayViewResource="@layout/calendar_day_layout"
+                app:cv_monthHeaderResource="@layout/calendar_month_header_layout">
+
+            </com.kizitonwose.calendarview.CalendarView>
+            <!--
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchbutton" />
+            -->
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="?android:attr/listDivider"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/eventList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -16,18 +73,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="@id/linearLayout2"
+            app:layout_constraintStart_toStartOf="@id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout2"
             tools:visibility="visible" />
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
             android:orientation="vertical"
-            android:paddingTop="8dp">
+            android:paddingTop="8dp"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +106,7 @@
                     android:scrollbars="horizontal"
                     tools:itemCount="5"
                     tools:layoutManager="GridLayout"
-                    tools:listitem="@layout/month__selector_item">
+                    tools:listitem="@layout/month_selector_item">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -57,30 +116,7 @@
                     android:layout_weight="0"
                     android:background="?android:attr/listDivider" />
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:background="@android:color/white">
-
-                    <ImageButton
-                        android:id="@+id/searchbutton"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@android:color/white"
-                        android:contentDescription="@string/label_search"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp"
-                        android:src="@drawable/ic_search"
-                        android:tint="@color/colorPiusBlue" />
-                </FrameLayout>
-
             </LinearLayout>
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="8dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/datelist"
