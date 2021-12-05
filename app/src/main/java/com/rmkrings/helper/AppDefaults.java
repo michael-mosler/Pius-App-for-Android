@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.rmkrings.pius_app_for_android;
 
 import java.util.ArrayList;
@@ -23,11 +24,51 @@ public class AppDefaults {
         return edit;
     }
 
+    /**
+     * Gets ApplicationInfo object.
+     * @return ApplicationInfo object for this app.
+     * @throws PackageManager.NameNotFoundException When package name not found
+     */
+    public static ApplicationInfo getApplicationInfo() throws PackageManager.NameNotFoundException {
+        return pius_app_for_android
+                .getAppContext()
+                .getPackageManager()
+                .getApplicationInfo(
+                        pius_app_for_android.getAppPackageName(), PackageManager.GET_META_DATA
+                );
+    }
 
+    /**
+     * Gets application parameter value from build variant setting.
+     * @param key Parameter name
+     * @return Parameter value
+     * @throws PackageManager.NameNotFoundException When package name was not found while getting parameter.
+     */
+    public static String getApplicationParameter(String key) throws PackageManager.NameNotFoundException {
+        ApplicationInfo ai = getApplicationInfo();
+        return (String)ai.metaData.get(key);
+    }
+
+    /**
+     * Gets application base URL. This first checks remote config. When URL is found in there
+     * it is returned. As a fallback build in address is used.
+     * @return Apps backend base URL.
+     */
     public static String getBaseUrl() {
         try {
-            ApplicationInfo ai = pius_app_for_android.getAppContext().getPackageManager().getApplicationInfo(pius_app_for_android.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
-            return (String)ai.metaData.get("host");
+            // First try to get backend address from Remote Config.
+            // If not found use app pre-configured default.
+            final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+            final String backendAddress = firebaseRemoteConfig
+                    .getString(
+                            getApplicationParameter("remoteConfigHostParam")
+                    );
+
+            if (backendAddress == null || backendAddress.equals("")) {
+                return getApplicationParameter("host");
+            }
+
+            return backendAddress;
         }
         catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

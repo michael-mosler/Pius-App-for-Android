@@ -50,6 +50,9 @@
         <meta-data
             android:name="alwaysShowStaffHelperPopover"
             android:value="${alwaysShowStaffHelperPopover}" />
+        <meta-data
+            android:name="remoteConfigHostParam"
+            android:value="${remoteConfigHostParam}" />
 
         <activity android:name=".WebViewActivity" />
         <activity android:name=".PreferencesActivity" />

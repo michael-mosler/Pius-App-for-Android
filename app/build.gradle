@@ -20,13 +20,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: false]
+            manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: false, remoteConfigHostParam: 'gatewayAddress']
         }
         debug {
-            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: false]
+            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: false, remoteConfigHostParam: 'gatewayAddressDev']
         }
         localhost {
-            manifestPlaceholders = [host: 'http://localhost:3000', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: true]
+            manifestPlaceholders = [host: 'http://localhost:3000', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: true, remoteConfigHostParam: 'gatewayAddressLocalhost']
             signingConfig signingConfigs.debug
             debuggable = true
         }
@@ -48,8 +48,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     //noinspection GradleDependency
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
-    implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-config'
+    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-config:21.0.1'
     implementation 'com.github.cdflynn:checkview:v1.1'
 }
 
