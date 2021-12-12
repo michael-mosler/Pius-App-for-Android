@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +34,10 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder;
 import com.rmkrings.data.adapter.CalendarDateListAdapter;
 import com.rmkrings.data.calendar.Calendar;
 import com.rmkrings.data.calendar.DayItem;
-import com.rmkrings.data.calendar.MonthItem;
 import com.rmkrings.fragments.calendar.CalendarViewContainer;
 import com.rmkrings.fragments.calendar.DayViewContainer;
 import com.rmkrings.fragments.calendar.MonthViewContainer;
 import com.rmkrings.helper.Config;
-import com.rmkrings.interfaces.ViewSelectedCallback;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
@@ -54,20 +54,19 @@ import java.time.ZonedDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  */
-public class CalendarFragment extends Fragment implements HttpResponseCallback, CalendarViewContainer, ViewSelectedCallback {
+public class CalendarFragment extends Fragment implements HttpResponseCallback, CalendarViewContainer {
 
     private ProgressBar mProgressBar;
     private CalendarView calendarView;
     private DayViewContainer selectedDayViewContainer = null;
 
     private CalendarDateListAdapter mCalendarDateListAdapter;
-    private Button mSelectedButton = null;
 
     // Local State
     private final String digestFileName = Config.digestFilename("calendar");
@@ -76,17 +75,13 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private final Cache cache = new Cache();
     private Calendar calendar;
     private final ArrayList<DayItem> dateList = new ArrayList<>();
+    private final HashMap<LocalDate, DayViewContainer> dayViewContainerHashMap = new HashMap<>();
     private FragmentActivity fragmentActivity;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
     public CalendarFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -106,14 +101,29 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                 dayViewContainer.parent = instance;
                 dayViewContainer.calendarDay = calendarDay;
                 dayViewContainer.textView.setText(String.format(Locale.GERMAN, "%d", calendarDay.getDate().getDayOfMonth()));
+                dayViewContainer.markerView.setTextColor(ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorPiusBlue));
+                dayViewContainerHashMap.put(calendarDay.getDate(), dayViewContainer);
 
-                if (calendarDay.getOwner() == DayOwner.THIS_MONTH) {
-                    dayViewContainer.textView.setTextColor(Color.BLACK);
-                } else {
-                    dayViewContainer.textView.setTextColor(Color.LTGRAY);
+                // Number of dots to show. It is limited to three.
+                if (calendar != null) {
+                    final ArrayList<DayItem> dateList = calendar.filterBy(calendarDay);
+                    int dots = Math.min(dateList.size(), 3);
+
+                    if (dots > 0) {
+                        String output = "\u2b24";
+                        for (int i = Math.min(dots - 1, 2); i > 0; i -= 1) {
+                            output = output.concat(" \u2b24");
+                        }
+                        dayViewContainer.markerView.setText(Html.fromHtml(output, Html.FROM_HTML_MODE_LEGACY));
+                    }
                 }
 
-                if (dayViewContainer.isSelected) {
+                if ((selectedDayViewContainer != null
+                        && dayViewContainer.calendarDay.getDate().equals(selectedDayViewContainer.calendarDay.getDate())
+                ) || (selectedDayViewContainer == null
+                        && dayViewContainer.calendarDay.getDate().equals(LocalDate.now()))
+                ) {
+                    selectedDayViewContainer = dayViewContainer;
                     dayViewContainer.textView.setTextColor(Color.WHITE);
                     dayViewContainer.textView.setBackgroundResource(R.drawable.bg_pius_blue);
                 }
@@ -122,6 +132,16 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                     dayViewContainer.textView.setBackgroundResource(R.drawable.bg_red);
                 } else {
                     dayViewContainer.textView.setBackground(null);
+
+                    if (calendarDay.getOwner() == DayOwner.THIS_MONTH) {
+                        if (calendarDay.getDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
+                            dayViewContainer.textView.setTextColor(Color.RED);
+                        } else {
+                            dayViewContainer.textView.setTextColor(Color.BLACK);
+                        }
+                    } else {
+                        dayViewContainer.textView.setTextColor(Color.LTGRAY);
+                    }
                 }
             }
         });
@@ -151,7 +171,13 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             }
         });
 
-        calendarView.setupAsync(YearMonth.now().minusMonths(1), YearMonth.now().plusMonths(1), DayOfWeek.of(1));
+        /*
+        calendarView.setMonthScrollListener(calendarMonth -> {
+            // return Unit.INSTANCE;
+        });
+         */
+
+        calendarView.setupAsync(YearMonth.now(), YearMonth.now(), DayOfWeek.of(1));
         calendarView.setHasBoundaries(true);
         calendarView.setScrollMode(ScrollMode.PAGED);
         calendarView.setOrientation(CalendarView.HORIZONTAL);
@@ -171,6 +197,13 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             transaction.replace(R.id.frameLayout, CalendarSearchFragment.newInstance(calendar));
             transaction.addToBackStack(null);
             transaction.commit();
+        });
+
+        Button mGoToTodayButton = view.findViewById(R.id.buttonGoToToday);
+        mGoToTodayButton.setOnClickListener(v -> {
+            calendarView.scrollToMonth(YearMonth.now());
+            final DayViewContainer dayViewContainer = dayViewContainerHashMap.get(LocalDate.now());
+            onSelectionChanged(dayViewContainer);
         });
     }
 
@@ -196,18 +229,11 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         reload();
     }
 
-    private void setDateList(String dayName, String monthName) {
+    private void setDateList(CalendarDay calendarDay) {
         mCalendarDateListAdapter.notifyItemRangeRemoved(0, dateList.size());
 
         dateList.clear();
-        MonthItem monthItem = calendar.getMonthItem(monthName);
-        if (monthItem != null) {
-            ArrayList<DayItem> dayItems = monthItem.getDayItems()
-                    .stream()
-                    .filter(dayItem -> dayItem.getDay().equals(dayName))
-                    .collect(Collectors.toCollection(ArrayList::new));
-            dateList.addAll(dayItems);
-        }
+        dateList.addAll(calendar.filterBy(calendarDay));
 
         mCalendarDateListAdapter.notifyItemRangeInserted(0, dateList.size());
     }
@@ -262,6 +288,10 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
                 cache.store(digestFileName, calendar.getDigest());
             }
+
+            YearMonth lastMonth = calendar.getLastMonth();
+            calendarView.setupAsync(YearMonth.now(), lastMonth, DayOfWeek.of(1));
+            calendarView.notifyCalendarChanged();
         } catch (Exception e) {
             e.printStackTrace();
             new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
@@ -277,61 +307,17 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     }
 
     @Override
-    public void notifySelectionChanged(View b, String title) {
-        if (mSelectedButton != null) {
-            mSelectedButton.setSelected(false);
-        }
-
-        b.setSelected(true);
-        mSelectedButton = (Button)b;
-
-        // setDateList(title);
-    }
-
-    @Override
     public void onSelectionChanged(DayViewContainer dayViewContainer) {
         if (selectedDayViewContainer != null) {
-            selectedDayViewContainer.isSelected = false;
-            calendarView.notifyDateChanged(selectedDayViewContainer.calendarDay.getDate());
+            final LocalDate selectedDate = selectedDayViewContainer.calendarDay.getDate();
+            selectedDayViewContainer = null;
+            calendarView.notifyDateChanged(selectedDate);
         }
 
         selectedDayViewContainer = dayViewContainer;
-        selectedDayViewContainer.isSelected = true;
         calendarView.notifyDateChanged(selectedDayViewContainer.calendarDay.getDate());
 
-        final String dayName = String.format(
-                Locale.GERMAN,
-                "%s %02d.%02d.",
-                dayViewContainer
-                        .calendarDay
-                        .getDate()
-                        .getDayOfWeek()
-                        .getDisplayName(TextStyle.SHORT_STANDALONE, Locale.GERMAN),
-                dayViewContainer
-                        .calendarDay
-                        .getDay(),
-                dayViewContainer
-                        .calendarDay
-                        .getDate()
-                        .getMonthValue()
-        );
-        final String month = String.format(
-                "%s", dayViewContainer
-                        .calendarDay
-                        .getDate()
-                        .getMonth()
-                        .getDisplayName(TextStyle.SHORT_STANDALONE, Locale.GERMAN)
-        );
-        final String year = String.format(
-                Locale.GERMAN,
-                "%d",
-                dayViewContainer
-                        .calendarDay
-                        .getDate()
-                        .getYear()
-        ).substring(2);
-        final String monthName = String.format("%s %s", month, year);
-        setDateList(dayName, monthName);
+        setDateList(dayViewContainer.calendarDay);
     }
 
 }
