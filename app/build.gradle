@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileOptions {
@@ -53,6 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:21.0.1'
     implementation 'com.github.cdflynn:checkview:v1.1'
     implementation 'com.github.kizitonwose:CalendarView:1.0.4'
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 // This is to fix the errors : java.lang.NoClassDefFoundError: Failed resolution of: Landroid/view/View$OnUnhandledKeyEventListener;
@@ -68,3 +71,6 @@ configurations.all {
 }
 
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}

@@ -17,6 +17,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Holds backend calendar as Java object.
+ */
 public class Calendar implements Serializable {
 
     // @serial
@@ -25,11 +28,19 @@ public class Calendar implements Serializable {
     // @serial
     private String digest;
 
+    /**
+     * Instantiates an empty calendar.
+     */
     private Calendar() {
         monthItems = new ArrayList<>();
         digest = null;
     }
 
+    /**
+     * Instantiate calendar from JSON object.
+     * @param data JSON calendar data
+     * @throws RuntimeException Indicates that JSON data processing failed.
+     */
     public Calendar(JSONObject data) throws RuntimeException {
         try {
             monthItems = new ArrayList<>();
@@ -53,15 +64,28 @@ public class Calendar implements Serializable {
         }
     }
 
-    public ArrayList<MonthItem> getMonthItems() {
-        return monthItems;
-    }
-
+    /**
+     * Gets calendar digest.
+     * @return Calendar digest, null when there is none.
+     */
     @Nullable
     public String getDigest() {
         return digest;
     }
 
+    /**
+     * Get all month items.
+     * @return List of all month items.
+     */
+    public ArrayList<MonthItem> getMonthItems() {
+        return monthItems;
+    }
+
+    /**
+     * Gets month item for month name.
+     * @param monthName Month name to get item for.
+     * @return Month item instance
+     */
     @Nullable
     public MonthItem getMonthItem(String monthName) {
         for (MonthItem monthItem: getMonthItems()) {
@@ -73,13 +97,17 @@ public class Calendar implements Serializable {
         return null;
     }
 
+    /**
+     * Gets all events for today.
+     * @return List of today's events.
+     */
     public ArrayList<DayItem> getTodayEvents() {
         MonthItem monthItem = getMonthItems().get(0);
         return monthItem.getTodayEvents();
     }
 
     /**
-     * Filters calendar by given string and return a new calendar.
+     * Filters calendar by given string and returns a new calendar.
      * @param s Filter string
      * @return Filtered calendar
      */

@@ -118,24 +118,32 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                     }
                 }
 
+                // Selected date matches container date or if no date is selected container date
+                // matches current date.
                 if ((selectedDayViewContainer != null
-                        && dayViewContainer.calendarDay.getDate().equals(selectedDayViewContainer.calendarDay.getDate())
+                        && dayViewContainer.calendarDay.getDate().isEqual(selectedDayViewContainer.calendarDay.getDate())
                 ) || (selectedDayViewContainer == null
-                        && dayViewContainer.calendarDay.getDate().equals(LocalDate.now()))
+                        && dayViewContainer.calendarDay.getDate().isEqual(LocalDate.now()))
                 ) {
                     selectedDayViewContainer = dayViewContainer;
                     dayViewContainer.textView.setTextColor(Color.WHITE);
                     dayViewContainer.textView.setBackgroundResource(R.drawable.bg_pius_blue);
                 }
+                // Current date and another date is selected.
                 else if (calendarDay.getDate().isEqual(ChronoLocalDate.from(LocalDate.from(ZonedDateTime.now())))) {
                     dayViewContainer.textView.setTextColor(Color.WHITE);
                     dayViewContainer.textView.setBackgroundResource(R.drawable.bg_red);
                 } else {
+                    // None of the above, plain view.
                     dayViewContainer.textView.setBackground(null);
 
                     if (calendarDay.getOwner() == DayOwner.THIS_MONTH) {
                         if (calendarDay.getDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
                             dayViewContainer.textView.setTextColor(Color.RED);
+                        } else if (calendarDay.getDate().getDayOfWeek() == DayOfWeek.SATURDAY) {
+                            dayViewContainer.textView.setTextColor(
+                                    ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorDisabled)
+                            );
                         } else {
                             dayViewContainer.textView.setTextColor(Color.BLACK);
                         }
@@ -170,12 +178,6 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                         );
             }
         });
-
-        /*
-        calendarView.setMonthScrollListener(calendarMonth -> {
-            // return Unit.INSTANCE;
-        });
-         */
 
         calendarView.setupAsync(YearMonth.now(), YearMonth.now(), DayOfWeek.of(1));
         calendarView.setHasBoundaries(true);
@@ -229,6 +231,11 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         reload();
     }
 
+    /**
+     * Sets new date details for given calendar day. Call this when a date is selected
+     * in calendar view.
+     * @param calendarDay Selecte calenday day
+     */
     private void setDateList(CalendarDay calendarDay) {
         mCalendarDateListAdapter.notifyItemRangeRemoved(0, dateList.size());
 
@@ -238,6 +245,9 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         mCalendarDateListAdapter.notifyItemRangeInserted(0, dateList.size());
     }
 
+    /**
+     * Reloads calendar data.
+     */
     private void reload() {
         String digest;
 
@@ -252,14 +262,16 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         calendarLoader.load(this, digest);
     }
 
+    /**
+     * Reload data callback. Processes calendar data which has been received from backend.
+     * @param responseData Backend response data structure
+     */
     @SuppressLint("DefaultLocale")
     @Override
     public void execute(HttpResponseData responseData) {
-        String data;
-        JSONObject jsonData;
-
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        // Check for errors.
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
             new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
@@ -274,15 +286,16 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             return;
         }
 
-        if (responseData.getData() != null) {
-            data = responseData.getData();
-            cache.store(cacheFileName, data);
-        } else {
-            data = cache.read(cacheFileName);
-        }
-
         try {
-            jsonData = new JSONObject(data);
+            // When data has changed update cache otherwise use data from cache.
+            String data = responseData.getData();
+            if (data != null) {
+                cache.store(cacheFileName, data);
+            } else {
+                data = cache.read(cacheFileName);
+            }
+
+            JSONObject jsonData = new JSONObject(data);
             calendar = new Calendar(jsonData);
 
             if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
@@ -292,6 +305,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             YearMonth lastMonth = calendar.getLastMonth();
             calendarView.setupAsync(YearMonth.now(), lastMonth, DayOfWeek.of(1));
             calendarView.notifyCalendarChanged();
+
         } catch (Exception e) {
             e.printStackTrace();
             new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
@@ -306,6 +320,11 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         }
     }
 
+    /**
+     * Called when selected date in calendar is changed. Selects given container which
+     * causes this calendar to be highlighted. A container highlighted before is de-selected.
+     * @param dayViewContainer Selected day view container.
+     */
     @Override
     public void onSelectionChanged(DayViewContainer dayViewContainer) {
         if (selectedDayViewContainer != null) {

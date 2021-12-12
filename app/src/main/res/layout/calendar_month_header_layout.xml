@@ -67,6 +67,7 @@
             android:layout_columnWeight="1"
             android:text="@string/sat"
             android:textAlignment="center"
+            android:textColor="@color/colorDisabled"
             android:textSize="18sp"
             tools:text="Sa" />
 
