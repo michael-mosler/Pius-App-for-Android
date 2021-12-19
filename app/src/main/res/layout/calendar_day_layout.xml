@@ -10,7 +10,7 @@
         android:id="@+id/calendarDayText"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_margin="4dp"
+        android:layout_margin="0dp"
         android:gravity="center"
         android:textAlignment="center"
         android:textSize="18sp"

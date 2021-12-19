@@ -1,16 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/headerTextView"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="26sp"
-        tools:text="October 2019" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/headerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="16dp"
+            android:textSize="26sp"
+            tools:text="October 2019" />
+
+        <Button
+            android:id="@+id/buttonGoToToday"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:background="#00000000"
+            android:text="@string/title_home"
+            android:textColor="@color/colorPiusBlue"
+            tools:ignore="TextContrastCheck"
+            tools:text="Heute" />
+
+        <ImageButton
+            android:id="@+id/buttonSearch"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#00000000"
+            android:contentDescription="@string/label_search"
+            android:paddingStart="4dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="4dp"
+            android:src="@drawable/ic_search"
+            app:tint="@color/colorPiusBlue"
+            tools:ignore="ImageContrastCheck" />
+    </LinearLayout>
+
     <GridLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -69,6 +105,7 @@
             android:textAlignment="center"
             android:textColor="@color/colorDisabled"
             android:textSize="18sp"
+            tools:ignore="TextContrastCheck"
             tools:text="Sa" />
 
         <TextView

@@ -24,7 +24,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/textView"
@@ -35,7 +37,7 @@
                 <Button
                     android:id="@+id/buttonGoToToday"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.1"
                     android:background="#00000000"
                     android:text="@string/title_home"
@@ -43,9 +45,9 @@
                     tools:text="Heute" />
 
                 <ImageButton
-                    android:id="@+id/searchbutton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:id="@+id/buttonSearch"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="end"
                     android:background="#00000000"
                     android:contentDescription="@string/label_search"

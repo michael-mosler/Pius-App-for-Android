@@ -176,6 +176,21 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                                 calendarMonth.getYearMonth().getMonth().getDisplayName(TextStyle.FULL, Locale.GERMAN),
                                 calendarMonth.getYear())
                         );
+                monthViewContainer
+                        .todayButton
+                        .setOnClickListener(v -> {
+                            calendarView.scrollToMonth(YearMonth.now());
+                            final DayViewContainer dayViewContainer = dayViewContainerHashMap.get(LocalDate.now());
+                            onSelectionChanged(dayViewContainer);
+                        });
+                monthViewContainer
+                        .searchButton
+                        .setOnClickListener(v -> {
+                            FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frameLayout, CalendarSearchFragment.newInstance(calendar));
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        });
             }
         });
 
@@ -192,21 +207,6 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         RecyclerView eventListView = view.findViewById(R.id.eventList);
         eventListView.setLayoutManager(mVerticalLayoutManager);
         eventListView.setAdapter(mCalendarDateListAdapter);
-
-        ImageButton mSearchButton = view.findViewById(R.id.searchbutton);
-        mSearchButton.setOnClickListener(v -> {
-            FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayout, CalendarSearchFragment.newInstance(calendar));
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
-
-        Button mGoToTodayButton = view.findViewById(R.id.buttonGoToToday);
-        mGoToTodayButton.setOnClickListener(v -> {
-            calendarView.scrollToMonth(YearMonth.now());
-            final DayViewContainer dayViewContainer = dayViewContainerHashMap.get(LocalDate.now());
-            onSelectionChanged(dayViewContainer);
-        });
     }
 
     @Override
@@ -224,7 +224,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     @Override
     public void onResume() {
         super.onResume();
-        requireActivity().setTitle(R.string.title_calendar);
+        getActivity().setTitle(R.string.title_calendar);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(3).setChecked(true);
 
@@ -274,12 +274,12 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         // Check for errors.
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+            new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_calendar))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
                     .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        if (getParentFragmentManager() != null) {
-                            getParentFragmentManager().popBackStack();
+                        if (getFragmentManager() != null) {
+                            getFragmentManager().popBackStack();
                         }
                     })
                     .show();
@@ -308,12 +308,12 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
 
         } catch (Exception e) {
             e.printStackTrace();
-            new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+            new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_calendar))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
                     .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        if (getParentFragmentManager() != null) {
-                            getParentFragmentManager().popBackStack();
+                        if (getFragmentManager() != null) {
+                            getFragmentManager().popBackStack();
                         }
                     })
                     .show();
