@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.rmkrings.activities.PreferencesActivity"
-    tools:showIn="@layout/activity_preferences">
+    tools:context="com.rmkrings.fragments.preferences.PreferencesFragment"
+    tools:showIn="@layout/fragment_preferences">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"

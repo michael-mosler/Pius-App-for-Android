@@ -54,7 +54,7 @@
     <string name="label_delete_all">Alles löschen</string>
     <string name="label_search">Suchen</string>
     <string name="label_eva">EVA</string>
-    <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
+    <string name="label_enter_course">Oder zum Eingeben hier drücken.</string>
 
     <string name="label_deleted">Gelöscht</string>
     <string name="label_changed">Geändert</string>

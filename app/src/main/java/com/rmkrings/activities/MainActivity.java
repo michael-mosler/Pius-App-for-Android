@@ -19,9 +19,11 @@ import com.rmkrings.fragments.CalendarFragment;
 import com.rmkrings.fragments.DashboardFragment;
 import com.rmkrings.fragments.TodayFragment;
 import com.rmkrings.fragments.VertretungsplanFragment;
+import com.rmkrings.fragments.preferences.PreferencesFragment;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Config;
 import com.rmkrings.helper.Reachability;
+import com.rmkrings.interfaces.IOnBackPressed;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.loader.StaffLoader;
 import com.rmkrings.pius_app_for_android;
@@ -85,8 +87,9 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
                     startFragment(new CalendarFragment());
                     return true;
                 } else if (itemId == R.id.navigation_settings) {
-                    Intent a = new Intent(MainActivity.this, PreferencesActivity.class);
-                    startActivity(a);
+                    startFragment(new PreferencesFragment());
+                    // Intent a = new Intent(MainActivity.this, PreferencesActivity.class);
+                    // startActivity(a);
                     return true;
                 } else {
                     return false;

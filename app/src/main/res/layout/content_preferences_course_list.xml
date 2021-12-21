@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_course_list_info" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <NumberPicker
+                    android:id="@+id/coursePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:descendantFocusability="blocksDescendants"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/courseEditLayout" />
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <NumberPicker
+                    android:id="@+id/courseTypePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:descendantFocusability="blocksDescendants"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/courseEditLayout" />
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <NumberPicker
+                    android:id="@+id/courseNumberPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:descendantFocusability="blocksDescendants"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/courseEditLayout" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="4dp" />
+
+            <LinearLayout
+                android:id="@+id/courseEditLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/label_enter_course"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    tools:targetApi="o" />
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <Button
+                    android:id="@+id/addCourseButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/button_default"
+                    android:text="@android:string/ok"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/courseList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toTopOf="@id/bottomSpacer1" />
+
+        <Space
+            android:id="@+id/bottomSpacer1"
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+        <Button
+            android:id="@+id/deleteAll"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:background="@drawable/button_default_red"
+            android:text="@string/label_delete_all"
+            android:textColor="@android:color/white"
+            tools:text="Alles löschen" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
