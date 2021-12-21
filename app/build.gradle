@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.github.cdflynn:checkview:v1.1'
     implementation 'com.github.kizitonwose:CalendarView:1.0.4'
     implementation "androidx.core:core-ktx:1.7.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
 }
 
 // This is to fix the errors : java.lang.NoClassDefFoundError: Failed resolution of: Landroid/view/View$OnUnhandledKeyEventListener;
