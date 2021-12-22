@@ -47,16 +47,15 @@
             android:name=".ScheduleChangedActivity"
             android:exported="true"
             android:label="@string/title_activity_schedule_changed"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="com.rmkrings.SCHEDULE_CHANGED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".WebViewActivity" />
-        <activity android:name=".PreferencesActivity" />
-        <activity android:name=".CourseListActivity" />
+        <activity
+            android:name=".WebViewActivity"
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -156,7 +156,10 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                             getParentFragmentManager().popBackStack();
                         }
                     })
-                    .setNegativeButton(R.string.title_settings, (dialog, which) -> fragmentActivity.startActivity(new Intent(fragmentActivity, PreferencesActivity.class)))
+                    .setNegativeButton(R.string.title_settings, (dialog, which) -> {
+                        // FragmentTransaction t =
+                        fragmentActivity.startActivity(new Intent(fragmentActivity, PreferencesActivity.class));
+                    })
                     .show();
 
             return;

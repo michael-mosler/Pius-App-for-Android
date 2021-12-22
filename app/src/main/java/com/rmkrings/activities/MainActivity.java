@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
         transaction.commit();
     }
 
-    private void startFragment(Fragment f) {
-        this.startFragment(f, true);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,21 +71,19 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.navigation_home) {
-                    startFragment(new TodayFragment());
+                    startFragment(new TodayFragment(), true);
                     return true;
                 } else if (itemId == R.id.navigation_substitution_schedule) {
-                    startFragment(new VertretungsplanFragment());
+                    startFragment(new VertretungsplanFragment(), true);
                     return true;
                 } else if (itemId == R.id.navigation_dashboard) {
-                    startFragment(new DashboardFragment());
+                    startFragment(new DashboardFragment(), true);
                     return true;
                 } else if (itemId == R.id.navigation_calendar) {
-                    startFragment(new CalendarFragment());
+                    startFragment(new CalendarFragment(), true);
                     return true;
                 } else if (itemId == R.id.navigation_settings) {
-                    startFragment(new PreferencesFragment());
-                    // Intent a = new Intent(MainActivity.this, PreferencesActivity.class);
-                    // startActivity(a);
+                    startFragment(new PreferencesFragment(), true);
                     return true;
                 } else {
                     return false;
