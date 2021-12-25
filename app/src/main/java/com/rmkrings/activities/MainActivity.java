@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
         return "dashboard";
     }
 
-    private void startFragment(Fragment f, Boolean withBackStack) {
+    public void startFragment(Fragment f, Boolean withBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayout, f);
 
@@ -128,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         setTitle(R.string.title_home);
@@ -167,4 +172,5 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
             e.printStackTrace();
         }
     }
+
 }

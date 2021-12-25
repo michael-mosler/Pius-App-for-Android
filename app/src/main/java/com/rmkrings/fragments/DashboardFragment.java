@@ -26,7 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rmkrings.activities.PreferencesActivity;
+import com.rmkrings.activities.MainActivity;
 import com.rmkrings.data.adapter.DashboardListAdapter;
 import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
@@ -37,6 +37,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
+import com.rmkrings.fragments.preferences.PreferencesFragment;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.helper.Config;
@@ -158,7 +159,8 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                     })
                     .setNegativeButton(R.string.title_settings, (dialog, which) -> {
                         // FragmentTransaction t =
-                        fragmentActivity.startActivity(new Intent(fragmentActivity, PreferencesActivity.class));
+                        MainActivity activity = (MainActivity)requireActivity();
+                        activity.startFragment(new PreferencesFragment(), true);
                     })
                     .show();
 

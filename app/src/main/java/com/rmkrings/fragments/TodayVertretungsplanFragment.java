@@ -78,6 +78,12 @@ public class TodayVertretungsplanFragment extends Fragment {
         }
     }
 
+    /**
+     * Shows today's subst. schedule fragment in given parent fragment. If there is no entry
+     * for today fragment is hidden.
+     * @param vertretungsplan Subst. schedule, today's entries will be extracted
+     * @param parentFragment Parent fragment to use.
+     */
     public void show(@Nullable Vertretungsplan vertretungsplan, ParentFragment parentFragment) {
         mVertetungsplanDetailListAdapter.notifyItemRangeRemoved(0, listItems.size());
 

@@ -28,7 +28,6 @@ import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
@@ -36,7 +35,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 
