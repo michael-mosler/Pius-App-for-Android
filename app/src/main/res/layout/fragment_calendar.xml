@@ -85,12 +85,30 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/eventList"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/eventList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/noEventsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:text="@string/no_events"
+                    android:visibility="visible" />
+
+            </FrameLayout>
+
         </LinearLayout>
 
         <ProgressBar

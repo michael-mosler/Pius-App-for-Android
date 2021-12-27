@@ -20,9 +20,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.kizitonwose.calendarview.CalendarView;
 import com.kizitonwose.calendarview.model.CalendarDay;
@@ -59,12 +58,16 @@ import java.util.Locale;
 import java.util.logging.Logger;
 
 /**
+ * Calendar view which shows a scrollable calendar. Each date may have up to three dots each
+ * dot indicating an event scheduled for this date. Tapping on a date shows detailed list
+ * of scheduled events.
  */
 public class CalendarFragment extends Fragment implements HttpResponseCallback, CalendarViewContainer {
 
     private ProgressBar mProgressBar;
     private CalendarView calendarView;
     private DayViewContainer selectedDayViewContainer = null;
+    private TextView noEventsTextView;
 
     private CalendarDateListAdapter mCalendarDateListAdapter;
 
@@ -88,6 +91,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         final CalendarFragment instance = this;
 
+        noEventsTextView = view.findViewById(R.id.noEventsText);
         calendarView = view.findViewById(R.id.calendarView);
         calendarView.setDayBinder(new DayBinder<DayViewContainer>() {
             @NonNull
@@ -120,11 +124,8 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
 
                 // Selected date matches container date or if no date is selected container date
                 // matches current date.
-                if ((selectedDayViewContainer != null
-                        && dayViewContainer.calendarDay.getDate().isEqual(selectedDayViewContainer.calendarDay.getDate())
-                ) || (selectedDayViewContainer == null
-                        && dayViewContainer.calendarDay.getDate().isEqual(LocalDate.now()))
-                ) {
+                if (selectedDayViewContainer != null
+                        && dayViewContainer.calendarDay.getDate().isEqual(selectedDayViewContainer.calendarDay.getDate())) {
                     selectedDayViewContainer = dayViewContainer;
                     dayViewContainer.textView.setTextColor(Color.WHITE);
                     dayViewContainer.textView.setBackgroundResource(R.drawable.bg_pius_blue);
@@ -148,7 +149,11 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                             dayViewContainer.textView.setTextColor(Color.BLACK);
                         }
                     } else {
-                        dayViewContainer.textView.setTextColor(Color.LTGRAY);
+                        if (calendarDay.getDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
+                            dayViewContainer.textView.setTextColor(getResources().getColor(R.color.colorSundayOut, null));
+                        } else {
+                            dayViewContainer.textView.setTextColor(Color.LTGRAY);
+                        }
                     }
                 }
             }
@@ -178,11 +183,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                         );
                 monthViewContainer
                         .todayButton
-                        .setOnClickListener(v -> {
-                            calendarView.scrollToMonth(YearMonth.now());
-                            final DayViewContainer dayViewContainer = dayViewContainerHashMap.get(LocalDate.now());
-                            onSelectionChanged(dayViewContainer);
-                        });
+                        .setOnClickListener(v -> today());
                 monthViewContainer
                         .searchButton
                         .setOnClickListener(v -> {
@@ -243,6 +244,10 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
         dateList.addAll(calendar.filterBy(calendarDay));
 
         mCalendarDateListAdapter.notifyItemRangeInserted(0, dateList.size());
+
+        noEventsTextView.setVisibility(
+                dateList.size() == 0 ? View.VISIBLE : View.INVISIBLE
+        );
     }
 
     /**
@@ -277,11 +282,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_calendar))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        if (getFragmentManager() != null) {
-                            getFragmentManager().popBackStack();
-                        }
-                    })
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
                     .show();
             return;
         }
@@ -306,18 +307,25 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             calendarView.setupAsync(YearMonth.now(), lastMonth, DayOfWeek.of(1));
             calendarView.notifyCalendarChanged();
 
+            // today();
+
         } catch (Exception e) {
             e.printStackTrace();
             new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_calendar))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        if (getFragmentManager() != null) {
-                            getFragmentManager().popBackStack();
-                        }
-                    })
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
                     .show();
         }
+    }
+
+    /**
+     * Go to today's date and show events for this date.
+     */
+    private void today() {
+        calendarView.scrollToMonth(YearMonth.now());
+        final DayViewContainer dayViewContainer = dayViewContainerHashMap.get(LocalDate.now());
+        onSelectionChanged(dayViewContainer);
     }
 
     /**
@@ -333,6 +341,14 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             calendarView.notifyDateChanged(selectedDate);
         }
 
+        if (dayViewContainer.calendarDay.getOwner() != DayOwner.THIS_MONTH) {
+            calendarView.scrollToMonth(
+                    YearMonth.of(
+                            dayViewContainer.calendarDay.getDate().getYear(),
+                            dayViewContainer.calendarDay.getDate().getMonth()
+                    )
+            );
+        }
         selectedDayViewContainer = dayViewContainer;
         calendarView.notifyDateChanged(selectedDayViewContainer.calendarDay.getDate());
 

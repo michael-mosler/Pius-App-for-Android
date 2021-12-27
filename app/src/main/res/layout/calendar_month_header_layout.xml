@@ -34,14 +34,11 @@
 
         <ImageButton
             android:id="@+id/buttonSearch"
-            android:layout_width="48dp"
+            android:layout_width="64dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:background="#00000000"
             android:contentDescription="@string/label_search"
-            android:paddingStart="4dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="4dp"
             android:src="@drawable/ic_search"
             app:tint="@color/colorPiusBlue"
             tools:ignore="ImageContrastCheck" />

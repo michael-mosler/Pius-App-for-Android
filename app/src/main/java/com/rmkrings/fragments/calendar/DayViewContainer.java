@@ -7,6 +7,11 @@ import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.ui.ViewContainer;
 import com.rmkrings.activities.R;
 
+/**
+ * Container which holds a single date in calendar view. It shows
+ * the day of month and a marker view which should display not more
+ * than 3 dots each dot indicating an event scheduled for the date.
+ */
 public class DayViewContainer extends ViewContainer {
 
     public TextView textView;

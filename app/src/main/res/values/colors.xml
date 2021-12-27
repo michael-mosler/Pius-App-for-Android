@@ -16,4 +16,5 @@
     <color name="colorDeleted">@color/colorAccent</color>
     <color name="colorChanged">@color/colorEva</color>
 
+    <color name="colorSundayOut">#FC9680</color>
 </resources>
