@@ -16,6 +16,10 @@
         android:textSize="18sp"
         tools:text="29" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+
     <TextView
         android:id="@+id/calendarDayMarker"
         android:layout_width="match_parent"
@@ -23,6 +27,6 @@
         android:textAlignment="center"
         android:textColor="#0277BD"
         android:textSize="6sp"
-        tools:text="⬤"
-        tools:ignore="SmallSp" />
+        tools:ignore="SmallSp"
+        tools:text="⚫" />
 </LinearLayout>

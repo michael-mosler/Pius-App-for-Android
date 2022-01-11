@@ -142,6 +142,7 @@ public class Calendar implements Serializable {
         final String monthName = String.format("%s %s", shortMonthName, year);
 
         MonthItem monthItem = getMonthItem(monthName);
+
         if (monthItem != null) {
             ArrayList<DayItem> dayItems = monthItem.getDayItems()
                     .stream()

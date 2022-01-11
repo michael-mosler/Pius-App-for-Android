@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,11 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private final HashMap<LocalDate, DayViewContainer> dayViewContainerHashMap = new HashMap<>();
     private FragmentActivity fragmentActivity;
 
+    private final Spanned[] dots = new Spanned[]{
+            Html.fromHtml("⚫", Html.FROM_HTML_MODE_LEGACY),
+            Html.fromHtml("⚫ ⚫", Html.FROM_HTML_MODE_LEGACY),
+            Html.fromHtml("⚫ ⚫ ⚫", Html.FROM_HTML_MODE_LEGACY)
+    };
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
     public CalendarFragment() {
@@ -111,14 +117,9 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                 // Number of dots to show. It is limited to three.
                 if (calendar != null) {
                     final ArrayList<DayItem> dateList = calendar.filterBy(calendarDay);
-                    int dots = Math.min(dateList.size(), 3);
-
-                    if (dots > 0) {
-                        String output = "\u2b24";
-                        for (int i = Math.min(dots - 1, 2); i > 0; i -= 1) {
-                            output = output.concat(" \u2b24");
-                        }
-                        dayViewContainer.markerView.setText(Html.fromHtml(output, Html.FROM_HTML_MODE_LEGACY));
+                    int nDots = Math.min(dateList.size() - 1, 2);
+                    if (nDots >= 0) {
+                        dayViewContainer.markerView.setText(dots[nDots]);
                     }
                 }
 
