@@ -14,6 +14,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         String url = getIntent().getStringExtra("URL");
         WebView mWebView = findViewById(R.id.webview);
+        mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.loadUrl(url);
     }
 }
