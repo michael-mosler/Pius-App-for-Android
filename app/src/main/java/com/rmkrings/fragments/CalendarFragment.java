@@ -21,6 +21,7 @@ import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -82,11 +83,6 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
     private final HashMap<LocalDate, DayViewContainer> dayViewContainerHashMap = new HashMap<>();
     private FragmentActivity fragmentActivity;
 
-    private final Spanned[] dots = new Spanned[]{
-            Html.fromHtml("⚫", Html.FROM_HTML_MODE_LEGACY),
-            Html.fromHtml("⚫ ⚫", Html.FROM_HTML_MODE_LEGACY),
-            Html.fromHtml("⚫ ⚫ ⚫", Html.FROM_HTML_MODE_LEGACY)
-    };
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
     public CalendarFragment() {
@@ -111,15 +107,21 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
                 dayViewContainer.parent = instance;
                 dayViewContainer.calendarDay = calendarDay;
                 dayViewContainer.textView.setText(String.format(Locale.GERMAN, "%d", calendarDay.getDate().getDayOfMonth()));
-                dayViewContainer.markerView.setTextColor(ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorPiusBlue));
+                // dayViewContainer.markerView.setTextColor(ContextCompat.getColor(pius_app_for_android.getAppContext(), R.color.colorPiusBlue));
                 dayViewContainerHashMap.put(calendarDay.getDate(), dayViewContainer);
 
                 // Number of dots to show. It is limited to three.
                 if (calendar != null) {
                     final ArrayList<DayItem> dateList = calendar.filterBy(calendarDay);
+                    for (ImageView dotView : dayViewContainer.dotViews) {
+                        dotView.setVisibility(View.GONE);
+                    }
+
                     int nDots = Math.min(dateList.size() - 1, 2);
                     if (nDots >= 0) {
-                        dayViewContainer.markerView.setText(dots[nDots]);
+                        for (int i = 0; i <= nDots; i++) {
+                            dayViewContainer.dotViews[i].setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 
