@@ -185,7 +185,8 @@ public class Calendar implements Serializable {
                 calendarDay
                         .getDate()
                         .getDayOfWeek()
-                        .getDisplayName(TextStyle.SHORT_STANDALONE, Locale.GERMAN),
+                        .getDisplayName(TextStyle.SHORT, Locale.GERMAN)
+                        .substring(0, 2),
                 calendarDay
                         .getDay(),
                 calendarDay
@@ -205,7 +206,8 @@ public class Calendar implements Serializable {
                 calendarDay
                         .getDate()
                         .getMonth()
-                        .getDisplayName(TextStyle.SHORT_STANDALONE, Locale.GERMAN)
+                        .getDisplayName(TextStyle.SHORT, Locale.GERMAN)
+                        .substring(0, 3)
         );
     }
 
