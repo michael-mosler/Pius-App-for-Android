@@ -44,6 +44,7 @@ captures/
 .idea/tasks.xml
 .idea/gradle.xml
 .idea/modules.xml
+.idea/deploymentTargetDropDown.xml
 .idea/assetWizardSettings.xml
 .idea/render.experimental.xml
 .idea/misc.xml
