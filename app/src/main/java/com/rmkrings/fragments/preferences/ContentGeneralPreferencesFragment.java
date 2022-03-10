@@ -52,6 +52,10 @@ public class ContentGeneralPreferencesFragment extends Fragment implements HttpR
 
     private final GeneralPreferencesFragment parent;
 
+    public ContentGeneralPreferencesFragment() {
+        this.parent = null;
+    }
+
     public ContentGeneralPreferencesFragment(GeneralPreferencesFragment parent) {
         this.parent = parent;
     }
