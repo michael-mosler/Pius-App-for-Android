@@ -84,7 +84,7 @@ public class CalendarSearchFragment extends Fragment {
             }
         });
 
-        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mVerticalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mDateList.setLayoutManager(mVerticalLayoutManager);
         mCalendarSearchListAdapter = new CalendarSearchListAdapter(listItems);
         mDateList.setAdapter(mCalendarSearchListAdapter);
@@ -108,12 +108,13 @@ public class CalendarSearchFragment extends Fragment {
     }
 
     private void setDateList() {
+        mCalendarSearchListAdapter.notifyItemRangeRemoved(0, listItems.size());
         listItems.clear();
         for (MonthItem montItem: filteredCalendar.getMonthItems()) {
             listItems.add(new MonthHeaderItem(montItem.getName()));
             listItems.addAll(montItem.getDayItems());
         }
 
-        mCalendarSearchListAdapter.notifyDataSetChanged();
+        mCalendarSearchListAdapter.notifyItemRangeInserted(0, listItems.size());
     }
 }

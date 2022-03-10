@@ -1,10 +1,8 @@
 package com.rmkrings.loader;
 
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.rmkrings.helper.AppDefaults;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,9 +36,8 @@ public class HttpDeviceTokenSetter extends HttpPost {
     @Override
     protected String getBody() throws JSONException {
         try {
-            ApplicationInfo ai = pius_app_for_android.getAppContext().getPackageManager().getApplicationInfo(pius_app_for_android.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
             final String messagingProvider = "fcm";
-            final String apiKey = (String)ai.metaData.get("apiKey");
+            final String apiKey = (String)AppDefaults.getApplicationParameter("apiKey");
             JSONObject jsonData = new JSONObject()
                     .put("apiKey", apiKey)
                     .put("deviceToken", token)

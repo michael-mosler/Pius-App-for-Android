@@ -7,11 +7,9 @@
     <string name="button_welcome_start">Jetzt loslegen</string>
     <string name="button_confirm">Verstanden</string>
 
-    <string name="welcome_new_in_version">Neu in der Version 1.7.1:</string>
-    <string name="welcome_new_1">Beim Login wird nun Autofill unterstützt.</string>
-    <string name="welcome_new_2">Im Lehrer-Popup wird nun die E-Mail-Adresse angezeigt.</string>
-    <string name="welcome_new_3">Teile der App haben ein neues, moderneres Design bekommen.</string>
-    <string name="welcome_new_4">Wir haben behoben, dass Einträge in der Kursliste nicht mehr doppelt angezeigt werden.</string>
+    <string name="welcome_new_in_version">Neu in der Version 1.8.0:</string>
+    <string name="welcome_new_1">Wir haben den Kalender neu gestaltet.</string>
+    <string name="welcome_new_2">Wir haben Fehler behoben.</string>
     <string name="welcome_title_overview">Funktionen im Überblick:</string>
     <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
     <string name="welcome_function_vertretungsplan">Greife mit der App ganz einfach auf den gesamten aktuellen Vertretungsplan zu.</string>
@@ -56,7 +54,7 @@
     <string name="label_delete_all">Alles löschen</string>
     <string name="label_search">Suchen</string>
     <string name="label_eva">EVA</string>
-    <string name="label_enter_course">Oder zum Bearbeiten drücken.</string>
+    <string name="label_enter_course">Oder zum Eingeben hier drücken.</string>
 
     <string name="label_deleted">Gelöscht</string>
     <string name="label_changed">Geändert</string>
@@ -83,4 +81,13 @@
     </string>
     <string name="error_failed_to_load_data">Die Daten konnten leider nicht geladen werden.</string>
     <string name="error_no_data">Es gibt noch keine Daten, die das Widget anzeigen kann. Warte auf eine Push-Benachrichtigung oder öffne das Dashboard, um Deinen Vetretungsplan zu laden.</string>
+    <string name="no_events">Keine Einträge</string>
+
+    <string name="mon">Mo</string>
+    <string name="tue">Di</string>
+    <string name="wed">Mi</string>
+    <string name="thu">Do</string>
+    <string name="fri">Fr</string>
+    <string name="sat">Sa</string>
+    <string name="sun">So</string>
 </resources>

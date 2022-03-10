@@ -53,10 +53,10 @@ public class VertretungsplanListAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.vertretungsplan_item, null);
+            convertView = infalInflater.inflate(R.layout.vertretungsplan_list_item, null);
         }
 
-        TextView txtListChild = convertView.findViewById(R.id.vertretungsplan_list_item);
+        TextView txtListChild = convertView.findViewById(R.id.vertretungsplan_item);
         txtListChild.setText(childText);
         return convertView;
     }

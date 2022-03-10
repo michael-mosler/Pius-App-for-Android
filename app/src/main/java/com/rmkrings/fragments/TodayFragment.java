@@ -28,7 +28,6 @@ import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
@@ -36,7 +35,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 
@@ -71,12 +69,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
         super.onViewCreated(view, savedInstanceState);
 
         mFragment = view.findViewById(R.id.todayFragment);
-        mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                reload(true);
-            }
-        });
+        mFragment.setOnRefreshListener(() -> reload(true));
 
         mProgressBar = view.findViewById(R.id.progressBar);
 
@@ -106,7 +99,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
 
     public void onResume() {
         super.onResume();
-        Objects.requireNonNull(getActivity()).setTitle(R.string.title_home);
+        requireActivity().setTitle(R.string.title_home);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(0).setChecked(true);
 
@@ -167,7 +160,7 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
                 }
 
                 // Update widget when new data has been loaded.
-                Context context = pius_app_for_android.getAppContext();
+                Context context = getActivity();
                 Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
                 context.startService(intent);
 

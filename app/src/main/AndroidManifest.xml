@@ -13,9 +13,11 @@
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.App.Starting">
 
-        <receiver android:name="com.rmkrings.widgets.DashboardWidget">
+        <receiver
+            android:name="com.rmkrings.widgets.DashboardWidget"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -24,17 +26,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/dashboard_widget_info" />
         </receiver>
-
-        <activity
-            android:name=".ScheduleChangedActivity"
-            android:label="@string/title_activity_schedule_changed"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="com.rmkrings.SCHEDULE_CHANGED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <meta-data
             android:name="host"
@@ -48,24 +39,30 @@
         <meta-data
             android:name="alwaysShowStaffHelperPopover"
             android:value="${alwaysShowStaffHelperPopover}" />
+        <meta-data
+            android:name="remoteConfigHostParam"
+            android:value="${remoteConfigHostParam}" />
 
-        <activity android:name=".WebViewActivity" />
-        <activity android:name=".PreferencesActivity" />
-        <activity android:name=".CourseListActivity" />
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/AppTheme.Launcher">
+            android:name=".ScheduleChangedActivity"
+            android:exported="true"
+            android:label="@string/title_activity_schedule_changed"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.rmkrings.SCHEDULE_CHANGED" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".WebViewActivity"
+            android:theme="@style/Theme.AppCompat"/>
+        <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -83,5 +80,4 @@
             android:name="com.rmkrings.notifications.DashboardWidgetUpdateService"
             android:exported="false" />
     </application>
-
 </manifest>

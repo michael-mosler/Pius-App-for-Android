@@ -2,7 +2,6 @@ package com.rmkrings.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,7 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rmkrings.activities.PreferencesActivity;
+import com.rmkrings.activities.MainActivity;
 import com.rmkrings.data.adapter.DashboardListAdapter;
 import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
@@ -38,6 +37,7 @@ import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
 import com.rmkrings.data.vertretungsplan.VertretungsplanHeaderItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanListItem;
 import com.rmkrings.data.vertretungsplan.VertretungsplanRemarkItem;
+import com.rmkrings.fragments.preferences.PreferencesFragment;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.helper.Config;
@@ -46,7 +46,6 @@ import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.activities.R;
 import com.rmkrings.notifications.DashboardWidgetUpdateService;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
@@ -54,7 +53,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 import static androidx.recyclerview.widget.RecyclerView.*;
@@ -110,7 +108,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mMetaData.setHasFixedSize(true);
 
         // Create Meta Data output widgets.
-        LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
+        LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mMetaData.setLayoutManager(mLayoutManager);
         mMetaDataAdapter = new MetaDataAdapter(metaData);
         mMetaData.setAdapter(mMetaDataAdapter);
@@ -120,22 +118,14 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mDashboardListView.setAdapter(mDashboardListAdapter);
 
         mEvaButton = view.findViewById(R.id.evaButton);
-        mEvaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayout, new EvaFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        mEvaButton.setOnClickListener(v -> {
+            FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayout, new EvaFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
-        mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                reload(true);
-            }
-        });
+        mFragment.setOnRefreshListener(() -> reload(true));
     }
 
     @Override
@@ -159,29 +149,25 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         mEvaButton.setVisibility(AppDefaults.hasUpperGrade() ? View.VISIBLE : View.INVISIBLE);
 
         if (!canUseDashboard()) {
-            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+            new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_dashboard))
                     .setMessage(getResources().getString(R.string.error_cannot_use_dashboard))
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (getFragmentManager() != null) {
-                                getFragmentManager().popBackStack();
-                            }
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        if (getParentFragmentManager() != null) {
+                            getParentFragmentManager().popBackStack();
                         }
                     })
-                    .setNegativeButton(R.string.title_settings, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            fragmentActivity.startActivity(new Intent(fragmentActivity, PreferencesActivity.class));
-                        }
+                    .setNegativeButton(R.string.title_settings, (dialog, which) -> {
+                        // FragmentTransaction t =
+                        MainActivity activity = (MainActivity)requireActivity();
+                        activity.startFragment(new PreferencesFragment(), true);
                     })
                     .show();
 
             return;
         }
 
-        Objects.requireNonNull(getActivity()).setTitle(grade);
+        requireActivity().setTitle(grade);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(2).setChecked(true);
         mNavigationView.getMenu().getItem(2).setTitle(grade);
@@ -213,14 +199,17 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
         vertretungsplanLoader.load(this, digest);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void setMetaData() {
         if (vertretungsplan != null) {
             if ((vertretungsplan.getAdditionalText().length() + vertretungsplan.getTickerText().length()) < 200){
                 this.metaData[0] = vertretungsplan.getTickerText() + "\n" + vertretungsplan.getAdditionalText();
-            }else {
+                this.metaData[1] = null;
+            } else {
                 this.metaData[0] = vertretungsplan.getTickerText();
                 this.metaData[1] = vertretungsplan.getAdditionalText();
             }
+
             mMetaDataAdapter.notifyDataSetChanged();
         }
     }
@@ -307,15 +296,12 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
             if (getActivity() != null && !getActivity().isFinishing()) {
                 if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
                     logger.severe(String.format("Failed to load data for Dashboard. HTTP Status code %d.", responseData.getHttpStatusCode()));
-                    new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                    new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                             .setTitle(getResources().getString(R.string.title_dashboard))
                             .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (getFragmentManager() != null) {
-                                        getFragmentManager().popBackStack();
-                                    }
+                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                                if (getParentFragmentManager() != null) {
+                                    getParentFragmentManager().popBackStack();
                                 }
                             })
                             .show();
@@ -330,7 +316,7 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                 }
 
                 // Update widget when new data has been loaded.
-                Context context = pius_app_for_android.getAppContext();
+                Context context = getActivity();
                 Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
                 context.startService(intent);
 
@@ -347,15 +333,12 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                     setVertretungsplanList();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                    new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                             .setTitle(getResources().getString(R.string.title_dashboard))
                             .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (getFragmentManager() != null) {
-                                        getFragmentManager().popBackStack();
-                                    }
+                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                                if (getParentFragmentManager() != null) {
+                                    getParentFragmentManager().popBackStack();
                                 }
                             })
                             .show();

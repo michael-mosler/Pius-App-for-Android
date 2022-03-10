@@ -42,44 +42,29 @@
                         android:paddingEnd="8dp"
                         tools:text="Samstag, 4. Mai 2019 (B-Woche)" />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp" />
-
-                    <fragment
+                    <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/postingsfragment"
                         android:name="com.rmkrings.fragments.TodayPostingsFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         tools:layout="@layout/fragment_today_postings" />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp" />
-
-                    <fragment
+                    <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/vertretungsplanfragment"
                         android:name="com.rmkrings.fragments.TodayVertretungsplanFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:layout="@layout/fragment_today_vertretungsplan" />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp" />
-
-                    <fragment
+                    <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/calendarfragment"
                         android:name="com.rmkrings.fragments.TodayCalendarFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:layout="@layout/fragment_today_calendar" />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp" />
-
-                    <fragment
+                    <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/newsfragment"
                         android:name="com.rmkrings.fragments.TodayNewsFragment"
                         android:layout_width="match_parent"

@@ -2,8 +2,6 @@ package com.rmkrings.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,11 +20,12 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rmkrings.activities.PreferencesActivity;
+import com.rmkrings.activities.MainActivity;
 import com.rmkrings.data.adapter.MetaDataAdapter;
 import com.rmkrings.data.adapter.VertretungsplanListAdapter;
 import com.rmkrings.data.vertretungsplan.GradeItem;
 import com.rmkrings.data.vertretungsplan.Vertretungsplan;
+import com.rmkrings.fragments.preferences.PreferencesFragment;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Cache;
 import com.rmkrings.helper.Config;
@@ -35,14 +34,12 @@ import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.activities.R;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.data.vertretungsplan.VertretungsplanForDate;
-import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 import static androidx.recyclerview.widget.RecyclerView.*;
@@ -90,36 +87,28 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         mMetaData.setHasFixedSize(true);
 
         // Create Meta Data output widgets.
-        LayoutManager mLayoutManager = new LinearLayoutManager(pius_app_for_android.getAppContext(), LinearLayoutManager.HORIZONTAL, false);
+        LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mMetaData.setLayoutManager(mLayoutManager);
         mAdapter = new MetaDataAdapter(metaData);
         mMetaData.setAdapter(mAdapter);
 
         // Prepare list data
-        mVertretunsplanListAdapter = new VertretungsplanListAdapter(pius_app_for_android.getAppContext(), listDataHeader, listDataChild);
+        mVertretunsplanListAdapter = new VertretungsplanListAdapter(getActivity(), listDataHeader, listDataChild);
         mVertretungsplanListView.setAdapter(mVertretunsplanListAdapter);
 
-        mVertretungsplanListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                VertretungsplanForDate vertretungsplanForDate = vertretungsplan.getVertretungsplaene().get(groupPosition);
-                GradeItem gradeItem = vertretungsplanForDate.getGradeItems().get(childPosition);
+        mVertretungsplanListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+            VertretungsplanForDate vertretungsplanForDate = vertretungsplan.getVertretungsplaene().get(groupPosition);
+            GradeItem gradeItem = vertretungsplanForDate.getGradeItems().get(childPosition);
 
-                FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayout, VertretungsplanDetailFragment.newInstance(gradeItem, vertretungsplanForDate.getDate()));
-                transaction.addToBackStack(null);
-                transaction.commit();
+            FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayout, VertretungsplanDetailFragment.newInstance(gradeItem, vertretungsplanForDate.getDate()));
+            transaction.addToBackStack(null);
+            transaction.commit();
 
-                return true;
-            }
+            return true;
         });
 
-        mFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                reload(true);
-            }
-        });
+        mFragment.setOnRefreshListener(() -> reload(true));
     }
 
     @Override
@@ -140,28 +129,23 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         super.onResume();
 
         if (!AppDefaults.isAuthenticated()) {
-            new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+            new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                     .setTitle(getResources().getString(R.string.title_substitution_schedule))
                     .setMessage(getResources().getString(R.string.error_cannot_use_vertretungsplan))
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (getFragmentManager() != null) {
-                                getFragmentManager().popBackStack();
-                            }
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        if (getParentFragmentManager() != null) {
+                            getParentFragmentManager().popBackStack();
                         }
                     })
-                    .setNegativeButton(R.string.title_settings, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            fragmentActivity.startActivity(new Intent(fragmentActivity, PreferencesActivity.class));
-                        }
+                    .setNegativeButton(R.string.title_settings, (dialog, which) -> {
+                        MainActivity activity = (MainActivity)requireActivity();
+                        activity.startFragment(new PreferencesFragment(), true);
                     })
                     .show();
             return;
         }
 
-        Objects.requireNonNull(getActivity()).setTitle(R.string.title_substitution_schedule);
+        requireActivity().setTitle(R.string.title_substitution_schedule);
         BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
         mNavigationView.getMenu().getItem(1).setChecked(true);
 
@@ -192,14 +176,17 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         vertretungsplanLoader.load(this, digest);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void setMetaData() {
         if (vertretungsplan != null) {
             if ((vertretungsplan.getAdditionalText().length() + vertretungsplan.getTickerText().length()) < 200){
                 this.metaData[0] = vertretungsplan.getTickerText() + "\n" + vertretungsplan.getAdditionalText();
+                this.metaData[1] = null;
             }else {
                 this.metaData[0] = vertretungsplan.getTickerText();
                 this.metaData[1] = vertretungsplan.getAdditionalText();
             }
+
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -242,15 +229,12 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             if (getActivity() != null && !getActivity().isFinishing()) {
                 logger.severe(String.format("Failed to load data for Vertretungsplan. HTTP Status code %d.", responseData.getHttpStatusCode()));
-                new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                         .setTitle(getResources().getString(R.string.title_substitution_schedule))
                         .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
-                                }
+                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                            if (getParentFragmentManager() != null) {
+                                getParentFragmentManager().popBackStack();
                             }
                         })
                         .show();
@@ -279,15 +263,12 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
         } catch (Exception e) {
             e.printStackTrace();
             if (getActivity() != null && !getActivity().isFinishing()) {
-                new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.AlertDialogTheme)
+                new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
                         .setTitle(getResources().getString(R.string.title_substitution_schedule))
                         .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
-                                }
+                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                            if (getParentFragmentManager() != null) {
+                                getParentFragmentManager().popBackStack();
                             }
                         })
                         .show();

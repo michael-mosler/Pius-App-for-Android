@@ -1,9 +1,6 @@
 package com.rmkrings.helper;
 
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-
-import com.rmkrings.pius_app_for_android;
 
 import java.util.Arrays;
 
@@ -30,8 +27,7 @@ public class Config {
      */
     public static Boolean getAlwaysShowWelcome() {
         try {
-            ApplicationInfo ai = pius_app_for_android.getAppContext().getPackageManager().getApplicationInfo(pius_app_for_android.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
-            return (Boolean)ai.metaData.get("alwaysShowWelcome");
+            return (Boolean)AppDefaults.getApplicationInfo().metaData.get("alwaysShowWelcome");
         }
         catch (PackageManager.NameNotFoundException e) {
             return false;
@@ -49,8 +45,7 @@ public class Config {
      */
     public static Boolean getAlwaysShowStaffPopoverHelper() {
         try {
-            ApplicationInfo ai = pius_app_for_android.getAppContext().getPackageManager().getApplicationInfo(pius_app_for_android.getAppContext().getPackageName(), PackageManager.GET_META_DATA);
-            return (Boolean)ai.metaData.get("alwaysShowStaffHelperPopover");
+            return (Boolean)AppDefaults.getApplicationInfo().metaData.get("alwaysShowStaffHelperPopover");
         }
         catch (PackageManager.NameNotFoundException e) {
             return false;

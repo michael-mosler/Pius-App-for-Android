@@ -12,11 +12,9 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.rmkrings.activities.R;
@@ -68,12 +66,12 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("deltaList", remoteMessage.getData().get("deltaList"));
         intent.putExtra("timestamp", remoteMessage.getData().get("timestamp"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Show notification.
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "PIUS-APP")
                 .setSmallIcon(R.drawable.ic_notification)
-                .setColor(getResources().getColor(R.color.colorPiusBlue))
+                .setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPiusBlue))
                 .setContentTitle(Objects.requireNonNull(remoteMessage.getNotification()).getTitle())
                 .setContentText(remoteMessage.getNotification().getBody())
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getNotification().getBody()))
@@ -127,20 +125,14 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
      * starts actual registration.
      */
     public void updateDeviceToken() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        if (task.getResult() != null) {
-                            String token = task.getResult().getToken();
-                            sendToken(token);
-                        }
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        return;
                     }
+
+                    String token = task.getResult();
+                    sendToken(token);
                 });
     }
 

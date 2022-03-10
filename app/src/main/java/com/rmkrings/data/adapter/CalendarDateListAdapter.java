@@ -18,12 +18,10 @@ public class CalendarDateListAdapter extends RecyclerView.Adapter<CalendarDateLi
 
     static class DateListViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView dateView;
         final TextView eventView;
         DateListViewHolder(@NonNull ConstraintLayout itemView) {
             super(itemView);
-            dateView = itemView.findViewById(R.id.date);
-            eventView = itemView.findViewById(R.id.event);
+            eventView = itemView.findViewById(R.id.item_view);
         }
     }
 
@@ -36,14 +34,13 @@ public class CalendarDateListAdapter extends RecyclerView.Adapter<CalendarDateLi
     public DateListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         ConstraintLayout v = (ConstraintLayout)LayoutInflater
                 .from(viewGroup.getContext())
-                .inflate(R.layout.date_list_item, viewGroup, false);
+                .inflate(R.layout.list_item, viewGroup, false);
         return new DateListViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DateListViewHolder dateListViewHolder, int i) {
         DayItem dayItem = dateList.get(i);
-        dateListViewHolder.dateView.setText(dayItem.getDay());
         dateListViewHolder.eventView.setText(dayItem.getEvent());
     }
 
