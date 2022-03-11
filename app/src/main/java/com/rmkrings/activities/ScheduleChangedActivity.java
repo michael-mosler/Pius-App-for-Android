@@ -1,13 +1,20 @@
 package com.rmkrings.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,17 +48,12 @@ public class ScheduleChangedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_changed);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent a = new Intent(ScheduleChangedActivity.this, MainActivity.class);
-                a.putExtra("target", MainActivity.getTargetDashboard());
-                startActivity(a);
-            }
+        fab.setOnClickListener(view -> {
+            Intent a = new Intent(ScheduleChangedActivity.this, MainActivity.class);
+            a.putExtra("target", MainActivity.getTargetDashboard());
+            startActivity(a);
         });
 
         RecyclerView mList = findViewById(R.id.changeSet);
@@ -74,8 +76,23 @@ public class ScheduleChangedActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ColorDrawable bgndColor = new ColorDrawable(Color.WHITE);
+            ab.setTitle(
+                    Html.fromHtml(
+                        "<font color='#000000'>"
+                                .concat(getResources().getString(R.string.title_my_subst_schedule_changes))
+                                .concat("</font>"),
+                        Html.FROM_HTML_MODE_COMPACT
+                    )
+            );
+            ab.setBackgroundDrawable(bgndColor);
+        }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void showChanges(VertretungsplanChangeList vertretungsplanChangeList, String timestamp) {
         TextView mTimestamp = findViewById(R.id.timestamp);
         String readableTimestamp = DateHelper.convert(
