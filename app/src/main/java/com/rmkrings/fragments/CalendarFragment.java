@@ -241,16 +241,18 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
      * @param calendarDay Selecte calenday day
      */
     private void setDateList(CalendarDay calendarDay) {
-        mCalendarDateListAdapter.notifyItemRangeRemoved(0, dateList.size());
+        if (calendar != null) {
+            mCalendarDateListAdapter.notifyItemRangeRemoved(0, dateList.size());
 
-        dateList.clear();
-        dateList.addAll(calendar.filterBy(calendarDay));
+            dateList.clear();
+            dateList.addAll(calendar.filterBy(calendarDay));
 
-        mCalendarDateListAdapter.notifyItemRangeInserted(0, dateList.size());
+            mCalendarDateListAdapter.notifyItemRangeInserted(0, dateList.size());
 
-        noEventsTextView.setVisibility(
-                dateList.size() == 0 ? View.VISIBLE : View.INVISIBLE
-        );
+            noEventsTextView.setVisibility(
+                    dateList.size() == 0 ? View.VISIBLE : View.INVISIBLE
+            );
+        }
     }
 
     /**
