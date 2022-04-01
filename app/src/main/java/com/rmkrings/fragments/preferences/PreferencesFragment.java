@@ -5,13 +5,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.rmkrings.activities.R;
 import com.rmkrings.data.adapter.ViewPagerAdapter;
 
@@ -28,7 +29,7 @@ public class PreferencesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_preferences, container, false);
+        return inflater.inflate(R.layout.content_preferences, container, false);
     }
 
     @Override
@@ -42,12 +43,28 @@ public class PreferencesFragment extends Fragment {
      * @param view View which holds tab/pager view.
      */
     private void setViewPager(View view) {
-        ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(getActivity());
 
-        ViewPager mViewPager = view.findViewById(R.id.pager);
+        ViewPager2 mViewPager = view.findViewById(R.id.pager);
         mViewPager.setAdapter(mViewPagerAdapter);
 
         TabLayout mTabLayout = view.findViewById(R.id.tab);
-        mTabLayout.setupWithViewPager(mViewPager);
+        new TabLayoutMediator(
+                mTabLayout,
+                mViewPager,
+                (tab, position) -> {
+                    switch (position) {
+                        case 0:
+                            tab.setText(GeneralPreferencesFragment.getTitle());
+                            break;
+                        case 1:
+                            tab.setText(StaffListPreferencesFragment.getTitle());
+                            break;
+                        case 2:
+                            tab.setText(AboutPreferencesFragment.getTitle());
+                            break;
+                    }
+                }
+        ).attach();
     }
 }

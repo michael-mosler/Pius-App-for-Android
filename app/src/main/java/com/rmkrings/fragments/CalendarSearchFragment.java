@@ -20,7 +20,6 @@ import com.rmkrings.data.calendar.CalendarListItem;
 import com.rmkrings.data.calendar.MonthHeaderItem;
 import com.rmkrings.data.calendar.MonthItem;
 import com.rmkrings.activities.R;
-import com.rmkrings.pius_app_for_android;
 
 import java.util.ArrayList;
 
@@ -108,6 +107,10 @@ public class CalendarSearchFragment extends Fragment {
     }
 
     private void setDateList() {
+        if (filteredCalendar == null) {
+            return;
+        }
+
         mCalendarSearchListAdapter.notifyItemRangeRemoved(0, listItems.size());
         listItems.clear();
         for (MonthItem montItem: filteredCalendar.getMonthItems()) {

@@ -106,8 +106,8 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
         switch(vertretungsplanListItem.getType()) {
             case VertretungsplanListItem.courseHeader: {
                 VertretungsplanHeaderItem headerItem = (VertretungsplanHeaderItem)vertretungsplanListItem;
-                LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
+                LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = layoutInflater.inflate(R.layout.vertretungsplan_header_item, parent, false);
 
                 TextView tv = (TextView)convertView;
                 tv.setText(
@@ -120,8 +120,8 @@ public class DashboardListAdapter extends BaseExpandableListAdapter {
 
             case VertretungsplanListItem.detailItem: {
                 final VertretungsplanDetailItem detailItem = (VertretungsplanDetailItem)vertretungsplanListItem;
-                final LayoutInflater infalInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.veretretungsplan_detail_item, parent, false);
+                final LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = layoutInflater.inflate(R.layout.veretretungsplan_detail_item, parent, false);
 
                 final TextView substitutionType = convertView.findViewById(R.id.widgetSubstitutionTypeItem);
                 substitutionType.setText(detailItem.getSubstitutionType());

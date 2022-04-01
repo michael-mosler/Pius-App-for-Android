@@ -2,59 +2,38 @@ package com.rmkrings.data.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.rmkrings.fragments.preferences.AboutPreferencesFragment;
 import com.rmkrings.fragments.preferences.GeneralPreferencesFragment;
+import com.rmkrings.fragments.preferences.StaffListPreferencesFragment;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentStateAdapter {
 
-    private static final int TAB_COUNT = 2;
-    private final GeneralPreferencesFragment mGeneralPreferencesFragment;
-    private final AboutPreferencesFragment mAboutPreferencesFragment;
+    private static final int TAB_COUNT = 3;
 
-    public ViewPagerAdapter(FragmentManager fm) {
-        super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mGeneralPreferencesFragment = new GeneralPreferencesFragment();
-        mAboutPreferencesFragment = new AboutPreferencesFragment();
+    public ViewPagerAdapter(FragmentActivity fa) {
+        super(fa);
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return mGeneralPreferencesFragment;
+                return new GeneralPreferencesFragment();
             case 1:
-                return mAboutPreferencesFragment;
+                return new StaffListPreferencesFragment();
+            case 2:
+                return new AboutPreferencesFragment();
             default:
                 return new Fragment();
         }
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return TAB_COUNT;
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return mGeneralPreferencesFragment.getTitle();
-            case 1:
-                return mAboutPreferencesFragment.getTitle();
-
-        }
-        return super.getPageTitle(position);
-    }
-
-    /**
-     * Gets all managed fragments.
-     * @return Array of embedded fragments.
-     */
-    public Fragment[] getFragments() {
-        return new Fragment[]{ mGeneralPreferencesFragment, mAboutPreferencesFragment };
     }
 }

@@ -23,11 +23,20 @@ import java.util.logging.Logger;
  * called.
  */
 public class StaffLoader extends HttpGet implements HttpResponseCallback {
+
     private final String cacheFileName = Config.cacheFilename("staff");
     private final String digestFileName = Config.digestFilename(("staff"));
     private final Cache cache = new Cache();
 
+    private HttpResponseCallback responseDelegate;
+
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
+
+    private void delegateResponse(HttpResponseData responseData) {
+        if (responseDelegate != null) {
+            responseDelegate.execute(responseData);
+        }
+    }
 
     @Override
     protected URL getURL(String digest) throws MalformedURLException {
@@ -49,42 +58,51 @@ public class StaffLoader extends HttpGet implements HttpResponseCallback {
         super.load(this, digest);
     }
 
+    public void load(HttpResponseCallback responseDelegate) {
+        this.responseDelegate = responseDelegate;
+        load();
+    }
+
     /**
      * Process backend response for staff load request. On success if staff dictionary has changed
      * this method simply updated local staff cache. No parsing or any other king of processing
      * is made. This method implements HttpResponseCallback interface.
+     *
      * @param responseData Backend response data with HTTP status code information and data.
      */
     @SuppressLint("DefaultLocale")
     @Override
     public void execute(HttpResponseData responseData) {
-        String data;
-        String digest;
-        JSONObject jsonData;
-
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Staff dictionary. HTTP Status code %d.", responseData.getHttpStatusCode()));
+            delegateResponse(responseData);
             return;
         }
 
-        data = responseData.getData();
+        String data = responseData.getData();
         if (data != null) {
             // When data has changed we need the new digest as it must be updated.
             try {
-                jsonData = new JSONObject(data);
-                digest = jsonData.getString("_digest");
+                String digest = (new JSONObject(data)).getString("_digest");
                 cache.store(cacheFileName, data);
                 cache.store(digestFileName, digest);
-            } catch(JSONException e) {
+                delegateResponse(responseData);
+            } catch (JSONException e) {
                 // Basically there is not much we can do here. Showing an error is not of much
                 // help for the user.
+
+                // TODO: Error Handling
                 e.printStackTrace();
             }
+        } else {
+            data = cache.read(cacheFileName);
+            delegateResponse(new HttpResponseData(200, false, data, responseDelegate));
         }
     }
 
     /**
      * Load staff dictionary from cache.
+     *
      * @return Returns current staff dictionary. This dictionary might be empty.
      */
     public StaffDictionary loadFromCache() {
@@ -104,4 +122,5 @@ public class StaffLoader extends HttpGet implements HttpResponseCallback {
             return new StaffDictionary();
         }
     }
+
 }

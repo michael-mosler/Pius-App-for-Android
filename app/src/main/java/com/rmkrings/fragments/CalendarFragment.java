@@ -311,9 +311,6 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             YearMonth lastMonth = calendar.getLastMonth();
             calendarView.setupAsync(YearMonth.now(), lastMonth, DayOfWeek.of(1));
             calendarView.notifyCalendarChanged();
-
-            // today();
-
         } catch (Exception e) {
             e.printStackTrace();
             new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
