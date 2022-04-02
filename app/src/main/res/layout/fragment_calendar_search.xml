@@ -14,15 +14,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
+            <SearchView
                 android:id="@+id/searchinput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/label_search"
-                android:inputType="text"
-                android:singleLine="true"
-                android:autofillHints="" tools:targetApi="o" />
+                android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/datelist"

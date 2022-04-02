@@ -41,7 +41,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
     private final String digestFileName = Config.digestFilename("calendar");
     private final String cacheFileName = Config.cacheFilename("calendar");
     private final Cache cache = new Cache();
-    private Calendar calendar;
+    private Calendar calendar = new Calendar();
     private final ArrayList<CalendarListItem> dateList = new ArrayList<>();
     private ParentFragment parentFragment;
 
@@ -192,7 +192,7 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
             }
 
             jsonData = new JSONObject(data);
-            calendar = new Calendar(jsonData);
+            calendar.load(jsonData);
 
             if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 304 && calendar.getDigest() != null) {
                 cache.store(digestFileName, calendar.getDigest());

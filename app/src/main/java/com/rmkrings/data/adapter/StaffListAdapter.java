@@ -1,4 +1,4 @@
-package com.rmkrings.fragments;
+package com.rmkrings.data.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

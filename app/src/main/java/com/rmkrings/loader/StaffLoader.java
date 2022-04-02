@@ -32,12 +32,6 @@ public class StaffLoader extends HttpGet implements HttpResponseCallback {
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
 
-    private void delegateResponse(HttpResponseData responseData) {
-        if (responseDelegate != null) {
-            responseDelegate.execute(responseData);
-        }
-    }
-
     @Override
     protected URL getURL(String digest) throws MalformedURLException {
         String urlString = String.format("%s/v2/staff", AppDefaults.getBaseUrl());
@@ -55,7 +49,7 @@ public class StaffLoader extends HttpGet implements HttpResponseCallback {
         if (cache.fileExists(digestFileName)) {
             digest = cache.read(digestFileName);
         }
-        
+
         super.load(this, digest);
     }
 
@@ -129,4 +123,13 @@ public class StaffLoader extends HttpGet implements HttpResponseCallback {
         }
     }
 
+    /**
+     * If delegate is set then response data processing is sent to it.
+     * @param responseData Response data from last server response.
+     */
+    private void delegateResponse(HttpResponseData responseData) {
+        if (responseDelegate != null) {
+            responseDelegate.execute(responseData);
+        }
+    }
 }

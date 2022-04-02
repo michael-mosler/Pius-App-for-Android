@@ -1,7 +1,7 @@
 package com.rmkrings.fragments.preferences;
 
-import static com.rmkrings.fragments.StaffListAdapter.SUPPLEMENT;
-import static com.rmkrings.fragments.StaffListAdapter.TEACHERS;
+import static com.rmkrings.data.adapter.StaffListAdapter.SUPPLEMENT;
+import static com.rmkrings.data.adapter.StaffListAdapter.TEACHERS;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.rmkrings.activities.R;
 import com.rmkrings.data.staff.StaffDictionary;
 import com.rmkrings.data.staff.StaffMember;
-import com.rmkrings.fragments.StaffListAdapter;
+import com.rmkrings.data.adapter.StaffListAdapter;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.StaffLoader;
@@ -30,6 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for staff list. Staff list is presented as a tab in the preferences
+ * view.
+ */
 public class StaffListPreferencesFragment extends Fragment implements HttpResponseCallback {
 
     private ExpandableListView staffListListView;
@@ -118,7 +122,7 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
     }
 
     private void notifyChanged() {
-        // Guard, should not be fulfilled.
+        // Guard, should never be fulfilled.
         if (staffDictionary == null) {
             return;
         }
@@ -127,8 +131,8 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
         Map<String, StaffMember> filteredMap = staffDictionary
                 .entrySet()
                 .stream()
-                .filter(member -> member.getValue().matches(searchTerm))
                 .filter(member -> member.getValue().getIsTeacher())
+                .filter(member -> member.getValue().matches(searchTerm))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         StaffDictionary teachers = new StaffDictionary();
@@ -138,8 +142,8 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
         filteredMap = staffDictionary
                 .entrySet()
                 .stream()
-                .filter(member -> member.getValue().matches(searchTerm))
                 .filter(member -> !member.getValue().getIsTeacher())
+                .filter(member -> member.getValue().matches(searchTerm))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         StaffDictionary supplement = new StaffDictionary();
