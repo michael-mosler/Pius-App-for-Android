@@ -8,13 +8,13 @@ android {
         coreLibraryDesugaringEnabled true
     }
 
-    compileSdkVersion 31
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 25
-        targetSdkVersion 31
-        versionCode 22
-        versionName "1.8.2"
+        targetSdkVersion 32
+        versionCode 23
+        versionName "1.9.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {

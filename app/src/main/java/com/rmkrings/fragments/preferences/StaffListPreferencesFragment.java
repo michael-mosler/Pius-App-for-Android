@@ -160,6 +160,7 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
 
         staffListAdapter.notifyDataSetChanged();
 
+        expandGroupsIfNeeed();
         progressBar.setVisibility(View.INVISIBLE);
     }
 
