@@ -22,6 +22,7 @@ import com.rmkrings.fragments.StaffListAdapter;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.StaffLoader;
+import com.rmkrings.pius_app_for_android;
 
 import org.json.JSONException;
 
@@ -91,6 +92,14 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
         super.onResume();
         reload();
     }
+    @Override
+    public void onInternalError(Exception e) {
+        new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
+                .setTitle(getResources().getString(R.string.title_peferences_staff))
+                .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
+                .show();
+    }
 
     /**
      * Returns tab title.
@@ -98,7 +107,7 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
      * @return Tab title.
      */
     public static String getTitle() {
-        return "Mitarbeiter";
+        return pius_app_for_android.getAppContext().getResources().getString(R.string.title_peferences_staff);
     }
 
     /**
@@ -148,8 +157,7 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
     public void execute(HttpResponseData responseData) {
         if (responseData.isError()) {
             new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
-                    // TODO: Set correct title.
-                    .setTitle(getResources().getString(R.string.title_calendar))
+                    .setTitle(getResources().getString(R.string.title_peferences_staff))
                     .setMessage(getResources().getString(R.string.error_failed_to_load_data))
                     .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
                     .show();
@@ -160,20 +168,14 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
             // We must keep this for searchching.
             staffDictionary = new StaffDictionary(responseData.getData());
             notifyChanged();
-
         } catch (JSONException e) {
-
-            e.printStackTrace();
-            // TODO: Set correct title.
-            new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
-                    .setTitle(getResources().getString(R.string.title_calendar))
-                    .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
-                    .show();
-
+            onInternalError(e);
         }
     }
 
+    /**
+     * This method expands all groups if not expanded already.
+     */
     private void expandGroupsIfNeeed() {
         for (int i = 0; i < staffListAdapter.getGroupCount(); i += 1) {
             if (!staffListListView.isGroupExpanded(i)) {

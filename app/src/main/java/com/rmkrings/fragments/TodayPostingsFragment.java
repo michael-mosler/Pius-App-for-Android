@@ -161,8 +161,12 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
             setPostings();
         }
         catch (Exception e) {
-            e.printStackTrace();
-            show(getResources().getString(R.string.error_failed_to_load_data), parentFragment);
+            onInternalError(e);
         }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        show(getResources().getString(R.string.error_failed_to_load_data), parentFragment);
     }
 }

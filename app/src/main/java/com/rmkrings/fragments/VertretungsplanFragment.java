@@ -261,18 +261,23 @@ public class VertretungsplanFragment extends Fragment implements HttpResponseCal
             setLastUpdate();
             setVertretungsplanList();
         } catch (Exception e) {
-            e.printStackTrace();
-            if (getActivity() != null && !getActivity().isFinishing()) {
-                new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
-                        .setTitle(getResources().getString(R.string.title_substitution_schedule))
-                        .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                            if (getParentFragmentManager() != null) {
-                                getParentFragmentManager().popBackStack();
-                            }
-                        })
-                        .show();
-            }
+            onInternalError(e);
+        }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        e.printStackTrace();
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+                    .setTitle(getResources().getString(R.string.title_substitution_schedule))
+                    .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        if (getParentFragmentManager() != null) {
+                            getParentFragmentManager().popBackStack();
+                        }
+                    })
+                    .show();
         }
     }
 }

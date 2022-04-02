@@ -55,6 +55,7 @@ public class StaffLoader extends HttpGet implements HttpResponseCallback {
         if (cache.fileExists(digestFileName)) {
             digest = cache.read(digestFileName);
         }
+        
         super.load(this, digest);
     }
 
@@ -88,15 +89,20 @@ public class StaffLoader extends HttpGet implements HttpResponseCallback {
                 cache.store(digestFileName, digest);
                 delegateResponse(responseData);
             } catch (JSONException e) {
-                // Basically there is not much we can do here. Showing an error is not of much
-                // help for the user.
-
-                // TODO: Error Handling
-                e.printStackTrace();
+                onInternalError(e);
             }
         } else {
             data = cache.read(cacheFileName);
             delegateResponse(new HttpResponseData(200, false, data, responseDelegate));
+        }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        if (responseDelegate != null) {
+            responseDelegate.onInternalError(e);
+        } else {
+            e.printStackTrace();
         }
     }
 

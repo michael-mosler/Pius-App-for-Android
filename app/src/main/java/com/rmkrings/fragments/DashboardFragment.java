@@ -332,21 +332,25 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                     setLastUpdate();
                     setVertretungsplanList();
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
-                            .setTitle(getResources().getString(R.string.title_dashboard))
-                            .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                                if (getParentFragmentManager() != null) {
-                                    getParentFragmentManager().popBackStack();
-                                }
-                            })
-                            .show();
+                    onInternalError(e);
                 }
             }
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            onInternalError(e);
         }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        new AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+                .setTitle(getResources().getString(R.string.title_dashboard))
+                .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    if (getParentFragmentManager() != null) {
+                        getParentFragmentManager().popBackStack();
+                    }
+                })
+                .show();
     }
 
     private boolean canUseDashboard() {

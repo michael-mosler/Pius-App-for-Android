@@ -312,13 +312,17 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             calendarView.setupAsync(YearMonth.now(), lastMonth, DayOfWeek.of(1));
             calendarView.notifyCalendarChanged();
         } catch (Exception e) {
-            e.printStackTrace();
-            new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
-                    .setTitle(getResources().getString(R.string.title_calendar))
-                    .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
-                    .show();
+            onInternalError(e);
         }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
+                .setTitle(getResources().getString(R.string.title_calendar))
+                .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
+                .show();
     }
 
     /**

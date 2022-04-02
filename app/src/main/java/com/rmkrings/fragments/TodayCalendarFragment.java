@@ -201,7 +201,10 @@ public class TodayCalendarFragment extends Fragment implements HttpResponseCallb
             setDateList();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            onInternalError(e);
         }
     }
+
+    @Override
+    public void onInternalError(Exception e) { }
 }

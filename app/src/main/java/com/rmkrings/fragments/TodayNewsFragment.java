@@ -151,9 +151,13 @@ public class TodayNewsFragment extends Fragment implements HttpResponseCallback,
             setNewsList();
         }
         catch (Exception e) {
-            setMessage(getResources().getString(R.string.error_failed_to_load_data));
-            e.printStackTrace();
+            onInternalError(e);
         }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        setMessage(getResources().getString(R.string.error_failed_to_load_data));
     }
 
     @Override
