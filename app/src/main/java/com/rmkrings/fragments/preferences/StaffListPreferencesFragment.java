@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
  */
 public class StaffListPreferencesFragment extends Fragment implements HttpResponseCallback {
 
+    private ProgressBar progressBar;
     private ExpandableListView staffListListView;
     private StaffListAdapter staffListAdapter;
     private final HashMap<String, StaffDictionary> listDataChild = new HashMap<>(0);
@@ -61,6 +63,7 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
 
         StaffListPreferencesFragment self = this;
 
+        progressBar = view.findViewById(R.id.staffLoadingProgressBar);
         staffListListView = view.findViewById(R.id.staffListView);
         staffListAdapter = new StaffListAdapter(getActivity(), listDataChild);
         staffListListView.setAdapter(staffListAdapter);
@@ -118,6 +121,7 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
      * Reloads staff data.
      */
     private void reload() {
+        progressBar.setVisibility(View.VISIBLE);
         staffLoader.load(this);
     }
 
@@ -155,6 +159,8 @@ public class StaffListPreferencesFragment extends Fragment implements HttpRespon
         listDataChild.put(SUPPLEMENT, supplement);
 
         staffListAdapter.notifyDataSetChanged();
+
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
