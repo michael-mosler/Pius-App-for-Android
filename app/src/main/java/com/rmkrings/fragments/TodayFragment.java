@@ -174,14 +174,18 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
 
                     mTodayVertetungsplanFragment.show(vertretungsplan, this);
                 } catch (Exception e) {
-                    mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
-                    e.printStackTrace();
+                    onInternalError(e);
                 }
             }
         }
         catch (IllegalStateException e) {
-            e.printStackTrace();
+            onInternalError(e);
         }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        mTodayVertetungsplanFragment.show(getResources().getString(R.string.error_failed_to_load_data), this);
     }
 
     @Override

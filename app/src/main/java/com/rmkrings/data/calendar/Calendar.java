@@ -15,12 +15,13 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Observable;
 import java.util.stream.Collectors;
 
 /**
  * Holds backend calendar as Java object.
  */
-public class Calendar implements Serializable {
+public class Calendar extends Observable implements Serializable {
 
     // @serial
     private final ArrayList<MonthItem> monthItems;
@@ -31,25 +32,29 @@ public class Calendar implements Serializable {
     /**
      * Instantiates an empty calendar.
      */
-    private Calendar() {
+    public Calendar() {
         monthItems = new ArrayList<>();
         digest = null;
     }
 
     /**
+     *
      * Instantiate calendar from JSON object.
      * @param data JSON calendar data
      * @throws RuntimeException Indicates that JSON data processing failed.
      */
-    public Calendar(JSONObject data) throws RuntimeException {
+    public void load(JSONObject data) throws RuntimeException {
+        monthItems.clear();
         try {
-            monthItems = new ArrayList<>();
             JSONArray jsonMonthItems = data.optJSONArray("monthItems");
             for (int i = 0; i < Objects.requireNonNull(jsonMonthItems).length(); i++) {
                 JSONObject jsonMonthItem = jsonMonthItems.getJSONObject(i);
                 MonthItem monthItem = new MonthItem(jsonMonthItem);
                 monthItems.add(monthItem);
             }
+
+            setChanged();
+            notifyObservers();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -112,18 +117,14 @@ public class Calendar implements Serializable {
      * @return Filtered calendar
      */
     public Calendar filter(String s) {
-        if (s.length() == 0) {
-            return this;
-        }
-
         Calendar c = new Calendar();
-        for (MonthItem monthItem: getMonthItems()) {
-            MonthItem m = monthItem.filter(s);
-
-            if (m != null) {
-                c.monthItems.add(m);
-            }
-        }
+        c.monthItems.addAll(
+                getMonthItems()
+                        .stream()
+                        .map(item -> item.filter(s))
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toCollection(ArrayList<MonthItem>::new))
+        );
 
         return c;
     }

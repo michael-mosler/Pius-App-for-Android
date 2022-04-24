@@ -7,8 +7,8 @@
     <string name="button_welcome_start">Jetzt loslegen</string>
     <string name="button_confirm">Verstanden</string>
 
-    <string name="welcome_new_in_version">Neu in der Version 1.8.1:</string>
-    <string name="welcome_new_1">Wir haben den Kalender neu gestaltet.</string>
+    <string name="welcome_new_in_version">Neu in der Version 1.9.0:</string>
+    <string name="welcome_new_1">Unter "Einstellungen" kannst Du eine Liste aller Lehrer anzeigen.</string>
     <string name="welcome_new_2">Wir haben Fehler behoben.</string>
     <string name="welcome_title_overview">Funktionen im Überblick:</string>
     <string name="welcome_function_today">Auf der Heute-Seite hast Du alles Wichtige im Blick.</string>
@@ -34,6 +34,7 @@
     <string name="title_whats_new">What\'s New</string>
     <string name="title_peferences_general">Allgemein</string>
     <string name="title_peferences_about">Über die App</string>
+    <string name="title_peferences_staff">Mitarbeiter</string>
 
     <string name="label_add_grade_and_courses">Gib bitte für Deinen persönlichen Vertretungsplan und zur Verwendung des Dashboards Deine Klasse bzw. Jahrgangsstufe ein.</string>
     <string name="label_add_pius_credentials">Gib bitte den Benutzernamen und das Passwort für den Zugang zur Pius-Gymnasium Web-Seite an. Zum Anmelden benötigst Du eine Internetverbindung.</string>

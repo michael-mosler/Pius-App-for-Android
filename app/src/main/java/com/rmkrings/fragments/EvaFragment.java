@@ -184,8 +184,11 @@ public class EvaFragment extends Fragment implements HttpResponseCallback {
 
             setEvaList();
         } catch (Exception e) {
-            e.printStackTrace();
+            onInternalError(e);
         }
 
     }
+
+    @Override
+    public void onInternalError(Exception e) { }
 }

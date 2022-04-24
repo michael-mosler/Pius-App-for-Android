@@ -8,13 +8,13 @@ android {
         coreLibraryDesugaringEnabled true
     }
 
-    compileSdkVersion 31
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 25
-        targetSdkVersion 31
-        versionCode 22
-        versionName "1.8.2"
+        targetSdkVersion 32
+        versionCode 23
+        versionName "1.9.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -33,6 +33,17 @@ android {
             debuggable = true
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
 }
 
 dependencies {
@@ -50,12 +61,13 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
-    implementation 'com.google.firebase:firebase-messaging:23.0.0'
-    implementation 'com.google.firebase:firebase-config:21.0.1'
+    implementation 'com.google.firebase:firebase-messaging:23.0.2'
+    implementation 'com.google.firebase:firebase-config:21.0.2'
     implementation 'com.github.cdflynn:checkview:v1.1'
     implementation 'com.github.kizitonwose:CalendarView:1.0.4'
     implementation "androidx.core:core-ktx:1.7.0"
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }
 
 // This is to fix the errors : java.lang.NoClassDefFoundError: Failed resolution of: Landroid/view/View$OnUnhandledKeyEventListener;

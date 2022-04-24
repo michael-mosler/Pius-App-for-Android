@@ -52,7 +52,7 @@
             android:layout_gravity="center"
             android:layout_weight="0"
             android:contentDescription="@string/title_dashboard"
-            android:src="@drawable/ic_calendar_blue" />
+            android:src="@drawable/ic_list_blue" />
 
         <TextView
             android:layout_width="wrap_content"

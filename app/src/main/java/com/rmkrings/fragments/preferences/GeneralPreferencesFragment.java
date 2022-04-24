@@ -49,7 +49,7 @@ public class GeneralPreferencesFragment extends Fragment {
      * Gets title.
      * @return Title
      */
-    public String getTitle() {
+    public static String getTitle() {
         return pius_app_for_android.getAppContext().getResources().getString(R.string.title_peferences_general);
     }
 }

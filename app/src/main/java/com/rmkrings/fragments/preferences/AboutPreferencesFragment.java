@@ -30,7 +30,10 @@ public class AboutPreferencesFragment extends Fragment {
         TextView mVersion = view.findViewById(R.id.version);
 
         try{
-            String version = Objects.requireNonNull(getActivity()).getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+            String version = requireActivity()
+                    .getPackageManager()
+                    .getPackageInfo(requireActivity().getPackageName(), 0)
+                    .versionName;
             mVersion.setText(getResources().getText(R.string.label_app_name).toString().replaceAll("%v", version));
         } catch (PackageManager.NameNotFoundException ex){
             ex.printStackTrace();
@@ -38,7 +41,7 @@ public class AboutPreferencesFragment extends Fragment {
         }
     }
 
-    public String getTitle() {
+    public static String getTitle() {
         return pius_app_for_android.getAppContext().getResources().getString(R.string.title_peferences_about);
     }
 }

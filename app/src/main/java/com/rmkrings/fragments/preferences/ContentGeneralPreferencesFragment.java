@@ -433,12 +433,12 @@ public class ContentGeneralPreferencesFragment extends Fragment implements HttpR
                         .show();
             }
         } catch (Exception e) {
-            // There is not much we can do when an exception occus. Most likely user
-            // has dismissed activity while we were waiting for REST request reply.
-            // In this case no UI operations are permitted and can easily cause
-            // invalid state exceptions. Compared to iOS this one of the biggest
-            // design flaws in Android. I would expect OS to handle this transparently.
-            e.printStackTrace();
+            onInternalError(e);
         }
+    }
+
+    @Override
+    public void onInternalError(Exception e) {
+        e.printStackTrace();
     }
 }

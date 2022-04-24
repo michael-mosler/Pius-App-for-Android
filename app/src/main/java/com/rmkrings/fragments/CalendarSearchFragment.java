@@ -7,12 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.SearchView;
 
 import com.rmkrings.data.adapter.CalendarSearchListAdapter;
 import com.rmkrings.data.calendar.Calendar;
@@ -20,7 +18,6 @@ import com.rmkrings.data.calendar.CalendarListItem;
 import com.rmkrings.data.calendar.MonthHeaderItem;
 import com.rmkrings.data.calendar.MonthItem;
 import com.rmkrings.activities.R;
-import com.rmkrings.pius_app_for_android;
 
 import java.util.ArrayList;
 
@@ -30,6 +27,7 @@ public class CalendarSearchFragment extends Fragment {
     private static final String ARG_PARAM1 = "calendar";
 
     private CalendarSearchListAdapter mCalendarSearchListAdapter = null;
+    // private CalendarSearchLiLstAdapter mCalendarSearchListAdapter = null;
 
     // Local state
     private Calendar calendar;
@@ -67,20 +65,22 @@ public class CalendarSearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Outlets
-        EditText mSearchInput = view.findViewById(R.id.searchinput);
+        SearchView mSearchInput = view.findViewById(R.id.searchinput);
         RecyclerView mDateList = view.findViewById(R.id.datelist);
 
-        mSearchInput.addTextChangedListener(new TextWatcher() {
+        mSearchInput.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                filteredCalendar = calendar.filter(s.toString());
+            public boolean onQueryTextSubmit(String query) {
+                filteredCalendar = calendar.filter(query);
                 setDateList();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filteredCalendar = calendar.filter(newText);
+                setDateList();
+                return true;
             }
         });
 
@@ -108,6 +108,10 @@ public class CalendarSearchFragment extends Fragment {
     }
 
     private void setDateList() {
+        if (filteredCalendar == null) {
+            return;
+        }
+
         mCalendarSearchListAdapter.notifyItemRangeRemoved(0, listItems.size());
         listItems.clear();
         for (MonthItem montItem: filteredCalendar.getMonthItems()) {

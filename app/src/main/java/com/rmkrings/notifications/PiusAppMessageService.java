@@ -203,6 +203,9 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
      * @param data - Response data, ignored.
      */
     @Override
-    public void execute(HttpResponseData data) { /* void */ }
+    public void execute(HttpResponseData data) { }
+
+    @Override
+    public void onInternalError(Exception e) { }
 
 }
