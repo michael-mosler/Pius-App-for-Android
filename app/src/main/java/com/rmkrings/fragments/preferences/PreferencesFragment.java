@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.rmkrings.activities.R;
@@ -36,6 +37,15 @@ public class PreferencesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setViewPager(view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        requireActivity().setTitle(R.string.title_settings);
+        BottomNavigationView mNavigationView = getActivity().findViewById(R.id.navigation);
+        mNavigationView.getMenu().getItem(4).setChecked(true);
     }
 
     /**
