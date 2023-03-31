@@ -2,7 +2,6 @@ package com.rmkrings.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,7 +44,6 @@ import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.loader.VertretungsplanLoader;
 import com.rmkrings.activities.R;
-import com.rmkrings.notifications.DashboardWidgetUpdateService;
 
 import org.json.JSONObject;
 
@@ -314,11 +312,6 @@ public class DashboardFragment extends Fragment implements HttpResponseCallback 
                 } else {
                     data = cache.read(cacheFileName());
                 }
-
-                // Update widget when new data has been loaded.
-                Context context = getActivity();
-                Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
-                context.startService(intent);
 
                 try {
                     jsonData = new JSONObject(data);

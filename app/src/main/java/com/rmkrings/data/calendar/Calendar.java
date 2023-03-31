@@ -10,8 +10,9 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
@@ -165,13 +166,11 @@ public class Calendar extends Observable implements Serializable {
         }
 
         final MonthItem monthItem = monthItems.get(monthItems.size() - 1);
-        final DateTimeFormatterBuilder dateTimeFormatterBuilder = new DateTimeFormatterBuilder();
-        dateTimeFormatterBuilder
-                .parseCaseInsensitive()
-                .appendPattern("MMM")
-                .appendLiteral(" ")
-                .appendPattern("yy");
-        return YearMonth.parse(monthItem.getName(), dateTimeFormatterBuilder.toFormatter(Locale.GERMAN));
+        final TemporalAccessor ta = DateTimeFormatter
+                .ofPattern("MMMM yyyy")
+                .withLocale(Locale.GERMAN)
+                .parse(monthItem.getFullName());
+        return YearMonth.from(ta);
     }
 
     /**

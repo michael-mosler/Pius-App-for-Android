@@ -26,16 +26,20 @@ public class MonthItem implements Serializable {
     private final String name;
 
     // @serial
+    private final String fullName;
+
+    // @serial
     private final ArrayList<DayItem> dayItems;
 
     private MonthItem(MonthItem monthItem) {
         name = monthItem.getName();
+        fullName = monthItem.getFullName();
         dayItems = new ArrayList<>();
     }
 
     MonthItem(JSONObject data) throws RuntimeException {
         try {
-            String fullName = StringHelper.replaceHtmlEntities(data.getString("name"));
+            fullName = StringHelper.replaceHtmlEntities(data.getString("name"));
             name = fullName.substring(0, 3) + " " + fullName.substring(fullName.length() - 2);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,6 +67,15 @@ public class MonthItem implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Gets full name of month
+     *
+     * @return Full name of month
+     */
+    public String getFullName() {
+        return fullName;
     }
 
     /**

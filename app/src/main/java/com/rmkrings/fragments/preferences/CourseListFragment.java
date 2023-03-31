@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 /**
  */
-public class ContentCourseListFragment extends Fragment {
+public class CourseListFragment extends Fragment {
 
     private EditText mEditText;
     private NumberPicker mCoursePicker;
@@ -42,7 +42,7 @@ public class ContentCourseListFragment extends Fragment {
     private final Config config = new Config();
     private final ArrayList<String> courseList = new ArrayList<>();
 
-    public ContentCourseListFragment() {
+    public CourseListFragment() {
         // Required empty public constructor
     }
 

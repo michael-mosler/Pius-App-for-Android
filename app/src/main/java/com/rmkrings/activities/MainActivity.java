@@ -1,7 +1,6 @@
 package com.rmkrings.activities;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -23,7 +22,6 @@ import com.rmkrings.fragments.preferences.PreferencesFragment;
 import com.rmkrings.helper.AppDefaults;
 import com.rmkrings.helper.Config;
 import com.rmkrings.helper.Reachability;
-import com.rmkrings.interfaces.IOnBackPressed;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.loader.StaffLoader;
 import com.rmkrings.pius_app_for_android;
@@ -32,8 +30,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements ReachabilityChangeCallback
 {
-    Dialog myDialog;
-
     @SuppressWarnings("SameReturnValue")
     public static String getTargetDashboard() {
         return "dashboard";
@@ -55,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
         super.onCreate(savedInstanceState);
         SplashScreen.installSplashScreen(this);
         setContentView(R.layout.activity_main);
-        myDialog = new Dialog(this);
 
         // Add navigation bar.
         ColorStateList tint;
@@ -113,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
         }
 
         if (versionCode > AppDefaults.getSavedVersionCode() || Config.getAlwaysShowWelcome()) {
+            final Dialog myDialog = new Dialog(this);
+
             AppDefaults.setSavedVersionCode(versionCode);
 
             Button btnFollow;
@@ -125,11 +122,6 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
 
         final StaffLoader staffLoader = new StaffLoader();
         staffLoader.load();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override
