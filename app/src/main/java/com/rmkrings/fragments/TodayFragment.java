@@ -2,7 +2,6 @@ package com.rmkrings.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.interfaces.ParentFragment;
 import com.rmkrings.loader.CalendarLoader;
 import com.rmkrings.loader.VertretungsplanLoader;
-import com.rmkrings.notifications.DashboardWidgetUpdateService;
 
 import org.json.JSONObject;
 
@@ -158,11 +156,6 @@ public class TodayFragment extends Fragment implements HttpResponseCallback, Par
                 } else {
                     data = cache.read(cacheFileName());
                 }
-
-                // Update widget when new data has been loaded.
-                Context context = getActivity();
-                Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
-                context.startService(intent);
 
                 try {
                     jsonData = new JSONObject(data);

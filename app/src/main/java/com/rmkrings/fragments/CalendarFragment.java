@@ -286,6 +286,7 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
             YearMonth lastMonth = calendar.getLastMonth();
             calendarView.setupAsync(YearMonth.now(), lastMonth, DayOfWeek.of(1));
             calendarView.notifyCalendarChanged();
+            this.today();
         } catch (Exception e) {
             onInternalError(e);
         }
@@ -293,11 +294,20 @@ public class CalendarFragment extends Fragment implements HttpResponseCallback, 
 
     @Override
     public void onInternalError(Exception e) {
-        new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
-                .setTitle(getResources().getString(R.string.title_calendar))
-                .setMessage(getResources().getString(R.string.error_failed_to_load_data))
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
-                .show();
+        // If there is no context we cannot show popup.
+        if (getContext() == null) {
+            return;
+        }
+
+        try {
+            new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme)
+                    .setTitle(getResources().getString(R.string.title_calendar))
+                    .setMessage(getResources().getString(R.string.error_failed_to_load_data))
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> getParentFragmentManager().popBackStack())
+                    .show();
+        } catch (Exception innerException) {
+            innerException.printStackTrace();
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.rmkrings.notifications;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,7 +10,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
@@ -80,21 +83,16 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setAutoCancel(true);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            String id = "PIUS-APP";
-            CharSequence name = remoteMessage.getNotification().getTitle();
-            String description = getString(R.string.title_activity_schedule_changed);
-            NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
-            mChannel.setDescription(description);
-            mChannel.enableLights(true);
-            mChannel.setLightColor(Color.BLUE);
-            notificationManager.createNotificationChannel(mChannel);
-            notificationManager.notify(0, builder.build());
-        } else {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(0, builder.build());
-        }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        String id = "PIUS-APP";
+        CharSequence name = remoteMessage.getNotification().getTitle();
+        String description = getString(R.string.title_activity_schedule_changed);
+        NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
+        mChannel.setDescription(description);
+        mChannel.enableLights(true);
+        mChannel.setLightColor(Color.BLUE);
+        notificationManager.createNotificationChannel(mChannel);
+        notificationManager.notify(0, builder.build());
 
         // If schedule data is attached update dashboard data cache and then
         // reload widget.
@@ -106,11 +104,6 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
                 final Cache cache = new Cache();
                 cache.store(Config.digestFilename(grade), vertretungsplan.getDigest());
                 cache.store(Config.cacheFilename(grade), data);
-
-                // Update widget when new data has been loaded.
-                Context context = pius_app_for_android.getAppContext();
-                Intent widgetIntent = new Intent(context, DashboardWidgetUpdateService.class);
-                context.startService(widgetIntent);
             }
             catch(JSONException e) {
                 e.printStackTrace();

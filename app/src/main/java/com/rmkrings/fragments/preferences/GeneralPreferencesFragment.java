@@ -1,7 +1,6 @@
 package com.rmkrings.fragments.preferences;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,7 +26,6 @@ import com.rmkrings.helper.Config;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.VertretungsplanLoader;
-import com.rmkrings.notifications.DashboardWidgetUpdateService;
 import com.rmkrings.notifications.PiusAppMessageService;
 import com.rmkrings.pius_app_for_android;
 
@@ -372,11 +370,6 @@ public class GeneralPreferencesFragment extends Fragment implements HttpResponse
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        // Update widget when new data has been loaded.
-        Context context = pius_app_for_android.getAppContext();
-        Intent intent = new Intent(context, DashboardWidgetUpdateService.class);
-        context.startService(intent);
 
         // When still not authenticated then clear username and password.
         if (!AppDefaults.isAuthenticated()) {
