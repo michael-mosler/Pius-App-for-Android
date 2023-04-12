@@ -13,8 +13,8 @@ android {
         applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 26
         targetSdkVersion 33
-        versionCode 25
-        versionName "1.9.2"
+        versionCode 26
+        versionName "1.9.3"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -25,7 +25,7 @@ android {
             manifestPlaceholders = [host: 'https://pius-gateway.eu-de.mybluemix.net', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: false, remoteConfigHostParam: 'gatewayAddress']
         }
         debug {
-            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: false, remoteConfigHostParam: 'gatewayAddressDev']
+            manifestPlaceholders = [host: 'https://pius-gateway-ng.eu-gb.mybluemix.net', versionCode: 1, versioName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: true, alwaysShowStaffHelperPopover: false, remoteConfigHostParam: 'gatewayAddressDev']
         }
         localhost {
             manifestPlaceholders = [host: 'http://localhost:3000', versionCode: 1, versionName: 1.0, apiKey: 'heSXxSOvNcl8J4UB9$#TV9TUZ3zClbX$EyOQzKiqGWxRgonzSe', alwaysShowWelcome: false, alwaysShowStaffHelperPopover: true, remoteConfigHostParam: 'gatewayAddressLocalhost']
@@ -65,7 +65,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:21.3.0'
     implementation 'com.github.cdflynn:checkview:v1.1'
     implementation 'com.github.kizitonwose:CalendarView:1.0.4'
-    implementation "androidx.core:core-ktx:1.9.0"
+    implementation "androidx.core:core-ktx:1.10.0"
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }

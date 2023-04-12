@@ -45,6 +45,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     private final Cache cache = new Cache();
     private Postings postings;
     private final ArrayList<BaseListItem> itemlist = new ArrayList<>();
+    private Context context;
     private ParentFragment parentFragment;
 
     private final static Logger logger = Logger.getLogger(CalendarLoader.class.getName());
@@ -81,6 +82,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this.context = context;
     }
 
     private void reload() {
@@ -97,12 +99,19 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
         postingsLoader.load(this, digest);
     }
 
-    private void show(String message, ParentFragment parentFragment) {
-        mPostingsAdapter.notifyItemRangeRemoved(0, itemlist.size());
-        itemlist.clear();
-        itemlist.add(new MessageItem(message, Gravity.CENTER));
-        mPostingsAdapter.notifyItemInserted(0);
-        parentFragment.notifyDoneRefreshing();
+    private void showMessage(String message) {
+        if (isAdded() && getParentFragmentManager() != null && !getParentFragmentManager().isStateSaved()) {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .show(this)
+                    .commit();
+
+            mPostingsAdapter.notifyItemRangeRemoved(0, itemlist.size());
+            itemlist.clear();
+            itemlist.add(new MessageItem(message, Gravity.CENTER));
+            mPostingsAdapter.notifyItemInserted(0);
+            parentFragment.notifyDoneRefreshing();
+        }
     }
 
     public void show(ParentFragment parentFragment) {
@@ -139,7 +148,7 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
 
         if (responseData.getHttpStatusCode() != null && responseData.getHttpStatusCode() != 200 && responseData.getHttpStatusCode() != 304) {
             logger.severe(String.format("Failed to load data for Calendar. HTTP Status code %d.", responseData.getHttpStatusCode()));
-            show(getResources().getString(R.string.error_failed_to_load_data), parentFragment);
+            showMessage(context.getResources().getString(R.string.error_failed_to_load_data));
             return;
         }
 
@@ -167,6 +176,6 @@ public class TodayPostingsFragment extends Fragment implements HttpResponseCallb
 
     @Override
     public void onInternalError(Exception e) {
-        show(getResources().getString(R.string.error_failed_to_load_data), parentFragment);
+        showMessage(getResources().getString(R.string.error_failed_to_load_data));
     }
 }
