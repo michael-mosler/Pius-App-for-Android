@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
     }
 
     private int mapItemIdToTab(int itemId) {
-        int tab;
         if (itemId == R.id.navigation_home) {
             return HOME;
         }

@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class VertretungsplanChangeList {
-    private final HashMap<String, ArrayList<VertretungsplanChangeDetailItem>> changes = new HashMap<>();
+    private final HashMap<String, ArrayList<VertretungsplanChangeDetailItem>> changes;
 
-    public VertretungsplanChangeList(JSONArray jsonData) throws RuntimeException {
-        try {
-            for (int i = 0; i < jsonData.length(); i++) {
+    public VertretungsplanChangeList(JSONArray jsonData) {
+        changes = new HashMap<>();
+
+        for (int i = 0; i < jsonData.length(); i++) {
+            try {
                 if (jsonData.isNull(i)) {
                     continue;
                 }
@@ -29,10 +31,9 @@ public class VertretungsplanChangeList {
 
                 a.add(new VertretungsplanChangeDetailItem(jsonChangeItem));
                 changes.put(date, a);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw(new RuntimeException("Failed to process substitution schedule change list item."));
         }
     }
 
