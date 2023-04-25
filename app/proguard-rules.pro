@@ -12,6 +12,9 @@
 #   public *;
 #}
 
+-dontwarn org.conscrypt.Conscrypt**
+-dontwarn org.conscrypt.OpenSSLProvider**
+
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 -keepattributes SourceFile,LineNumberTable
