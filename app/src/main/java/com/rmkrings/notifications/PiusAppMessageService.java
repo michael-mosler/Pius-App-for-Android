@@ -1,6 +1,5 @@
 package com.rmkrings.notifications;
 
-import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,12 +8,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.RingtoneManager;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -22,17 +18,11 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.rmkrings.activities.R;
 import com.rmkrings.activities.ScheduleChangedActivity;
-import com.rmkrings.data.vertretungsplan.Vertretungsplan;
 import com.rmkrings.helper.AppDefaults;
-import com.rmkrings.helper.Cache;
-import com.rmkrings.helper.Config;
 import com.rmkrings.http.HttpResponseData;
 import com.rmkrings.interfaces.HttpResponseCallback;
 import com.rmkrings.loader.HttpDeviceTokenSetter;
 import com.rmkrings.pius_app_for_android;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -93,22 +83,6 @@ public class PiusAppMessageService extends FirebaseMessagingService implements H
         mChannel.setLightColor(Color.BLUE);
         notificationManager.createNotificationChannel(mChannel);
         notificationManager.notify(0, builder.build());
-
-        // If schedule data is attached update dashboard data cache and then
-        // reload widget.
-        if (remoteMessage.getData().containsKey("substitutionSchedule")) {
-            try {
-                final String data = remoteMessage.getData().get("substitutionSchedule");
-                final Vertretungsplan vertretungsplan = new Vertretungsplan(new JSONObject(Objects.requireNonNull(data)));
-                final String grade = AppDefaults.getGradeSetting();
-                final Cache cache = new Cache();
-                cache.store(Config.digestFilename(grade), vertretungsplan.getDigest());
-                cache.store(Config.cacheFilename(grade), data);
-            }
-            catch(JSONException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     /**

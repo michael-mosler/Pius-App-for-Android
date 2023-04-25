@@ -13,8 +13,8 @@ android {
         applicationId "com.rmkrings.pius_app_for_android"
         minSdkVersion 26
         targetSdkVersion 33
-        versionCode 26
-        versionName "1.9.3"
+        versionCode 27
+        versionName "1.9.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -44,6 +44,7 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
+    namespace 'com.rmkrings.activities'
 }
 
 dependencies {

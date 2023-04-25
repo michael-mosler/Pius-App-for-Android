@@ -37,7 +37,7 @@ public class HttpDeviceTokenSetter extends HttpPost {
     protected String getBody() throws JSONException {
         try {
             final String messagingProvider = "fcm";
-            final String apiKey = (String)AppDefaults.getApplicationParameter("apiKey");
+            final String apiKey = AppDefaults.getApplicationParameter("apiKey");
             JSONObject jsonData = new JSONObject()
                     .put("apiKey", apiKey)
                     .put("deviceToken", token)

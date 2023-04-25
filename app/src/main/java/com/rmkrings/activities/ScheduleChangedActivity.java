@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.ActionBar;
@@ -64,15 +65,17 @@ public class ScheduleChangedActivity extends AppCompatActivity {
         mList.setAdapter(mVertretungsplanChangesAdapter);
 
         if (getIntent().getExtras() != null) {
-            try {
-                String data = getIntent().getStringExtra("deltaList");
-                String timestamp = getIntent().getStringExtra("timestamp");
-                VertretungsplanChangeList vertretungsplanChangeList = new VertretungsplanChangeList(new JSONArray(data));
-                showChanges(vertretungsplanChangeList, Objects.requireNonNull(timestamp));
+            String data = getIntent().getStringExtra("deltaList");
+            String timestamp = getIntent().getStringExtra("timestamp");
+            VertretungsplanChangeList vertretungsplanChangeList;
 
+            try {
+                vertretungsplanChangeList = new VertretungsplanChangeList(new JSONArray(data));
             } catch (JSONException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+
+            showChanges(vertretungsplanChangeList, Objects.requireNonNull(timestamp));
         }
 
         ActionBar ab = getSupportActionBar();
@@ -80,10 +83,10 @@ public class ScheduleChangedActivity extends AppCompatActivity {
             ColorDrawable bgndColor = new ColorDrawable(Color.WHITE);
             ab.setTitle(
                     Html.fromHtml(
-                        "<font color='#000000'>"
-                                .concat(getResources().getString(R.string.title_my_subst_schedule_changes))
-                                .concat("</font>"),
-                        Html.FROM_HTML_MODE_COMPACT
+                            "<font color='#000000'>"
+                                    .concat(getResources().getString(R.string.title_my_subst_schedule_changes))
+                                    .concat("</font>"),
+                            Html.FROM_HTML_MODE_COMPACT
                     )
             );
             ab.setBackgroundDrawable(bgndColor);
@@ -98,12 +101,12 @@ public class ScheduleChangedActivity extends AppCompatActivity {
         mTimestamp.setText(readableTimestamp);
 
         list.clear();
-        for (Map.Entry<String, ArrayList<VertretungsplanChangeDetailItem>> change: vertretungsplanChangeList.getChanges().entrySet()) {
+        for (Map.Entry<String, ArrayList<VertretungsplanChangeDetailItem>> change : vertretungsplanChangeList.getChanges().entrySet()) {
             String date = change.getKey();
             list.add(new VertretungsplanChangeGroupItem(date));
 
             ArrayList<VertretungsplanChangeDetailItem> a = change.getValue();
-            for (VertretungsplanChangeDetailItem d: a) {
+            for (VertretungsplanChangeDetailItem d : a) {
                 list.add(new VertretungsplanChangeTypeItem(d.getChangeType()));
                 list.add(new VertretungsplanHeaderItem(d.getCourse(), d.getLesson()));
 
