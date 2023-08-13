@@ -5,11 +5,11 @@ import android.content.pm.PackageManager;
 import java.util.Arrays;
 
 public class Config {
-    private final String[] grades = { "keine", "Klasse 5", "Klasse 6", "Klasse 7", "Klasse 8", "Klasse 9", "EF", "Q1", "Q2" };
+    private final String[] grades = { "keine", "Klasse 5", "Klasse 6", "Klasse 7", "Klasse 8", "Klasse 9", "Klasse 10", "EF", "Q1", "Q2" };
 
     private final String[] upperGrades = { "EF", "Q1", "Q2" };
-    private final String[] lowerGrades = { "Klasse 5", "Klasse 6", "Klasse 7", "Klasse 8", "Klasse 9" };
-    private final String[] shortGrades = { "", "5", "6", "7", "8", "9", "EF", "Q1", "Q2" };
+    private final String[] lowerGrades = { "Klasse 5", "Klasse 6", "Klasse 7", "Klasse 8", "Klasse 9", "Klasse 10" };
+    private final String[] shortGrades = { "", "5", "6", "7", "8", "9", "10", "EF", "Q1", "Q2" };
 
     private final String[] courses = { "Mathematik", "Deutsch", "Englisch", "Französisch", "Latein", "Spanisch", "Hebräisch", "Erdkunde", "Biologie", "Physik", "Chemie", "Informatik", "Geschichte", "Religion", "Philosophie", "Musik", "Kunst", "Sport", "Literatur", "SOWI", "IV" };
     private final String[] coursesShortNames = { "M", "D", "E", "F", "L", "S", "H", "EK", "BI", "PH", "CH", "IF", "GE", "KR", "PL", "MU", "KU", "SP", "LI", "SW", "IV" };
@@ -22,27 +22,11 @@ public class Config {
     private final String[] lessonStartTimes = { "07:55", "08:40", "09:45", "10:35", "11:25", "12:40", "13:25", "14:30", "15:15", "16:00", "16:45" };
 
     /**
-     * Get always show welcome screen information. This should return true for debug build only.
-     * @return "true" if welcome screen should be shown, even if version code has not changed.
-     */
-    public static Boolean getAlwaysShowWelcome() {
-        try {
-            return (Boolean)AppDefaults.getApplicationInfo().metaData.get("alwaysShowWelcome");
-        }
-        catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
      * Get aleays show staff helper popover information. This should return true in debug
      * mode only.
      * @return "true" if popover is to be shown.
      */
+    @SuppressWarnings("unused")
     public static Boolean getAlwaysShowStaffPopoverHelper() {
         try {
             return (Boolean)AppDefaults.getApplicationInfo().metaData.get("alwaysShowStaffHelperPopover");

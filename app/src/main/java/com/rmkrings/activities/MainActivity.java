@@ -22,6 +22,7 @@ import com.rmkrings.fragments.TodayFragment;
 import com.rmkrings.fragments.VertretungsplanFragment;
 import com.rmkrings.fragments.preferences.PreferencesFragment;
 import com.rmkrings.helper.AppDefaults;
+import com.rmkrings.helper.Config;
 import com.rmkrings.helper.Reachability;
 import com.rmkrings.interfaces.ReachabilityChangeCallback;
 import com.rmkrings.loader.StaffLoader;
@@ -187,6 +188,18 @@ public class MainActivity extends AppCompatActivity implements ReachabilityChang
             int currentVersionCode = getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode;
             if (currentVersionCode > AppDefaults.getVersionCode()) {
                 // Any thing that need to be migrated goes in here.
+
+                if (AppDefaults.getVersionCode() < 28) {
+                    // With version code 28 we have introduced grade 10.
+                    // We need to shift EF, Q1 and Q2, though.
+                    var selectedGradeRow = AppDefaults.getSelectedGradeRow();
+                    if (selectedGradeRow > 5) {
+                        var config = new Config();
+                        selectedGradeRow = Math.min(selectedGradeRow + 1, config.getGrades().length - 1);
+                        AppDefaults.setSelectedGradeRow(selectedGradeRow);
+                    }
+                }
+
                 AppDefaults.setVersionCode(currentVersionCode);
 
                 final Dialog myDialog = new Dialog(this);
